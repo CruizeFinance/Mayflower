@@ -1,2 +1,0 @@
-npm install @chainlink/contracts --save
-npm install ganache-cli --save-dev
