@@ -1,0 +1,12 @@
+@import "./variables.scss";
+@import "./mixins.scss";
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.mobile {
+  height: 100vh;
+  padding: 20px;
+  @include flex(column, center, center, 30px);
+}

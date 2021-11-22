@@ -1,0 +1,126 @@
+@import "../styles/mixins.scss";
+
+.select {
+  border-radius: 25px !important;
+  font-size: 14px !important;
+}
+.select > div {
+  padding: 10px 14px;
+}
+.view-links {
+  display: flex;
+  gap: 10px;
+  a {
+    font-size: 14px;
+    padding: 10px 15px;
+    border-radius: 25px;
+    color: var(--gray);
+    &.active {
+      background: var(--primary);
+      color: var(--secondary);
+    }
+  }
+}
+.input-field {
+  box-shadow: none;
+  border: 1px solid;
+  border-radius: 10px;
+  .price-input {
+    input {
+      text-align: right;
+    }
+  }
+  .max-label {
+    padding: 5px 10px;
+    border-radius: 25px;
+    background: var(--background);
+    margin-left: 2px;
+    font-size: 14px;
+  }
+}
+.hedge-eth {
+  @include flex(column, center, center, "");
+}
+.dialog {
+  width: 400px;
+  height: auto;
+  padding: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  @include flex(column, center, center, 5px);
+  .details {
+    @include flex(column, center, center, 0px);
+  }
+  .redeem-details {
+    width: 100%;
+    @include flex(row, center, space-between, 0);
+    .token-details {
+      @include flex(column, flex-start, center, 3px);
+    }
+  }
+  .confirm {
+    width: 100%;
+    @include flex(row, center, space-between, "");
+  }
+  .order-details {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    width: 300px;
+    padding: 20px;
+    @include flex(column, center, center, 10px);
+  }
+  button {
+    border-radius: 5px !important;
+    &.full-width {
+      width: 100%;
+    }
+  }
+}
+.history {
+  width: 400px;
+  .results-area {
+    max-height: 250px;
+    overflow: auto;
+  }
+  .history-row {
+    display: flex;
+    flex: 1 1 100%;
+    align-items: center;
+    padding: 5px;
+    margin: 10px 0;
+    position: relative;
+    .col-1 {
+      flex: 1 1 20%;
+    }
+    .col-2,
+    .col-3 {
+      flex: 1 1 35%;
+    }
+    .col-4 {
+      flex: 1 1 10%;
+      align-items: flex-end;
+    }
+    .col-1,
+    .col-2,
+    .col-3,
+    .col-4 {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    &.result {
+      border: 1px solid;
+      border-radius: 5px;
+    }
+    .history-activity {
+      position: absolute;
+      width: 150px;
+      @include flex(column, "", "", 10px);
+      padding: 10px;
+      right: 15px;
+      background: var(--secondary);
+      border: 1px solid var(--gray);
+      border-radius: 5 px;
+    }
+  }
+}

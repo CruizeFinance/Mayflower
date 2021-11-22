@@ -1,0 +1,8 @@
+.button {
+  box-shadow: none !important;
+  text-transform: none !important;
+  border-radius: 25px !important;
+  &.secondary {
+    border: 1px solid;
+  }
+}

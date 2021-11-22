@@ -1,0 +1,9 @@
+@import "../../styles/mixins.scss";
+
+.details {
+  @include flex(row, center, center, 10px);
+  padding: 0px;
+  .add {
+    @include flex(column, flex-start, center, "");
+  }
+}

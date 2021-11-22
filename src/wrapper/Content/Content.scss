@@ -1,0 +1,14 @@
+@import "../../styles/mixins.scss";
+
+.main {
+  @include flex(row, center, center, "");
+  padding: 10px;
+  overflow: auto;
+  .content {
+    width: 550px;
+    height: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    @include flex(column, center, center, 10px);
+  }
+}
