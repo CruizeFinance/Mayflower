@@ -34,10 +34,10 @@ App = {
   load: async () => {
       // load app ...
       console.log('Loading app')
-      await App.loadWeb3()
-      await App.loadAccount()
-      await App.loadContract()
-      await App.render()
+      // await App.loadWeb3()
+      // await App.loadAccount()
+      // await App.loadContract()
+      // await App.render()
   },
 }
 export default App;
