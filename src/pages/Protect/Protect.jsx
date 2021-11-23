@@ -6,7 +6,7 @@ import { Button } from "../../components";
 import { InfoBox, InputField, ViewLinks, TokenModal } from "../Sections";
 import { useMoralis } from "react-moralis";
 import { Link } from "react-router-dom";
-import { loadContract } from "../../Blockchain/LoadSmartContract's";
+import { loadContract } from "../../Blockchain/LoadSmartContract";
 
 const Protect = (props) => {
   const { isAuthenticated, authenticate } = useMoralis();
