@@ -42,7 +42,10 @@ const ConfirmDetails = ({ type }) => {
           <Typography variant="body2">0.5%</Typography>
         </div>
       </div>
-      <Link to="/created" style={{ textDecoration: "none", width: "100%" }}>
+      <Link
+        to={`/created?type=${type?.toLowerCase()}`}
+        style={{ textDecoration: "none", width: "100%" }}
+      >
         <Button className={`full-width`}>Confirm Order</Button>
       </Link>
     </div>

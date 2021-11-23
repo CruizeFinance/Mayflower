@@ -1,9 +1,11 @@
 import { CreatedDetails, HistoryBox, InfoBox } from "../Sections";
 
-const Created = () => {
+const Created = (props) => {
   return (
     <>
-      <CreatedDetails type="Protect" />
+      <CreatedDetails
+        type={window.location?.search?.includes("protect") ? "Protect" : "Buy"}
+      />
       <HistoryBox />
       <InfoBox
         hideDialogOne

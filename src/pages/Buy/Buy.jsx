@@ -29,7 +29,7 @@ const Buy = () => {
         <Typography variant="body2">
           Add the required USDC balance to confirm the order
         </Typography>
-        <Link to="/manage" style={{ textDecoration: "none" }}>
+      <Link to="/confirm?type=buy" style={{ textDecoration: "none" }}>
           <Button width={400}>Buy ETH</Button>
         </Link>
       </div>
