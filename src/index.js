@@ -3,11 +3,13 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./styles/index.scss";
-
+import dotenv  from 'dotenv'
+import { MoralisProvider } from "react-moralis";
+dotenv.config()
 ReactDOM.render(
-  <React.StrictMode>
+  <MoralisProvider appId="" serverUrl="">
     <App />
-  </React.StrictMode>,
+  </MoralisProvider>,
   document.getElementById("root")
 );
 
