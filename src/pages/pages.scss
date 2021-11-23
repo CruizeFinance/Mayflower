@@ -44,7 +44,7 @@
 .dialog {
   width: 400px;
   height: auto;
-  padding: 10px;
+  padding: 20px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   @include flex(column, center, center, 5px);

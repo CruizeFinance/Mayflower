@@ -1,8 +1,9 @@
 import { IconButton, Tooltip, Typography, Fade } from "@mui/material";
 import { Sprite } from "../../../components";
+import { Link } from "react-router-dom";
 import "../../pages.scss";
 
-const InfoBox = ({ hideDialogOne, dialogTwoLabel, showSetUpLink }) => {
+const InfoBox = ({ hideDialogOne, dialogTwoLabel, showSetUpLink, type }) => {
   return (
     <>
       {!hideDialogOne ? (
@@ -38,16 +39,16 @@ const InfoBox = ({ hideDialogOne, dialogTwoLabel, showSetUpLink }) => {
           {dialogTwoLabel || "Looking to buy a dip at price drops"}
         </Typography>
         {showSetUpLink ? (
-          <a
+          <Link
             style={{
               textDecoration: "underline",
               fontSize: "14px",
               color: "var(--primary)"
             }}
-            href="javascript:void(0)"
+            to={`/${type === "Protect" ? "buy" : ""}`}
           >
             Set Up Now
-          </a>
+          </Link>
         ) : null}
       </div>
     </>

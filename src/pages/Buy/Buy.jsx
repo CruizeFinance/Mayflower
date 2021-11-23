@@ -4,9 +4,11 @@ import { Link } from "react-router-dom";
 import { MARKS, VIEW } from "../../utils/constants";
 import { InfoBox, InputField, ViewLinks, TokenModal } from "../Sections";
 import { Button } from "../../components";
+import { useMoralis } from "react-moralis";
 import "../pages.scss";
 
 const Buy = () => {
+  const { isAuthenticated } = useMoralis();
   return (
     <>
       <TokenModal />
@@ -33,7 +35,8 @@ const Buy = () => {
       </div>
       <InfoBox
         dialogTwoLabel={"Looking to add Price Protection?"}
-        showSetUpLink
+        showSetUpLink={isAuthenticated}
+        type="Buy"
       />
     </>
   );

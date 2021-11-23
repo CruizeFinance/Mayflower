@@ -48,7 +48,7 @@ const Protect = (props) => {
           </>
         )}
       </div>
-      <InfoBox showSetUpLink />
+      <InfoBox showSetUpLink={isAuthenticated} type="Protect" />
     </>
   );
 };

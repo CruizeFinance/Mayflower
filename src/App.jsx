@@ -2,7 +2,6 @@ import { ThemeProvider, CssBaseline, Typography } from "@mui/material";
 import { theme } from "./styles/styles";
 import Wrapper from "./wrapper/Wrapper";
 import "./styles/app.scss";
-import { MoralisProvider } from "react-moralis";
 import { isMobile } from "react-device-detect";
 
 const App = () => {
@@ -26,7 +25,7 @@ const App = () => {
   );
 };
 
-App = {
+/* App = {
 // Web3 stuff
   loading: false,
   contracts: {}, 
@@ -39,5 +38,5 @@ App = {
       // await App.loadContract()
       // await App.render()
   },
-}
+} */
 export default App;

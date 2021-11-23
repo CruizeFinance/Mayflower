@@ -20,7 +20,6 @@ const Manage = () => {
         dialogTwoLabel={
           "Your orders will only get executed if the staked balance is more than the required amount at the time of execution."
         }
-        showSetUpLink
       />
     </>
   );
