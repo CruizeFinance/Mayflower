@@ -19,15 +19,10 @@ const App = () => {
       </Typography>
     </div>
   ) : (
-    <MoralisProvider
-      appId={process.env.REACT_APP_APP_ID}
-      serverUrl={process.env.REACT_APP_SERVER_URL}
-    >
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Wrapper />
       </ThemeProvider>
-    </MoralisProvider>
   );
 };
 
