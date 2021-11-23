@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import "../../pages.scss";
 
-const InputField = ({ inputLabel, currency, showMaxTag }) => {
+const InputField = ({ inputLabel, currency, showMaxTag, onChange }) => {
   return (
     <Paper
       sx={{ display: "flex", alignItems: "center", width: 400 }}
@@ -21,6 +21,7 @@ const InputField = ({ inputLabel, currency, showMaxTag }) => {
         inputProps={{ "aria-label": "set price limit" }}
         type="number"
         className={`price-input`}
+        onChange={onChange}
       />
       {showMaxTag ? <div className={`max-label`}>Max</div> : null}
       <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />

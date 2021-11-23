@@ -15,7 +15,11 @@ const Protect = (props) => {
     <>
       <TokenModal />
       <ViewLinks map={VIEW} page={"protect"} />
-      <InputField inputLabel="Price Limit" currency="USDC" />
+      <InputField
+        inputLabel="Price Limit"
+        currency="USDC"
+        onChange={(e) => console.log(e.target.value)}
+      />
       <Box sx={{ width: 400 }}>
         <Slider
           aria-label="Custom marks"
@@ -43,7 +47,9 @@ const Protect = (props) => {
               Add the required ETH balance to confirm the order
             </Typography>
             <Link to="/confirm?type=protect" style={{ textDecoration: "none" }}>
-              <Button width={400} onClick={loadContract}>Hedge ETH</Button>
+              <Button width={400} onClick={loadContract}>
+                Hedge ETH
+              </Button>
             </Link>
           </>
         )}
