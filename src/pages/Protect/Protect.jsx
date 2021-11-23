@@ -6,6 +6,7 @@ import { Button } from "../../components";
 import { InfoBox, InputField, ViewLinks, TokenModal } from "../Sections";
 import { useMoralis } from "react-moralis";
 import { Link } from "react-router-dom";
+import { loadContract } from "../../Blockchain/LoadSmartContract's";
 
 const Protect = (props) => {
   const { isAuthenticated, authenticate } = useMoralis();
@@ -42,7 +43,7 @@ const Protect = (props) => {
               Add the required ETH balance to confirm the order
             </Typography>
             <Link to="/confirm?type=protect" style={{ textDecoration: "none" }}>
-              <Button width={400}>Hedge ETH</Button>
+              <Button width={400} onClick={loadContract}>Hedge ETH</Button>
             </Link>
           </>
         )}
