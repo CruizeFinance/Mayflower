@@ -17,9 +17,10 @@ const InputField = ({ inputLabel, currency, showMaxTag, onChange }) => {
         <Typography variant={"body2"}>{inputLabel}</Typography>
       </IconButton>
       <InputBase
+       
         sx={{ ml: 1, flex: 1 }}
-        inputProps={{ "aria-label": "set price limit" }}
-        type="number"
+        inputProps={{ "aria-label": "set price limit"}}
+        type="number" 
         className={`price-input`}
         onChange={onChange}
       />
