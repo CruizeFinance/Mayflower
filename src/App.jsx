@@ -2,9 +2,15 @@ import { ThemeProvider, CssBaseline, Typography } from "@mui/material";
 import { theme } from "./styles/styles";
 import Wrapper from "./wrapper/Wrapper";
 import "./styles/app.scss";
+import {setBlockData} from "../src/ContextAPI/ContextAPI";
 import { isMobile } from "react-device-detect";
+import { useState } from "react";
 
 const App = () => {
+  // setting up the required data 
+  const [price, setPrice] = useState(0)
+  const [protectedAmount, setProtectedAmount] = useState(0)
+  const [totalLimit, setTotalLimit] = useState(0)
   return isMobile ? (
     <div className={`mobile`}>
       <img
@@ -18,25 +24,13 @@ const App = () => {
       </Typography>
     </div>
   ) : (
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <setBlockData.Provider value={{price,setPrice,protectedAmount, setProtectedAmount,totalLimit, setTotalLimit}}>
         <CssBaseline />
         <Wrapper />
-      </ThemeProvider>
+      </setBlockData.Provider>
+    </ThemeProvider>
   );
 };
 
-/* App = {
-// Web3 stuff
-  loading: false,
-  contracts: {}, 
-    
-  load: async () => {
-      // load app ...
-      console.log('Loading app')
-      // await App.loadWeb3()
-      // await App.loadAccount()
-      // await App.loadContract()
-      // await App.render()
-  },
-} */
 export default App;
