@@ -6,8 +6,6 @@ import { Button } from "../../components";
 import { InfoBox, InputField, ViewLinks, TokenModal } from "../Sections";
 import { useMoralis } from "react-moralis";
 import { Link } from "react-router-dom";
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
 import { loadContract } from "../../Blockchain/LoadSmartContract";
 import { setBlockData } from "../../ContextAPI/ContextAPI";
 import { useContext, useState, useEffect } from "react";
@@ -35,6 +33,7 @@ const Protect = (props) => {
     }
   }, [price, protectedAmount, totalLimit]);
 
+  // if the input filed is not filled 
  const alert  =  ()=>{
  window.alert("Please fill all the information before  Hedge ETH")
 
@@ -48,7 +47,6 @@ const Protect = (props) => {
       <TokenModal />
       <ViewLinks map={VIEW} page={"protect"} />
       <InputField
-        InputProps={{ inputProps: { min: 1 } }}
         inputLabel="Price Limit"
         currency="USDC"
         value={price}

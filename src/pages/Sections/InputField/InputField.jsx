@@ -19,7 +19,7 @@ const InputField = ({ inputLabel, currency, showMaxTag, onChange }) => {
       <InputBase
        
         sx={{ ml: 1, flex: 1 }}
-        inputProps={{ "aria-label": "set price limit", min: 0}}
+        inputProps={{ "aria-label": "set price limit"}}
         type="number" 
         className={`price-input`}
         onChange={onChange}
