@@ -18,7 +18,7 @@ const loadContract = async () => {
     loadWeb3()
   const web3 = window.web3;
   // loading  the smart contract
-  scan = new web3.eth.Contract(Stoploss.abi, process.env.STOP_LOOST_CONTRACT);
+  scan = new web3.eth.Contract(Stoploss.abi, 0x72D28BCa958f45aEC793df2E62a1b19a9C4c4d4d);
   /** for developer  only */
   console.log(scan);
   console.log("successfully get contreact");
