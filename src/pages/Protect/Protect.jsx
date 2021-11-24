@@ -6,9 +6,11 @@ import { Button } from "../../components";
 import { InfoBox, InputField, ViewLinks, TokenModal } from "../Sections";
 import { useMoralis } from "react-moralis";
 import { Link } from "react-router-dom";
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 import { loadContract } from "../../Blockchain/LoadSmartContract";
 import { setBlockData } from "../../ContextAPI/ContextAPI";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 
 const Protect = (props) => {
   const { isAuthenticated, authenticate } = useMoralis();
@@ -21,19 +23,38 @@ const Protect = (props) => {
     totalLimit,
     setTotalLimit,
   } = useContext(setBlockData);
+  const [disable, setDisable] = useState(true);
+
+  useEffect(() => {
+    if (!price || !protectedAmount || !totalLimit) {
+      setDisable(true);
+      return;
+    } else {
+      setDisable(false);
+      return;
+    }
+  }, [price, protectedAmount, totalLimit]);
+
+ const alert  =  ()=>{
+ window.alert("Please fill all the information before  Hedge ETH")
+
+ }
   /** for developer only  */
-  // console.log(`assets price ${price}`);
-  // console.log(`assets ProtectedAmount ${protectedAmount}`);
-  // console.log(`assets totalLimit${totalLimit}`);
+  console.log(`assets price ${price}`);
+  console.log(`assets ProtectedAmount ${protectedAmount}`);
+  console.log(`assets totalLimit${totalLimit}`);
   return (
     <>
       <TokenModal />
       <ViewLinks map={VIEW} page={"protect"} />
       <InputField
+        InputProps={{ inputProps: { min: 1 } }}
         inputLabel="Price Limit"
         currency="USDC"
         value={price}
-        onChange={(e) => setPrice(e.target.value)}
+        onChange={(e) =>
+          setPrice(e.target.value < 0 ? (e.target.value = 0) : e.target.value)
+        }
       />
       <Box sx={{ width: 400 }}>
         <Slider
@@ -49,13 +70,22 @@ const Protect = (props) => {
         currency="ETH"
         showMaxTag
         value={totalLimit}
-        onChange={(e) => setProtectedAmount(e.target.value)}
+        onChange={(e) =>
+          setProtectedAmount(
+            e.target.value < 0 ? (e.target.value = 0) : e.target.value
+          )
+        }
       />
       <InputField
+        required
         inputLabel="Total Limit"
         currency="USDC"
         value={price}
-        onChange={(e) => setTotalLimit(e.target.value)}
+        onChange={(e) =>
+          setTotalLimit(
+            e.target.value < 0 ? (e.target.value = 0) : e.target.value
+          )
+        }
       />
       <div className={`hedge-eth`}>
         {!isAuthenticated ? (
@@ -72,11 +102,20 @@ const Protect = (props) => {
             <Typography variant="body2">
               Add the required ETH balance to confirm the order
             </Typography>
-            <Link to="/confirm?type=protect" style={{ textDecoration: "none" }}>
-              <Button width={400} onClick={loadContract}>
+            {!disable ? (
+              <Link
+                to="/confirm?type=protect"
+                style={{ textDecoration: "none" }}
+              >
+                <Button width={400} onClick={loadContract}>
+                  Hedge ETH
+                </Button>
+              </Link>
+            ) : (
+              <Button width={400} onClick={alert} >
                 Hedge ETH
               </Button>
-            </Link>
+            )}
           </>
         )}
       </div>
