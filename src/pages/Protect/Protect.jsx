@@ -7,10 +7,24 @@ import { InfoBox, InputField, ViewLinks, TokenModal } from "../Sections";
 import { useMoralis } from "react-moralis";
 import { Link } from "react-router-dom";
 import { loadContract } from "../../Blockchain/LoadSmartContract";
+import { setBlockData } from "../../ContextAPI/ContextAPI";
+import { useContext } from "react";
 
 const Protect = (props) => {
   const { isAuthenticated, authenticate } = useMoralis();
-
+  // getting context
+  const {
+    price,
+    setPrice,
+    protectedAmount,
+    setProtectedAmount,
+    totalLimit,
+    setTotalLimit,
+  } = useContext(setBlockData);
+  /** for developer only  */
+  // console.log(`assets price ${price}`);
+  // console.log(`assets ProtectedAmount ${protectedAmount}`);
+  // console.log(`assets totalLimit${totalLimit}`);
   return (
     <>
       <TokenModal />
@@ -18,7 +32,8 @@ const Protect = (props) => {
       <InputField
         inputLabel="Price Limit"
         currency="USDC"
-        onChange={(e) => console.log(e.target.value)}
+        value={price}
+        onChange={(e) => setPrice(e.target.value)}
       />
       <Box sx={{ width: 400 }}>
         <Slider
@@ -29,8 +44,19 @@ const Protect = (props) => {
           marks={MARKS}
         />
       </Box>
-      <InputField inputLabel="Protected Amount" currency="ETH" showMaxTag />
-      <InputField inputLabel="Total Limit" currency="USDC" />
+      <InputField
+        inputLabel="Protected Amount"
+        currency="ETH"
+        showMaxTag
+        value={totalLimit}
+        onChange={(e) => setProtectedAmount(e.target.value)}
+      />
+      <InputField
+        inputLabel="Total Limit"
+        currency="USDC"
+        value={price}
+        onChange={(e) => setTotalLimit(e.target.value)}
+      />
       <div className={`hedge-eth`}>
         {!isAuthenticated ? (
           <>
