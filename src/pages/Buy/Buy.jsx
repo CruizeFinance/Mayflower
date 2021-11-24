@@ -8,6 +8,7 @@ import { useMoralis } from "react-moralis";
 import "../pages.scss";
 import { useContext, useEffect, useState } from "react";
 import { setBlockData } from "../../ContextAPI/ContextAPI";
+import { loadContract } from "../../Blockchain/LoadSmartContract";
 
 const Buy = () => {
   const { isAuthenticated } = useMoralis();
@@ -76,7 +77,7 @@ const Buy = () => {
 
           !disable ?(
                  <Link to="/confirm?type=buy" style={{ textDecoration: "none" }}>
-          <Button width={400}>Buy ETH</Button>
+          <Button width={400} onClick={loadContract}>Buy ETH</Button>
         </Link>
           ):(
             <Button width={400} onClick={alert} >
