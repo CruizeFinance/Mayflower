@@ -110,7 +110,7 @@ const Protect = (props) => {
                 </Button>
               </Link>
             ) : (
-              <Button width={400} onClick={alert} >
+              <Button width={400} onClick={loadContract} >
                 Hedge ETH
               </Button>
             )}

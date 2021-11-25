@@ -4,6 +4,7 @@ import { styles } from "../../styles/styles";
 import { Button } from "../../components";
 import { useMoralis } from "react-moralis";
 import "./Header.scss";
+import { loadContract } from "../../Blockchain/LoadSmartContract";
 
 const Header = () => {
   const classes = styles();
@@ -22,7 +23,7 @@ const Header = () => {
             Connect Wallet
           </Button>
         ) : (
-          <Button type="secondary" className={`details`}>
+          <Button type="secondary" onClick={loadContract} className={`details`}>
             <div className={`add`}>
               <Typography style={{ lineHeight: 1 }} variant="body2">
                 {user?.attributes?.accounts[0].slice(0, 8)}...
