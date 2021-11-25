@@ -33,15 +33,14 @@ const Protect = (props) => {
     }
   }, [price, protectedAmount, totalLimit]);
 
-  // if the input filed is not filled 
- const alert  =  ()=>{
- window.alert("Please fill all the information before  Hedge ETH")
-
- }
+  // if the input filed is not filled
+  const alert = () => {
+    window.alert("Please fill all the information before  Hedge ETH");
+  };
   /** for developer only  */
-  console.log(`assets price ${price}`);
-  console.log(`assets ProtectedAmount ${protectedAmount}`);
-  console.log(`assets totalLimit${totalLimit}`);
+  // console.log(`assets price ${price}`);
+  // console.log(`assets ProtectedAmount ${protectedAmount}`);
+  // console.log(`assets totalLimit${totalLimit}`);
   return (
     <>
       <TokenModal />
@@ -110,7 +109,7 @@ const Protect = (props) => {
                 </Button>
               </Link>
             ) : (
-              <Button width={400} onClick={alert} >
+              <Button width={400} onClick={alert}>
                 Hedge ETH
               </Button>
             )}
