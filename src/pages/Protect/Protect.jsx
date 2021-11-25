@@ -38,9 +38,9 @@ const Protect = (props) => {
     window.alert("Please fill all the information before  Hedge ETH");
   };
   /** for developer only  */
-  console.log(`assets price ${price}`);
-  console.log(`assets ProtectedAmount ${protectedAmount}`);
-  console.log(`assets totalLimit${totalLimit}`);
+  // console.log(`assets price ${price}`);
+  // console.log(`assets ProtectedAmount ${protectedAmount}`);
+  // console.log(`assets totalLimit${totalLimit}`);
   return (
     <>
       <TokenModal />

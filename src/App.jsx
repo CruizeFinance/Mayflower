@@ -2,15 +2,16 @@ import { ThemeProvider, CssBaseline, Typography } from "@mui/material";
 import { theme } from "./styles/styles";
 import Wrapper from "./wrapper/Wrapper";
 import "./styles/app.scss";
-import {setBlockData} from "../src/ContextAPI/ContextAPI";
+import { setBlockData } from "../src/ContextAPI/ContextAPI";
 import { isMobile } from "react-device-detect";
 import { useState } from "react";
 
 const App = () => {
-  // setting up the required data 
-  const [price, setPrice] = useState(0)
-  const [protectedAmount, setProtectedAmount] = useState(0)
-  const [totalLimit, setTotalLimit] = useState(0)
+  // setting up the required data
+  const [assetsAddress, setAssetsAddress] = useState("eth");
+  const [price, setPrice] = useState(0);
+  const [protectedAmount, setProtectedAmount] = useState(0);
+  const [totalLimit, setTotalLimit] = useState(0);
   return isMobile ? (
     <div className={`mobile`}>
       <img
@@ -25,7 +26,18 @@ const App = () => {
     </div>
   ) : (
     <ThemeProvider theme={theme}>
-      <setBlockData.Provider value={{price,setPrice,protectedAmount, setProtectedAmount,totalLimit, setTotalLimit}}>
+      <setBlockData.Provider
+        value={{
+          price,
+          setPrice,
+          protectedAmount,
+          setProtectedAmount,
+          totalLimit,
+          setTotalLimit,
+          assetsAddress,
+          setAssetsAddress,
+        }}
+      >
         <CssBaseline />
         <Wrapper />
       </setBlockData.Provider>
