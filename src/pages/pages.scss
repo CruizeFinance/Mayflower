@@ -21,9 +21,11 @@
     }
   }
 }
+.slider>span {
+  color: var(--gray);
+}
 .input-field {
-  box-shadow: none;
-  border: 1px solid;
+  border: 1px solid var(--light-gray);
   border-radius: 10px;
   .price-input {
     input {
@@ -36,6 +38,7 @@
     background: var(--background);
     margin-left: 2px;
     font-size: 14px;
+    cursor: pointer;
   }
 }
 .hedge-eth {

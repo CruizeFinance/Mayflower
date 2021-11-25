@@ -19,7 +19,7 @@ const Protect = (props) => {
     protectedAmount,
     setProtectedAmount,
     totalLimit,
-    setTotalLimit,
+    setTotalLimit
   } = useContext(setBlockData);
   const [disable, setDisable] = useState(true);
 
@@ -33,11 +33,10 @@ const Protect = (props) => {
     }
   }, [price, protectedAmount, totalLimit]);
 
-  // if the input filed is not filled 
- const alert  =  ()=>{
- window.alert("Please fill all the information before  Hedge ETH")
-
- }
+  // if the input filed is not filled
+  const alert = () => {
+    window.alert("Please fill all the information before  Hedge ETH");
+  };
   /** for developer only  */
   console.log(`assets price ${price}`);
   console.log(`assets ProtectedAmount ${protectedAmount}`);
@@ -54,7 +53,7 @@ const Protect = (props) => {
           setPrice(e.target.value < 0 ? (e.target.value = 0) : e.target.value)
         }
       />
-      <Box sx={{ width: 400 }}>
+      <Box sx={{ width: 400 }} className={`slider`}>
         <Slider
           aria-label="Custom marks"
           defaultValue={0}
@@ -88,7 +87,10 @@ const Protect = (props) => {
       <div className={`hedge-eth`}>
         {!isAuthenticated ? (
           <>
-            <Typography variant="body2">
+            <Typography
+              variant="body2"
+              style={{ color: "var(--gray)", marginBottom: "10px" }}
+            >
               Connect your wallet to continue
             </Typography>
             <Button width={400} onClick={authenticate}>
@@ -97,7 +99,10 @@ const Protect = (props) => {
           </>
         ) : (
           <>
-            <Typography variant="body2">
+            <Typography
+              variant="body2"
+              style={{ color: "var(--gray)", marginBottom: "10px" }}
+            >
               Add the required ETH balance to confirm the order
             </Typography>
             {!disable ? (
@@ -110,14 +115,14 @@ const Protect = (props) => {
                 </Button>
               </Link>
             ) : (
-              <Button width={400} onClick={alert} >
+              <Button width={400} onClick={alert}>
                 Hedge ETH
               </Button>
             )}
           </>
         )}
       </div>
-      <InfoBox showSetUpLink={isAuthenticated} type="Protect" />
+      <InfoBox showSetUpLink type="Protect" />
     </>
   );
 };

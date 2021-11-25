@@ -36,7 +36,7 @@ const InfoBox = ({ hideDialogOne, dialogTwoLabel, showSetUpLink, type }) => {
       ) : null}
       <div className={`dialog`}>
         <Typography variant={"subtitle1"}>
-          {dialogTwoLabel || "Looking to buy a dip at price drops"}
+          {dialogTwoLabel || "Looking to buy a dip at price drops?"}
         </Typography>
         {showSetUpLink ? (
           <Link

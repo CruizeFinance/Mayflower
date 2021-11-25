@@ -7,7 +7,7 @@
   .content {
     width: 550px;
     height: 100%;
-    padding: 10px;
+    padding: 20px;
     border-radius: 10px;
     @include flex(column, center, center, 20px);
   }

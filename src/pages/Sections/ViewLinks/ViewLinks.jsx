@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useMoralis } from "react-moralis";
 import { Link } from "react-router-dom";
 import "../../pages.scss";
@@ -5,19 +6,37 @@ import "../../pages.scss";
 const ViewLinks = ({ map, page }) => {
   const { isAuthenticated } = useMoralis();
 
+  const [hashMap, setHashMap] = useState(map);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      setHashMap({
+        ...map,
+        ...{
+          manage: {
+            label: "Manage",
+            route: "/manage"
+          }
+        }
+      });
+    }
+  }, [isAuthenticated]);
+
   return (
     <div className={`view-links`}>
-      {Object.keys(map).map((view, index) => (
+      {Object.keys(hashMap).map((view, index) => (
         <Link
-          to={isAuthenticated ? map[view].route : "/"}
+          to={hashMap[view].route}
           key={`${view} - ${index}`}
           className={`${view === page?.toLowerCase() ? "active" : ""}`}
           style={{
             textDecoration: "none",
-            cursor: isAuthenticated ? "pointer" : "not-allowed"
+            cursor: "pointer",
+            fontWeight: "bold",
+            letterSpacing: 1
           }}
         >
-          {map[view].label}
+          {hashMap[view].label}
         </Link>
       ))}
     </div>

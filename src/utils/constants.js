@@ -29,10 +29,6 @@ export const VIEW = {
   buy: {
     label: "Buy",
     route: "/buy"
-  },
-  manage: {
-    label: "Manage",
-    route: "/manage"
   }
 };
 

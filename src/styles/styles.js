@@ -21,6 +21,7 @@ export const styles = makeStyles({
 export const theme = createTheme({
   typography: {
     allVariants: {
+      fontFamily: "Cabin",
       color: "#23262F"
     }
   },
