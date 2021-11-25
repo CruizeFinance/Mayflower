@@ -1,4 +1,9 @@
-# Getting Started with Create React App
+# Mayflower
+is a potent vessel that guards your crypto riches from the impact of every tidal attack that comes our way.
+
+
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
