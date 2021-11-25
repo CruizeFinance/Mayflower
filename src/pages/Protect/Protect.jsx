@@ -6,12 +6,17 @@ import { Button } from "../../components";
 import { InfoBox, InputField, ViewLinks, TokenModal } from "../Sections";
 import { useMoralis } from "react-moralis";
 import { Link } from "react-router-dom";
-import { loadContract } from "../../Blockchain/LoadSmartContract";
+//import { loadContract } from "../../Blockchain/LoadSmartContract";
 import { setBlockData } from "../../ContextAPI/ContextAPI";
 import { useContext, useState, useEffect } from "react";
+//import useStoreApi from './storeApi';
+//import { depositStop, approveERC } from './protectSC';
+
 
 const Protect = (props) => {
-  const { isAuthenticated, authenticate } = useMoralis();
+  //const {address, blance, message} = useStoreApi();
+  const { isAuthenticated, authenticate, user } = useMoralis();
+  const address = user?.attributes?.accounts[0];
   // getting context
   const {
     price,
@@ -42,6 +47,8 @@ const Protect = (props) => {
   console.log(`assets price ${price}`);
   console.log(`assets ProtectedAmount ${protectedAmount}`);
   console.log(`assets totalLimit${totalLimit}`);
+  console.log(protectedAmount.toString());
+  //console.log(user.attributes.accounts[0]);
   return (
     <>
       <TokenModal />
@@ -105,12 +112,12 @@ const Protect = (props) => {
                 to="/confirm?type=protect"
                 style={{ textDecoration: "none" }}
               >
-                <Button width={400} onClick={loadContract}>
+                <Button width={400} onClick={null}>
                   Hedge ETH
                 </Button>
               </Link>
             ) : (
-              <Button width={400} onClick={loadContract} >
+              <Button width={400} onClick={null} >
                 Hedge ETH
               </Button>
             )}
@@ -118,7 +125,9 @@ const Protect = (props) => {
         )}
       </div>
       <InfoBox showSetUpLink={isAuthenticated} type="Protect" />
+      <button onClick = {null}> approve Spend WETH </button>
     </>
+   
   );
 };
 

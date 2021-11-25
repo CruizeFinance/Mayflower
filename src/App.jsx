@@ -6,6 +6,7 @@ import {setBlockData} from "../src/ContextAPI/ContextAPI";
 import { isMobile } from "react-device-detect";
 import { useState } from "react";
 
+
 const App = () => {
   // setting up the required data 
   const [price, setPrice] = useState(0)
