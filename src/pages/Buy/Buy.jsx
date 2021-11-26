@@ -46,7 +46,7 @@ const Buy = () => {
       <TokenModal />
       <ViewLinks map={VIEW} page={"buy"} />
       <InputField
-        inputLabel="Price Limit"
+        inputLabel="Buy Prices"
         currency="USDC"
         onChange={(e) =>
           setPrice(e.target.value < 0 ? (e.target.value = 0) : e.target.value)
@@ -62,7 +62,7 @@ const Buy = () => {
         />
       </Box>
       <InputField
-        inputLabel="Protected Amount"
+        inputLabel="Buy Amount"
         currency="ETH"
         showMaxTag
         onChange={(e) =>

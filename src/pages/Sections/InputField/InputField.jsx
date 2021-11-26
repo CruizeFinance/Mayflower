@@ -24,9 +24,9 @@ const InputField = ({ inputLabel, currency, showMaxTag, onChange }) => {
       }}
       className={`input-field`}
     >
-      <IconButton sx={{ p: "10px" }} aria-label="menu">
+      <div style={{ padding: "10px" }}>
         <Typography variant={"body2"}>{inputLabel}</Typography>
-      </IconButton>
+      </div>
       <InputBase
         sx={{ ml: 1, flex: 1 }}
         inputProps={{ "aria-label": "set price limit" }}
@@ -42,9 +42,9 @@ const InputField = ({ inputLabel, currency, showMaxTag, onChange }) => {
         </div>
       ) : null}
       <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-      <IconButton color="primary" sx={{ p: "10px" }} aria-label="directions">
+      <div style={{ padding: "10px" }}>
         <Typography variant="subtitle1">{currency}</Typography>
-      </IconButton>
+      </div>
     </Paper>
   );
 };
