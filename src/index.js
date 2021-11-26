@@ -5,6 +5,7 @@ import reportWebVitals from "./reportWebVitals";
 import "./styles/index.scss";
 
 import { MoralisProvider } from "react-moralis";
+import { StoreProvider } from "./ContextAPI/Store";
 
 // we need to hard code appId and serverURL
 ReactDOM.render(
@@ -12,7 +13,9 @@ ReactDOM.render(
     appId="8PTpuPJlBziISOTScCHGfrKiunyea2t1Cr2PmWhi"
     serverUrl="https://inmtlgdrn2u9.moralishost.com:2053/server"
   >
-    <App />
+    <StoreProvider>
+      <App />
+    </StoreProvider>
   </MoralisProvider>,
   document.getElementById("root")
 );

@@ -2,15 +2,15 @@ import { MenuItem, Select } from "@mui/material";
 import { Sprite } from "../../../components";
 import { useContext, useState } from "react";
 import { ASSETS_VALUE } from "../../../utils/constants";
-import { setBlockData } from "../../../ContextAPI/ContextAPI";
+
 
 const TokenModal = () => {
   const [tokenValue, setTokenValue] = useState("eth");
-  const { setAssetsAddress, assetsAddress } = useContext(setBlockData);
+
   // getting value from the Menuitem's
   const handleClick = (e) => {
-    const { myValue } = e.currentTarget.dataset;
-    setAssetsAddress(ASSETS_VALUE[myValue]);
+    // const { myValue } = e.currentTarget.dataset;
+    // setAssetsAddress(ASSETS_VALUE[myValue]);
   };
   // comment out this to see reuslt  |-->
   // console.log(assetsAddress);
