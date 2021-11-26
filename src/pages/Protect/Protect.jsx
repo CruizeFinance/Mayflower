@@ -19,7 +19,9 @@ const Protect = (props) => {
     protectedAmount,
     setProtectedAmount,
     totalLimit,
-    setTotalLimit
+    setTotalLimit,
+    Contract,
+    setContract,
   } = useContext(setBlockData);
   const [disable, setDisable] = useState(true);
 
@@ -33,14 +35,29 @@ const Protect = (props) => {
     }
   }, [price, protectedAmount, totalLimit]);
 
-  // if the input filed is not filled
   const alert = () => {
     window.alert("Please fill all the information before  Hedge ETH");
   };
-  /** for developer only  */
-  // console.log(`assets price ${price}`);
-  // console.log(`assets ProtectedAmount ${protectedAmount}`);
-  // console.log(`assets totalLimit${totalLimit}`);
+
+  const loadSc = async () => {
+    loadERC20Contract(); //approve user for transfer token
+
+    let contract = await loadContract(); // loding main contract
+
+    setContract(contract); // setting to contract so that we can use that with the help of context api
+  };
+  console.log(Contract);
+  // step to reproduce error 
+  /** Enter price = 5000  Enter 0.1 eth in to protecte Amount , and 500 in total limit and click on the 
+   *   Hedge ETH button first pop will show to approve the user token  , and now you will redirected to the confirm page
+   * click to confirm  button another pop up open   you will see error above the confirm button in the meta mask
+   * 
+   * *************very important**********************************
+   *  before doing all of this things please check out the all commnet that i write for better understandig 
+   * once you read all the comment then go to this site https://app.uniswap.org/#/swap and swap 0.1 eth to Weth to work with smart contract 
+   * now all is done now you can do above step to reproduce the error  
+   *  
+   */
   return (
     <>
       <TokenModal />
@@ -110,7 +127,7 @@ const Protect = (props) => {
                 to="/confirm?type=protect"
                 style={{ textDecoration: "none" }}
               >
-                <Button width={400} onClick={loadContract}>
+                <Button width={400} onClick={loadSc}>
                   Hedge ETH
                 </Button>
               </Link>

@@ -12,6 +12,7 @@ const App = () => {
   const [price, setPrice] = useState(0);
   const [protectedAmount, setProtectedAmount] = useState(0);
   const [totalLimit, setTotalLimit] = useState(0);
+  const [Contract, setContract] = useState()
   return isMobile ? (
     <div className={`mobile`}>
       <img
@@ -35,7 +36,7 @@ const App = () => {
           totalLimit,
           setTotalLimit,
           assetsAddress,
-          setAssetsAddress,
+          setAssetsAddress,Contract, setContract
         }}
       >
         <CssBaseline />
