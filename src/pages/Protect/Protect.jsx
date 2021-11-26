@@ -6,7 +6,7 @@ import { Button } from "../../components";
 import { InfoBox, InputField, ViewLinks, TokenModal } from "../Sections";
 import { useMoralis } from "react-moralis";
 import { Link } from "react-router-dom";
-import { loadContract } from "../../Blockchain/LoadSmartContract";
+import { loadContract, loadERC20Contract } from "../../Blockchain/LoadSmartContract";
 import { setBlockData } from "../../ContextAPI/ContextAPI";
 import { useContext, useState, useEffect } from "react";
 
