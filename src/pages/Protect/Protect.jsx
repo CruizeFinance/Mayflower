@@ -24,7 +24,7 @@ const Protect = (props) => {
     setContract,
   } = useContext(setBlockData);
   const [disable, setDisable] = useState(true);
-
+let ans = 0;
   useEffect(() => {
     if (!price || !protectedAmount || !totalLimit) {
       setDisable(true);
