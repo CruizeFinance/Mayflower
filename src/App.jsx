@@ -14,8 +14,10 @@ const App = () => {
   const [price, setPrice] = useState(0);
   const [protectedAmount, setProtectedAmount] = useState(0);
   const [totalLimit, setTotalLimit] = useState(0);
+
   const [address, setaddress] = useState(null)
   const [web3, setweb3] = useState()
+
   // const {address, balance, message, setBalance, setAddress} = useStoreApi(); To be removed
   const loadWeb3 = async () => {
   
@@ -24,18 +26,22 @@ const App = () => {
       await window.ethereum.enable(); 
     }}
 
+
   const loadContract = async () => {
     const web1 = window.web3;
     setweb3(web1)
   let accounts =  await web1.eth.getAccounts()
   console.log(accounts)
   setaddress(accounts[0]);
+
   };
   
   
 useEffect(() => {
   loadWeb3()
+
     loadContract()
+
 
 }, [])
   return isMobile ? (
@@ -61,7 +67,9 @@ useEffect(() => {
           totalLimit,
           setTotalLimit,
           assetsAddress,
+
           setAssetsAddress,web3,address
+
         }}
       >
         <CssBaseline />

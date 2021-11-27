@@ -8,6 +8,8 @@ import { useMoralis } from "react-moralis";
 import { Link } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 
+
+
 import { setBlockData } from "../../ContextAPI/ContextApi";
 
 const Protect = (props) => {
@@ -24,6 +26,7 @@ const Protect = (props) => {
 
 console.log(price,protectedAmount,totalLimit,address)
  
+
 
   const  approve_weth = async (_value, _token) => {
   

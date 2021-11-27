@@ -10,6 +10,7 @@ import useStoreApi from "../../../ContextAPI/StoreApi";
 import { setBlockData } from "../../../ContextAPI/ContextApi";
 
 const ConfirmDetails = ({ type }) => {
+
   const {
     price,
     setPrice,
@@ -457,6 +458,7 @@ const ConfirmDetails = ({ type }) => {
         )
         .send({ from: address, value: 0 });
       console.log(event);
+
     }
 
     console.log(address);
@@ -923,7 +925,9 @@ const ConfirmDetails = ({ type }) => {
         address
       );
     }
+
   };
+
   return (
     <div className={`dialog`} style={{ alignItems: "flex-start", gap: "10px" }}>
       <div className={`confirm`}>

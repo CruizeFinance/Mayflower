@@ -16,6 +16,7 @@ const RedeemBox = () => {
   } = useContext(setBlockData);
  
  
+
   const viewBalances = async(addressOfUser) => {
     const abi3 = [
       {
@@ -866,9 +867,7 @@ const RedeemBox = () => {
   } 
 
   const redeem =  async (e)=>{
-  
     withdraw(address)
-
   }
 
   return (

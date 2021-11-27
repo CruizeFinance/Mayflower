@@ -23,11 +23,13 @@ const Buy = () => {
     setTotalLimit,web3,address
   } = useContext(setBlockData);
   
+
  
   // if the input filed is not filled
   const alert = () => {
     window.alert("Please fill all the information before  Hedge ETH");
   };
+
     const  approve_usdc = async (_value, _token, addressOfUser) => {
     const abi2 = [
       {
@@ -267,6 +269,7 @@ const Buy = () => {
     // approve_usdc(1000000, '0xe22da380ee6B445bb8273C81944ADEB6E8450422', address)
     approve_usdc(price, '0xe22da380ee6B445bb8273C81944ADEB6E8450422', address)
   }
+
 
 
 
