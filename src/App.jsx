@@ -7,15 +7,9 @@ import { isMobile } from "react-device-detect";
 import { useEffect, useState } from "react";
 import useStoreApi from "./ContextAPI/StoreApi";
 import Web3 from "web3";
-import { setBlockData } from "./ContextAPI/ContextApi";
 
 const App = () => {
-  const [assetsAddress, setAssetsAddress] = useState("eth");
-  const [price, setPrice] = useState(0);
-  const [protectedAmount, setProtectedAmount] = useState(0);
-  const [totalLimit, setTotalLimit] = useState(0);
-
-  // const {address, balance, message, setBalance, setAddress} = useStoreApi(); To be removed
+  const {address, balance, message, setBalance, setAddress} = useStoreApi();
   const loadWeb3 = async () => {
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum);
@@ -71,21 +65,10 @@ useEffect(() => {
     </div>
   ) : (
     <ThemeProvider theme={theme}>
-      <setBlockData.Provider
-        value={{
-          price,
-          setPrice,
-          protectedAmount,
-          setProtectedAmount,
-          totalLimit,
-          setTotalLimit,
-          assetsAddress,
-          setAssetsAddress,
-        }}
-      >
+      
         <CssBaseline />
         <Wrapper />
-      </setBlockData.Provider>
+      
     </ThemeProvider>
   );
 };
