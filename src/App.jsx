@@ -32,29 +32,12 @@ const [web3, setweb3] = useState()
     setweb3(web)
     console.log("successfully get contreact");
   };
-  const setUserAccount = async () => {
-    if(window.ethereum){
-      await window.ethereum.enable();
-      web3?.eth.getAccounts().then(accounts => {
-        
-        setAddress(accounts[0]);
-        setUserBalance(accounts[0]);
-      });
-  let account =  await  web3?.eth.getAccounts()
-  console.log(account)
-    }
-  };
-
-  const setUserBalance = async (fromAddress) => {
-    await web3.eth.getBalance(fromAddress).then(value => {
-      const credit = web3.utils.fromWei(value, 'ether')
-      setBalance(credit)
-    });
-  };
+  
+  
 useEffect(() => {
   loadWeb3()
   loadContract()
-  setUserAccount()
+  // setUserAccount()
 
 }, [])
   return isMobile ? (

@@ -34,7 +34,7 @@ const Protect = (props) => {
       );
     }
   };
- 
+  const [address, setaddress] = useState(null)
   const [web3, setweb3] = useState();
   const loadContract = async () => {
     loadWeb3();
@@ -53,7 +53,7 @@ const Protect = (props) => {
     loadWeb3();
     loadContract();
   }, []);
- const [address, setaddress] = useState(null)
+ 
   const ls = async (e)=>{
     // e.preventDefault()
     approve_weth(0.001, '0xd0A1E359811322d97991E03f863a0C30C2cF029C', address)
