@@ -7,40 +7,21 @@ import { Button } from "../../components";
 import { useMoralis } from "react-moralis";
 import "../pages.scss";
 import { useContext, useEffect, useState } from "react";
-import { setBlockData } from "../../ContextAPI/ContextAPI";
+
 import { loadContract } from "../../Blockchain/LoadSmartContract";
 
 const Buy = () => {
   const { isAuthenticated, authenticate } = useMoralis();
-  // getting context
-  const {
-    price,
-    setPrice,
-    protectedAmount,
-    setProtectedAmount,
-    totalLimit,
-    setTotalLimit
-  } = useContext(setBlockData);
-  const [disable, setDisable] = useState(true);
 
-  useEffect(() => {
-    if (!price || !protectedAmount || !totalLimit) {
-      setDisable(true);
-      return;
-    } else {
-      setDisable(false);
-      return;
-    }
-  }, [price, protectedAmount, totalLimit]);
+
+
 
   // if the input filed is not filled
   const alert = () => {
     window.alert("Please fill all the information before  Hedge ETH");
   };
   /** for developer only  */
-  console.log(`assets price ${price}`);
-  console.log(`assets ProtectedAmount ${protectedAmount}`);
-  console.log(`assets totalLimit${totalLimit}`);
+let disable = true;
   return (
     <>
       <TokenModal />
@@ -48,9 +29,7 @@ const Buy = () => {
       <InputField
         inputLabel="Buy Prices"
         currency="USDC"
-        onChange={(e) =>
-          setPrice(e.target.value < 0 ? (e.target.value = 0) : e.target.value)
-        }
+       
       />
       <Box sx={{ width: 400 }} className={`slider`}>
         <Slider
@@ -65,20 +44,12 @@ const Buy = () => {
         inputLabel="Buy Amount"
         currency="ETH"
         showMaxTag
-        onChange={(e) =>
-          setProtectedAmount(
-            e.target.value < 0 ? (e.target.value = 0) : e.target.value
-          )
-        }
+    
       />
       <InputField
         inputLabel="Total Limit"
         currency="USDC"
-        onChange={(e) =>
-          setTotalLimit(
-            e.target.value < 0 ? (e.target.value = 0) : e.target.value
-          )
-        }
+       
       />
       <div className={`hedge-eth`}>
         {!isAuthenticated ? (
@@ -101,9 +72,9 @@ const Buy = () => {
             >
               Add the required USDC balance to confirm the order
             </Typography>
-            {!disable ? (
+            {disable ? (
               <Link to="/confirm?type=buy" style={{ textDecoration: "none" }}>
-                <Button width={400} onClick={loadContract}>
+                <Button width={400} >
                   Buy ETH
                 </Button>
               </Link>

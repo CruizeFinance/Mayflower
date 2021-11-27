@@ -28,9 +28,8 @@ export const VIEW = {
   },
   buy: {
     label: "Buy",
-    route: "/buy"
-  }
-
+    route: "/buy",
+  },
 };
 
 export const ACTIVITY_HISTORY = [
@@ -70,7 +69,7 @@ export const ACTIVITY_HISTORY = [
 export const ASSETS_VALUE = [
   // we can put assets address on the place of assetsname
 
-  "eth",
+  "0xd0A1E359811322d97991E03f863a0C30C2cF029C",
 
   "link",
 

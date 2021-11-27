@@ -3,16 +3,19 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./styles/index.scss";
-import dotenv from "dotenv";
+
 import { MoralisProvider } from "react-moralis";
-dotenv.config();
+import { StoreProvider } from "./ContextAPI/Store";
+
 // we need to hard code appId and serverURL
 ReactDOM.render(
   <MoralisProvider
     appId="8PTpuPJlBziISOTScCHGfrKiunyea2t1Cr2PmWhi"
     serverUrl="https://inmtlgdrn2u9.moralishost.com:2053/server"
   >
-    <App />
+    <StoreProvider>
+      <App />
+    </StoreProvider>
   </MoralisProvider>,
   document.getElementById("root")
 );

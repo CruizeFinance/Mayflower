@@ -1,7 +1,4 @@
 import Web3 from "web3";
-import Stoploss from "./Abis/Stoploss.json";
-
-let scan;
 const loadWeb3 = async () => {
   if (window.ethereum) {
     window.web3 = new Web3(window.ethereum);
@@ -14,13 +11,15 @@ const loadWeb3 = async () => {
     );
   }
 };
+
 const loadContract = async () => {
   loadWeb3();
-  const web3 = window.web3;
+  const web = window.web3;
   // loading  the smart contract
-  scan = new web3.eth.Contract(Stoploss.abi, process.env.STOP_LOOST_CONTRACT);
+  // scan = new web3.eth.Contract(Stoploss.abi, process.env.STOP_LOOST_CONTRACT);
   /** for developer  only */
-  console.log(scan);
+  // console.log(scan);
   console.log("successfully get contreact");
+  return web
 };
-export { loadContract, loadWeb3 };
+export { loadContract, loadWeb3};
