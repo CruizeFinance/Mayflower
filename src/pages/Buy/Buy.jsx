@@ -9,12 +9,18 @@ import "../pages.scss";
 import { useContext, useEffect, useState } from "react";
 
 import { loadContract } from "../../Blockchain/LoadSmartContract";
+import { setBlockData } from "../../ContextAPI/ContextApi";
 
 const Buy = () => {
   const { isAuthenticated, authenticate } = useMoralis();
-
-
-
+  const {
+    price,
+    setPrice,
+    protectedAmount,
+    setProtectedAmount,
+    totalLimit,
+    setTotalLimit
+  } = useContext(setBlockData);
 
   // if the input filed is not filled
   const alert = () => {
@@ -29,7 +35,9 @@ let disable = true;
       <InputField
         inputLabel="Buy Prices"
         currency="USDC"
-       
+        onChange={(e) =>
+          setPrice(e.target.value < 0 ? (e.target.value = 0) : e.target.value)
+        }
       />
       <Box sx={{ width: 400 }} className={`slider`}>
         <Slider
@@ -44,12 +52,20 @@ let disable = true;
         inputLabel="Buy Amount"
         currency="ETH"
         showMaxTag
-    
+        onChange={(e) =>
+          setProtectedAmount(
+            e.target.value < 0 ? (e.target.value = 0) : e.target.value
+          )
+        }
       />
       <InputField
         inputLabel="Total Limit"
         currency="USDC"
-       
+        onChange={(e) =>
+          setTotalLimit(
+            e.target.value < 0 ? (e.target.value = 0) : e.target.value
+          )
+        }
       />
       <div className={`hedge-eth`}>
         {!isAuthenticated ? (
