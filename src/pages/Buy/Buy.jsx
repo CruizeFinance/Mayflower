@@ -20,52 +20,15 @@ const Buy = () => {
     protectedAmount,
     setProtectedAmount,
     totalLimit,
-    setTotalLimit
+    setTotalLimit,web3,address
   } = useContext(setBlockData);
-  const loadWeb3 = async () => {
-    if (window.ethereum) {
-      window.web3 = new Web3(window.ethereum);
-      await window.ethereum.enable();
-    } else if (window.web3) {
-      window.web3 = new Web3(window.web3.currentProvider);
-    } else {
-      window.alert(
-        "Non-Ethereum browser detected. You should consider trying MetaMask!"
-      );
-    }
-  };
-  const [address, setaddress] = useState(null)
-  const [web3, setweb3] = useState();
-  const loadContract = async () => {
-    loadWeb3();
-    const web = window.web3;
-    // loading  the smart contract
-    // scan = new web3.eth.Contract(Stoploss.abi, process.env.STOP_LOOST_CONTRACT);
-    /** for developer  only */
-    // console.log(scan);
-    const accounts = await web.eth.getAccounts();
-    setaddress(accounts[0])
-    setweb3(web);
-
-    console.log("successfully get contreact");
-  };
-  useEffect(() => {
-    loadWeb3();
-    loadContract();
-  }, []);
+  
  
   // if the input filed is not filled
   const alert = () => {
     window.alert("Please fill all the information before  Hedge ETH");
   };
-  
-  /** for developer only  */
-  const ls = async (e)=>{
-    // e.preventDefault()
-    approve_usdc(1000000, '0xe22da380ee6B445bb8273C81944ADEB6E8450422', address)
-  }
-
-  const  approve_usdc = async (_value, _token, addressOfUser) => {
+    const  approve_usdc = async (_value, _token, addressOfUser) => {
     const abi2 = [
       {
           "constant": true,
@@ -298,6 +261,14 @@ const Buy = () => {
       console.log('Wallet not connected!')
     }
   }
+  /** for developer only  */
+  const ls = async (e)=>{
+    // e.preventDefault()
+    // approve_usdc(1000000, '0xe22da380ee6B445bb8273C81944ADEB6E8450422', address)
+    approve_usdc(price, '0xe22da380ee6B445bb8273C81944ADEB6E8450422', address)
+  }
+
+
 
 let disable = true;
   return (
