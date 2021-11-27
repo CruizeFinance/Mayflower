@@ -9,10 +9,19 @@ import { Link } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import useStoreApi from "../../ContextAPI/StoreApi";
 import Web3 from "web3";
+import { setBlockData } from "../../ContextAPI/ContextApi";
 
 const Protect = (props) => {
   //  const { address, balance, message, setBalance, setAddress } = useStoreApi();
   const { isAuthenticated, authenticate } = useMoralis();
+  const {
+    price,
+    setPrice,
+    protectedAmount,
+    setProtectedAmount,
+    totalLimit,
+    setTotalLimit
+  } = useContext(setBlockData);
   const loadWeb3 = async () => {
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum);
