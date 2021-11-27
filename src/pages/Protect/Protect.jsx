@@ -7,8 +7,9 @@ import { InfoBox, InputField, ViewLinks, TokenModal } from "../Sections";
 import { useMoralis } from "react-moralis";
 import { Link } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
-import useStoreApi from "../../ContextAPI/StoreApi";
-import Web3 from "web3";
+
+
+
 import { setBlockData } from "../../ContextAPI/ContextApi";
 
 const Protect = (props) => {
@@ -20,44 +21,13 @@ const Protect = (props) => {
     protectedAmount,
     setProtectedAmount,
     totalLimit,
-    setTotalLimit
+    setTotalLimit,web3,address
   } = useContext(setBlockData);
-  const loadWeb3 = async () => {
-    if (window.ethereum) {
-      window.web3 = new Web3(window.ethereum);
-      await window.ethereum.enable();
-    } else if (window.web3) {
-      window.web3 = new Web3(window.web3.currentProvider);
-    } else {
-      window.alert(
-        "Non-Ethereum browser detected. You should consider trying MetaMask!"
-      );
-    }
-  };
-  const [address, setaddress] = useState(null)
-  const [web3, setweb3] = useState();
-  const loadContract = async () => {
-    loadWeb3();
-    const web = window.web3;
-    // loading  the smart contract
-    // scan = new web3.eth.Contract(Stoploss.abi, process.env.STOP_LOOST_CONTRACT);
-    /** for developer  only */
-    // console.log(scan);
-    const accounts = await web.eth.getAccounts();
-    setaddress(accounts[0])
-    setweb3(web);
 
-    console.log("successfully get contreact");
-  };
-  useEffect(() => {
-    loadWeb3();
-    loadContract();
-  }, []);
+console.log(price,protectedAmount,totalLimit,address)
  
-  const ls = async (e)=>{
-    // e.preventDefault()
-    approve_weth(0.001, '0xd0A1E359811322d97991E03f863a0C30C2cF029C', address)
-  }
+
+
   const  approve_weth = async (_value, _token) => {
   
     const abi2 = [
@@ -298,6 +268,15 @@ const Protect = (props) => {
     }
   }
   let disable = false;
+
+  const ls = async(e)=>{
+    console.log("pp")
+    // e.preventDefault()
+    // approve_weth(0.001, '0xd0A1E359811322d97991E03f863a0C30C2cF029C', address)
+    approve_weth(protectedAmount, '0xd0A1E359811322d97991E03f863a0C30C2cF029C', address)
+
+  }
+
   return (
     <>
       <TokenModal />
@@ -305,7 +284,9 @@ const Protect = (props) => {
       <InputField
         inputLabel="Price Limit"
         currency="USDC"
-     
+        onChange={(e) =>
+          setPrice(e.target.value < 0 ? (e.target.value = 0) : e.target.value)
+        }
       />
       <Box sx={{ width: 400 }} className={`slider`}>
         <Slider
@@ -321,12 +302,21 @@ const Protect = (props) => {
         currency="ETH"
         showMaxTag
        
-        
+        onChange={(e) =>
+          setProtectedAmount(
+            e.target.value < 0 ? (e.target.value = 0) : e.target.value
+          )
+        }
       />
       <InputField
         required
         inputLabel="Total Limit"
         currency="USDC"
+        onChange={(e) =>
+          setTotalLimit(
+            e.target.value < 0 ? (e.target.value = 0) : e.target.value
+          )
+        }
        
         
       />
@@ -351,7 +341,7 @@ const Protect = (props) => {
             >
               Add the required ETH balance to confirm the order
             </Typography>
-            {!disable ? (
+          
               <Link
                 to="/confirm?type=protect"
                 style={{ textDecoration: "none" }}
@@ -360,11 +350,7 @@ const Protect = (props) => {
                   Hedge ETH
                 </Button>
               </Link>
-            ) : (
-              <Button width={400} onClick={alert}>
-                Hedge ETH
-              </Button>
-            )}
+         
           </>
         )}
       </div>

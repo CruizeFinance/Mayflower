@@ -15,29 +15,33 @@ const App = () => {
   const [protectedAmount, setProtectedAmount] = useState(0);
   const [totalLimit, setTotalLimit] = useState(0);
 
+  const [address, setaddress] = useState(null)
+  const [web3, setweb3] = useState()
+
   // const {address, balance, message, setBalance, setAddress} = useStoreApi(); To be removed
   const loadWeb3 = async () => {
+  
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum);
       await window.ethereum.enable(); 
     }}
-const [web3, setweb3] = useState()
+
+
   const loadContract = async () => {
-    loadWeb3();
-    const web = window.web3;
-    // loading  the smart contract
-    // scan = new web3.eth.Contract(Stoploss.abi, process.env.STOP_LOOST_CONTRACT);
-    /** for developer  only */
-    // console.log(scan);
-    setweb3(web)
-    console.log("successfully get contreact");
+    const web1 = window.web3;
+    setweb3(web1)
+  let accounts =  await web1.eth.getAccounts()
+  console.log(accounts)
+  setaddress(accounts[0]);
+
   };
   
   
 useEffect(() => {
   loadWeb3()
-  loadContract()
-  // setUserAccount()
+
+    loadContract()
+
 
 }, [])
   return isMobile ? (
@@ -63,7 +67,9 @@ useEffect(() => {
           totalLimit,
           setTotalLimit,
           assetsAddress,
-          setAssetsAddress,
+
+          setAssetsAddress,web3,address
+
         }}
       >
         <CssBaseline />

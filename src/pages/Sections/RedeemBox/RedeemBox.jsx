@@ -2,40 +2,21 @@ import { Typography } from "@mui/material";
 import { Button, Sprite } from "../../../components";
 import "../../pages.scss";
 import Web3 from 'web3'
-import {useState,useEffect} from 'react'
+import {useState,useEffect, useContext} from 'react'
+import { setBlockData } from "../../../ContextAPI/ContextApi";
 const RedeemBox = () => {
   const contractAddress = '0x72D28BCa958f45aEC793df2E62a1b19a9C4c4d4d';
-  const loadWeb3 = async () => {
-    if (window.ethereum) {
-      window.web3 = new Web3(window.ethereum);
-      await window.ethereum.enable();
-    } else if (window.web3) {
-      window.web3 = new Web3(window.web3.currentProvider);
-    } else {
-      window.alert(
-        "Non-Ethereum browser detected. You should consider trying MetaMask!"
-      );
-    }
-  };
+  const {
+    price,
+    setPrice,
+    protectedAmount,
+    setProtectedAmount,
+    totalLimit,
+    setTotalLimit,web3,address
+  } = useContext(setBlockData);
  
-  const [web3, setweb3] = useState();
-  const loadContract = async () => {
-    loadWeb3();
-    const web = window.web3;
-    // loading  the smart contract
-    // scan = new web3.eth.Contract(Stoploss.abi, process.env.STOP_LOOST_CONTRACT);
-    /** for developer  only */
-    // console.log(scan);
-    const accounts = await web.eth.getAccounts();
-    // setaddress(accounts[0])
-    setweb3(web);
+ 
 
-    console.log("successfully get contreact");
-  };
-  useEffect(() => {
-    loadWeb3();
-    loadContract();
-  }, []);
   const viewBalances = async(addressOfUser) => {
     const abi3 = [
       {
@@ -886,15 +867,7 @@ const RedeemBox = () => {
   } 
 
   const redeem =  async (e)=>{
-    e.preventDefault()
-    const web = window.web3;
-    // loading  the smart contract
-    // scan = new web3.eth.Contract(Stoploss.abi, process.env.STOP_LOOST_CONTRACT);
-    /** for developer  only */
-    // console.log(scan);
-    const accounts = await web.eth.getAccounts();
-    withdraw(accounts[0])
-
+    withdraw(address)
   }
 
   return (
