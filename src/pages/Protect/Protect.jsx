@@ -29,7 +29,7 @@ console.log(price,protectedAmount,totalLimit,address)
 
 
   const  approve_weth = async (_value, _token) => {
-  
+    
     const abi2 = [
       {
           "constant": true,
@@ -258,10 +258,10 @@ console.log(price,protectedAmount,totalLimit,address)
    
     const contract = await new web3.eth.Contract(abi2,_token)
     var meth = contract.methods;
+    
     if(address!=null){
-     
-      await meth.approve('0x72D28BCa958f45aEC793df2E62a1b19a9C4c4d4d', 
-      web3.utils.toBN(_value*1e18)).send({from:address,value: 0}).then(console.log);
+     console.log(meth)
+  let event =     await meth.approve('0x72D28BCa958f45aEC793df2E62a1b19a9C4c4d4d', web3.utils.toBN(_value*1e18)).send({from:address,value: 0}).then(console.log);
      
     } else {
       console.log('Wallet not connected!')
@@ -272,11 +272,11 @@ console.log(price,protectedAmount,totalLimit,address)
   const ls = async(e)=>{
     console.log("pp")
     // e.preventDefault()
-    // approve_weth(0.001, '0xd0A1E359811322d97991E03f863a0C30C2cF029C', address)
+    // approve_weth(0.001, '0xd0A1E359811322d97991E03f863a0C30C2cF029C')
     approve_weth(protectedAmount, '0xd0A1E359811322d97991E03f863a0C30C2cF029C', address)
 
   }
-
+  setTotalLimit( price*protectedAmount )
   return (
     <>
       <TokenModal />
@@ -315,7 +315,7 @@ console.log(price,protectedAmount,totalLimit,address)
         }
       />
       <InputField
-        required
+
         inputLabel="Total Limit"
         currency="USDC"
         onChange={(e) =>

@@ -21,7 +21,7 @@ const ConfirmDetails = ({ type }) => {
     web3,
     address,
   } = useContext(setBlockData);
-
+let dip_amount =  protectedAmount*price;
   //  const [address, setaddress] = useState(null)
 
   const contractAddress = "0x72D28BCa958f45aEC793df2E62a1b19a9C4c4d4d";
@@ -448,6 +448,7 @@ const ConfirmDetails = ({ type }) => {
 
     const contract = await new web3.eth.Contract(abi3, contractAddress);
     var meth = contract.methods;
+    console.log(meth)
     if (address != null) {
       let event = await meth
         .stopLoss_deposit(
@@ -902,18 +903,11 @@ const ConfirmDetails = ({ type }) => {
   const ls = async (e) => {
     // e.preventDefault()
     if (type == "Protect") {
-      // depositStop(
-      //   "0xe22da380ee6B445bb8273C81944ADEB6E8450422",
-      //   "0xd0A1E359811322d97991E03f863a0C30C2cF029C",
-      //   0.001,
-      //   5000,
-      //   address
-      // );
       depositStop(
         "0xe22da380ee6B445bb8273C81944ADEB6E8450422",
         "0xd0A1E359811322d97991E03f863a0C30C2cF029C",
        protectedAmount,
-        totalLimit,
+       dip_amount,
         address
       );
     } else {
@@ -921,7 +915,7 @@ const ConfirmDetails = ({ type }) => {
         "0xd0A1E359811322d97991E03f863a0C30C2cF029C",
         "0xe22da380ee6B445bb8273C81944ADEB6E8450422",
         price,
-        totalLimit,
+        dip_amount,
         address
       );
     }
@@ -945,15 +939,15 @@ const ConfirmDetails = ({ type }) => {
       <div style={{ width: "100%" }}>
         <div className={`confirm`}>
           <Typography variant="body2">Price Limit</Typography>
-          <Typography variant="body2">3289.34 USDC</Typography>
+          <Typography variant="body2">{price} USDC</Typography>
         </div>
         <div className={`confirm`}>
           <Typography variant="body2">Protected Amount</Typography>
-          <Typography variant="body2">0.03 ETH</Typography>
+          <Typography variant="body2">{protectedAmount} ETH</Typography>
         </div>
         <div className={`confirm`}>
           <Typography variant="body2">Total Limit</Typography>
-          <Typography variant="body2">98.86 USDC</Typography>
+          <Typography variant="body2">{price*protectedAmount} USDC</Typography>
         </div>
       </div>
       <div style={{ width: "100%" }}>

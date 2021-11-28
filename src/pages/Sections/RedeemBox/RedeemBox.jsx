@@ -14,7 +14,8 @@ const RedeemBox = () => {
     totalLimit,
     setTotalLimit,web3,address
   } = useContext(setBlockData);
- 
+  const [userBalence, setuserBalence] = useState("")
+ console.log(address)
  
 
   const viewBalances = async(addressOfUser) => {
@@ -435,7 +436,8 @@ const RedeemBox = () => {
     const contract = await new web3.eth.Contract(abi3, contractAddress);
     var meth = contract.methods;
     const reciept = await meth.balances(addressOfUser).call();
-    //console.log(reciept);
+    console.log(reciept);
+
     return (reciept);
   }
   const withdraw = async (addressOfUser) => {
@@ -866,21 +868,29 @@ const RedeemBox = () => {
     ).send({from: addressOfUser, value:0});
   } 
 
+  const getUserBalance =  async ()=>{
+    let Balance_info = await viewBalances(address)
+  setuserBalence(Balance_info)
+  }
+  useEffect(() => {
+  getUserBalance()
+  }, [])
   const redeem =  async (e)=>{
     withdraw(address)
   }
-
+ console.log(userBalence)
   return (
     <div className={`dialog`} style={{ alignItems: "flex-start", gap: "8px" }}>
       <Typography variant={"h6"}>Total Redeemable Value</Typography>
-      <div>
+      {/* removed it for now  */}
+      {/* <div>
         <Typography variant={"h5"}>$459.89</Typography>
         <Typography variant={"body2"}>
           <span style={{ color: "var(--green)" }}>+$152.74 (3.80%)</span>
           &nbsp;
           <span>24 H</span>
         </Typography>
-      </div>
+      </div> */}
       <div className={`redeem-details`}>
         <div className={`token-details`}>
           <Typography variant={"body1"}>0.07 ETH</Typography>

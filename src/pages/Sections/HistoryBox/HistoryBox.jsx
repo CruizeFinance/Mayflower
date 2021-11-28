@@ -2,8 +2,11 @@ import { Typography } from "@mui/material";
 import { ACTIVITY_HISTORY } from "../../../utils/constants";
 import { Sprite } from "../../../components";
 import "../../pages.scss";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { setBlockData } from "../../../ContextAPI/ContextApi";
+import { PriceChangeOutlined } from "@mui/icons-material";
+import { _getCurrentDatetime } from "../../../utilities/utilitis";
 
 const HistoryBox = () => {
   const [showOptions, setShowOptions] = useState(null);
@@ -14,7 +17,16 @@ const HistoryBox = () => {
     }
     setShowOptions(i);
   };
+  const {
+    price,
+    setPrice,
+    protectedAmount,
+    setProtectedAmount,
+    totalLimit,
+    setTotalLimit,web3,address
+  } = useContext(setBlockData);
 
+  const current_datetime = _getCurrentDatetime().toString();
   return (
     <div className={`history`}>
       <div className={`history-row`} style={{ marginBottom: "0" }}>
@@ -59,15 +71,15 @@ const HistoryBox = () => {
             </div>
             <div className={`col-2`}>
               <Typography variant={"body1"}>
-                {activity.usdcPriceLimit} USDC
+                {price} USDC
               </Typography>
               <Typography variant={"body2"}>
-                {activity.ethPriceLimit} ETH
+                {protectedAmount} ETH
               </Typography>
             </div>
             <div className={`col-3`}>
-              <Typography variant={"body1"}>{activity.orderDate}</Typography>
-              <Typography variant={"body2"}>{activity.orderTime}</Typography>
+            <Typography variant={"body1"}>{current_datetime.split(' ')[0]}</Typography>
+              <Typography variant={"body2"}>{current_datetime.split(' ')[1]}</Typography>
             </div>
             <div
               className={`col-4`}
