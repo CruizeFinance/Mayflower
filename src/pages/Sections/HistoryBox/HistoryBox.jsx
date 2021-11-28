@@ -480,11 +480,11 @@ const HistoryBox = () => {
     console.log(result[1]);
     console.log(result[2]);
     console.log(result[3]);
-    // TODO:: return result
+    return result;
   }
 
-  viewOrders(address);
-
+  let all_orders = viewOrders(address);
+  console.log("orders: ", all_orders);
 
   const [showOptions, setShowOptions] = useState(null);
   const handleHistoryActivity = (i) => {
