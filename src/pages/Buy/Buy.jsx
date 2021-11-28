@@ -284,8 +284,11 @@ let disable = true;
         onChange={(e) =>
           setPrice(e.target.value < 0 ? (e.target.value = 0) : e.target.value)
         }
+        tooltip={
+          "Order is triggered when the market price of the asset reaches this price. For example - Price Limit of 4200 USDC for ETH with a market price of 4400 USDC"
+        }
       />
-      <Box sx={{ width: 400 }} className={`slider`}>
+      {/* <Box sx={{ width: 400 }} className={`slider`}>
         <Slider
           aria-label="Custom marks"
           defaultValue={0}
@@ -293,15 +296,18 @@ let disable = true;
           valueLabelDisplay="auto"
           marks={MARKS}
         />
-      </Box>
+      </Box> */}
       <InputField
         inputLabel="Buy Amount"
         currency="ETH"
-        showMaxTag
+        /* showMaxTag */
         onChange={(e) =>
           setProtectedAmount(
             e.target.value < 0 ? (e.target.value = 0) : e.target.value
           )
+        }
+        tooltip={
+          "The quantity of the asset from your wallet you’d like to use for the order. For example - 0.07 ETH out of the 0.09 ETH in your wallet."
         }
       />
       <InputField
@@ -311,6 +317,9 @@ let disable = true;
           setTotalLimit(
             e.target.value < 0 ? (e.target.value = 0) : e.target.value
           )
+        }
+        tooltip={
+          "Total price floor of your asset holding which is the product of the limit and amount. For example - 0.07 ETH staked with 4200 USDC limit will give 294 USDC as the total limit."
         }
       />
       <div className={`hedge-eth`}>

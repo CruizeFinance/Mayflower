@@ -17,7 +17,7 @@ const InfoBox = ({ hideDialogOne, dialogTwoLabel, showSetUpLink, type }) => {
               TransitionProps={{ timeout: 600 }}
             >
               <IconButton style={{ padding: "0px" }}>
-                <Sprite id="info" width={9} height={9} />
+                <Sprite id="info" width={12} height={12} />
               </IconButton>
             </Tooltip>
           </Typography>
