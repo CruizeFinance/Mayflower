@@ -25,7 +25,9 @@ const Protect = (props) => {
   } = useContext(setBlockData);
 
 console.log(price,protectedAmount,totalLimit,address)
- 
+
+const [totalValue, setTotalValue] = useState(null);
+useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), [price, protectedAmount]);
 
 
   const  approve_weth = async (_value, _token) => {
@@ -277,6 +279,7 @@ console.log(price,protectedAmount,totalLimit,address)
 
   }
   setTotalLimit( price*protectedAmount )
+
   return (
     <>
       <TokenModal />
@@ -304,7 +307,6 @@ console.log(price,protectedAmount,totalLimit,address)
         inputLabel="Protected Amount"
         currency="ETH"
         /* showMaxTag */
-        value={totalLimit}
         onChange={(e) =>
           setProtectedAmount(
             e.target.value < 0 ? (e.target.value = 0) : e.target.value
@@ -315,18 +317,19 @@ console.log(price,protectedAmount,totalLimit,address)
         }
       />
       <InputField
-
+        value={totalValue}
         inputLabel="Total Limit"
         currency="USDC"
-        onChange={(e) =>
-          setTotalLimit(
-            e.target.value < 0 ? (e.target.value = 0) : e.target.value
-          )
-        }
+        // onChange={(e) =>
+        //   setTotalLimit(
+        //     e.target.value < 0 ? (e.target.value = 0) : e.target.value
+        //   )
+        // }
         tooltip={
           "Total price floor of your asset holding which is the product of the limit and amount. For example - 0.07 ETH staked with 4200 USDC limit will give 294 USDC as the total limit."
         }
       />
+      {console.log('Price:: ', price, protectedAmount, totalValue)}
       <div className={`hedge-eth`}>
         {!isAuthenticated ? (
           <>
