@@ -1,7 +1,11 @@
 # Mayflower
 is a potent vessel that guards your crypto riches from the impact of every tidal attack that comes our way.
 
-# Checkout our [working](https://master.d3bieez7lmzxny.amplifyapp.com/) MVP.
+<br>
+
+## Checkout our working Prototype [here](https://master.d3bieez7lmzxny.amplifyapp.com/).
+
+<br>
 
 ## Our Artileries include
 
