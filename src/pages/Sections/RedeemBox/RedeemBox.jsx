@@ -865,6 +865,7 @@ const RedeemBox = () => {
       reciept._token
     ).send({from: addressOfUser, value:0});
   } 
+  const balance_of_user = viewBalances(address);
 
   const redeem =  async (e)=>{
     withdraw(address)

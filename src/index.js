@@ -6,6 +6,8 @@ import "./styles/index.scss";
 
 import { MoralisProvider } from "react-moralis";
 import { StoreProvider } from "./ContextAPI/Store";
+import dotenv from "dotenv";
+dotenv.config()
 
 // we need to hard code appId and serverURL
 ReactDOM.render(
