@@ -6,7 +6,7 @@ import { useState, useEffect, useContext } from "react";
 import { setBlockData } from "../../../ContextAPI/ContextApi";
 import { Convert_toWei } from "../../../utilities/utilities";
 const RedeemBox = () => {
-  const contractAddress = "0x72D28BCa958f45aEC793df2E62a1b19a9C4c4d4d";
+  const contractAddress = "0x2547faACe91e713814756aaFA754B89F9cf66ECf";
   const {
     price,
     setPrice,
@@ -880,7 +880,7 @@ const RedeemBox = () => {
   const redeem = async (e) => {
     withdraw(address);
   };
-  console.log(userBalance);
+  console.log('userBalance: ', userBalance);
   // convert to eth from Wei
 
   return (
