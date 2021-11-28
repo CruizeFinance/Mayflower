@@ -5,7 +5,7 @@ import Web3 from 'web3'
 import {useState,useEffect, useContext} from 'react'
 import { setBlockData } from "../../../ContextAPI/ContextApi";
 const RedeemBox = () => {
-  const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS;
+  const contractAddress = '0x72D28BCa958f45aEC793df2E62a1b19a9C4c4d4d';
   const {
     price,
     setPrice,
@@ -865,7 +865,6 @@ const RedeemBox = () => {
       reciept._token
     ).send({from: addressOfUser, value:0});
   } 
-  const balance_of_user = viewBalances(address);
 
   const redeem =  async (e)=>{
     withdraw(address)

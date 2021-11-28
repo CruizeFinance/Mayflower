@@ -40,32 +40,31 @@ export const ACTIVITY_HISTORY = [
     ethPriceLimit: 0.07,
     orderDate: "14th Sept, 2021",
     orderTime: "18:22 IST",
-  }
-  // Commenting the below lines to display only 1 default order.
-  // {
-  //   type: "Buy",
-  //   currency: "ETH",
-  //   usdcPriceLimit: 3841.28,
-  //   ethPriceLimit: 0.07,
-  //   orderDate: "14th Sept, 2021",
-  //   orderTime: "18:22 IST",
-  // },
-  // {
-  //   type: "Protect",
-  //   currency: "ETH",
-  //   usdcPriceLimit: 3841.28,
-  //   ethPriceLimit: 0.07,
-  //   orderDate: "14th Sept, 2021",
-  //   orderTime: "18:22 IST",
-  // },
-  // {
-  //   type: "Protect",
-  //   currency: "ETH",
-  //   usdcPriceLimit: 3841.28,
-  //   ethPriceLimit: 0.07,
-  //   orderDate: "14th Sept, 2021",
-  //   orderTime: "18:22 IST",
-  // },
+  },
+  {
+    type: "Buy",
+    currency: "ETH",
+    usdcPriceLimit: 3841.28,
+    ethPriceLimit: 0.07,
+    orderDate: "14th Sept, 2021",
+    orderTime: "18:22 IST",
+  },
+  {
+    type: "Protect",
+    currency: "ETH",
+    usdcPriceLimit: 3841.28,
+    ethPriceLimit: 0.07,
+    orderDate: "14th Sept, 2021",
+    orderTime: "18:22 IST",
+  },
+  {
+    type: "Protect",
+    currency: "ETH",
+    usdcPriceLimit: 3841.28,
+    ethPriceLimit: 0.07,
+    orderDate: "14th Sept, 2021",
+    orderTime: "18:22 IST",
+  },
 ];
 export const ASSETS_VALUE = [
   // we can put assets address on the place of assetsname
