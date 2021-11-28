@@ -27,10 +27,7 @@ const Buy = () => {
   useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), [price, protectedAmount]);
   
  
-  // if the input filed is not filled
-  const alert = () => {
-    window.alert("Please fill all the information before  Hedge ETH");
-  };
+  
 
     const  approve_usdc = async (_value, _token, addressOfUser) => {
     const abi2 = [
@@ -267,8 +264,6 @@ const Buy = () => {
   }
   /** for developer only  */
   const ls = async (e)=>{
-    // e.preventDefault()
-    // approve_usdc(1000000, '0xe22da380ee6B445bb8273C81944ADEB6E8450422', address)
     approve_usdc(price, '0xe22da380ee6B445bb8273C81944ADEB6E8450422', address)
   }
 
@@ -277,7 +272,7 @@ const Buy = () => {
 
 let disable = true;
 const input_fill = ()=>{
-  window.alert("please fill the proper information before Hedge  ETH")
+  window.alert("please fill the proper information before Hedge WETH ")
 }
 
 setTotalLimit( price*protectedAmount ) // karan will help us 
@@ -316,7 +311,7 @@ else {
       </Box> */}
       <InputField
         inputLabel="Buy Amount"
-        currency="ETH"
+        currency="WETH"
         /* showMaxTag */
         onChange={(e) =>
           setProtectedAmount(
@@ -324,7 +319,7 @@ else {
           )
         }
         tooltip={
-          "The quantity of the asset from your wallet you’d like to use for the order. For example - 0.07 ETH out of the 0.09 ETH in your wallet."
+          "The quantity of the asset from your wallet you’d like to use for the order. For example - 0.07 WETH  out of the 0.09 ETH in your wallet."
         }
       />
       <InputField
@@ -337,7 +332,7 @@ else {
         //   )
         // }
         tooltip={
-          "Total price floor of your asset holding which is the product of the limit and amount. For example - 0.07 ETH staked with 4200 USDC limit will give 294 USDC as the total limit."
+          "Total price floor of your asset holding which is the product of the limit and amount. For example - 0.07 WETH  staked with 4200 USDC limit will give 294 USDC as the total limit."
         }
       />
       <div className={`hedge-eth`}>
@@ -364,12 +359,12 @@ else {
             {disable ? (
               <Link to="/confirm?type=buy" style={{ textDecoration: "none" }}>
                 <Button width={400} onClick={ls} >
-                 Buy ETH 
+                 Buy WETH 
                 </Button>
               </Link>
             ) : (
               <Button width={400} onClick={input_fill}>
-                Hedge ETH
+                Hedge WETH 
               </Button>
             )}
           </>

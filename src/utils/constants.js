@@ -35,7 +35,7 @@ export const VIEW = {
 export const ACTIVITY_HISTORY = [
   {
     type: "Protect",
-    currency: "ETH",
+    currency: "WETH ",
     usdcPriceLimit: 3841.28,
     ethPriceLimit: 0.07,
     orderDate: "14th Sept, 2021",

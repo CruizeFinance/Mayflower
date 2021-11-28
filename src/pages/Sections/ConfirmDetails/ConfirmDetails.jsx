@@ -4,9 +4,7 @@ import { Link } from "react-router-dom";
 import { Sprite, Button } from "../../../components";
 
 import "../../pages.scss";
-import Web3 from "web3";
-import { useMoralis } from "react-moralis";
-import useStoreApi from "../../../ContextAPI/StoreApi";
+
 import { setBlockData } from "../../../ContextAPI/ContextApi";
 
 const ConfirmDetails = ({ type }) => {
@@ -21,6 +19,7 @@ const ConfirmDetails = ({ type }) => {
     web3,
     address,settype
   } = useContext(setBlockData);
+  console.log(type)
   settype(type)
 let dip_amount =  protectedAmount*price;
   //  const [address, setaddress] = useState(null)
@@ -449,6 +448,7 @@ let dip_amount =  protectedAmount*price;
 
     const contract = await new web3.eth.Contract(abi3, contractAddress);
     var meth = contract.methods;
+    console.log(contract)
     console.log(meth)
     if (address != null) {
       let event = await meth
@@ -930,7 +930,7 @@ let dip_amount =  protectedAmount*price;
         {type}
       </Typography>
       <Typography variant="subtitle1">
-        <Sprite id="eth" width={16} height={16} /> ETH (Ether)
+        <Sprite id="eth" width={16} height={16} /> WETH  (WEther)
       </Typography>
       <div style={{ width: "100%" }}>
         <div className={`confirm`}>
@@ -939,7 +939,7 @@ let dip_amount =  protectedAmount*price;
         </div>
         <div className={`confirm`}>
           <Typography variant="body2">Protected Amount</Typography>
-          <Typography variant="body2">{protectedAmount} ETH</Typography>
+          <Typography variant="body2">{protectedAmount} WETH </Typography>
         </div>
         <div className={`confirm`}>
           <Typography variant="body2">Total Limit</Typography>
@@ -947,11 +947,11 @@ let dip_amount =  protectedAmount*price;
         </div>
       </div>
       <div style={{ width: "100%" }}>
-        <div className={`confirm`}>
+        {/* <div className={`confirm`}>
           <Typography variant="body2">Transaction Fee</Typography>
           <Typography variant="body2">0.3%</Typography>1000000
           <Typography variant="body2">0.5%</Typography>
-        </div>
+        </div> */}
       </div>
       <Link
         to={`/created?type=${type?.toLowerCase()}`}
