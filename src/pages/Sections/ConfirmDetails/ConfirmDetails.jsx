@@ -945,15 +945,15 @@ const ConfirmDetails = ({ type }) => {
       <div style={{ width: "100%" }}>
         <div className={`confirm`}>
           <Typography variant="body2">Price Limit</Typography>
-          <Typography variant="body2">3289.34 USDC</Typography>
+          <Typography variant="body2">{price} USDC</Typography>
         </div>
         <div className={`confirm`}>
           <Typography variant="body2">Protected Amount</Typography>
-          <Typography variant="body2">0.03 ETH</Typography>
+          <Typography variant="body2">{protectedAmount} ETH</Typography>
         </div>
         <div className={`confirm`}>
           <Typography variant="body2">Total Limit</Typography>
-          <Typography variant="body2">98.86 USDC</Typography>
+          <Typography variant="body2">{protectedAmount*price} USDC</Typography>
         </div>
       </div>
       <div style={{ width: "100%" }}>
