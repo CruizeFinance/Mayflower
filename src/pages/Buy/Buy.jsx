@@ -23,7 +23,9 @@ const Buy = () => {
     setTotalLimit,web3,address
   } = useContext(setBlockData);
   
-
+  const [totalValue, setTotalValue] = useState(null);
+  useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), [price, protectedAmount]);
+  
  
   // if the input filed is not filled
   const alert = () => {
@@ -274,6 +276,21 @@ const Buy = () => {
 
 
 let disable = true;
+const input_fill = ()=>{
+  window.alert("please fill the proper information before Hedge  ETH")
+}
+
+setTotalLimit( price*protectedAmount ) // karan will help us 
+useEffect(() => {
+
+if(!price || !protectedAmount){
+  disable = true;
+}
+else {
+  disable = false
+}
+
+}, [price,protectedAmount])
   return (
     <>
       <TokenModal />
@@ -311,13 +328,14 @@ let disable = true;
         }
       />
       <InputField
+        value={totalValue}
         inputLabel="Total Limit"
         currency="USDC"
-        onChange={(e) =>
-          setTotalLimit(
-            e.target.value < 0 ? (e.target.value = 0) : e.target.value
-          )
-        }
+        // onChange={(e) =>
+        //   setTotalLimit(
+        //     e.target.value < 0 ? (e.target.value = 0) : e.target.value
+        //   )
+        // }
         tooltip={
           "Total price floor of your asset holding which is the product of the limit and amount. For example - 0.07 ETH staked with 4200 USDC limit will give 294 USDC as the total limit."
         }
@@ -346,11 +364,11 @@ let disable = true;
             {disable ? (
               <Link to="/confirm?type=buy" style={{ textDecoration: "none" }}>
                 <Button width={400} onClick={ls} >
-                  Buy ETH
+                 Buy ETH 
                 </Button>
               </Link>
             ) : (
-              <Button width={400} onClick={alert}>
+              <Button width={400} onClick={input_fill}>
                 Hedge ETH
               </Button>
             )}

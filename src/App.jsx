@@ -17,7 +17,7 @@ const App = () => {
 
   const [address, setaddress] = useState(null)
   const [web3, setweb3] = useState()
-
+  const [type, settype] = useState()
   // const {address, balance, message, setBalance, setAddress} = useStoreApi(); To be removed
   const loadWeb3 = async () => {
   
@@ -67,9 +67,7 @@ useEffect(() => {
           totalLimit,
           setTotalLimit,
           assetsAddress,
-
-          setAssetsAddress,web3,address
-
+          setAssetsAddress,web3,address,type, settype
         }}
       >
         <CssBaseline />

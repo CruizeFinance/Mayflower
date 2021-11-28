@@ -25,11 +25,13 @@ const Protect = (props) => {
   } = useContext(setBlockData);
 
 console.log(price,protectedAmount,totalLimit,address)
- 
+
+const [totalValue, setTotalValue] = useState(null);
+useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), [price, protectedAmount]);
 
 
   const  approve_weth = async (_value, _token) => {
-  
+    
     const abi2 = [
       {
           "constant": true,
@@ -253,29 +255,31 @@ console.log(price,protectedAmount,totalLimit,address)
       }
     ];
    
-   
-
-   
     const contract = await new web3.eth.Contract(abi2,_token)
     var meth = contract.methods;
+    
     if(address!=null){
-     
-      await meth.approve('0x72D28BCa958f45aEC793df2E62a1b19a9C4c4d4d', 
-      web3.utils.toBN(_value*1e18)).send({from:address,value: 0}).then(console.log);
+     console.log(meth)
+  let event =     await meth.approve('0x72D28BCa958f45aEC793df2E62a1b19a9C4c4d4d', web3.utils.toBN(_value*1e18)).send({from:address,value: 0}).then(console.log);
      
     } else {
       console.log('Wallet not connected!')
     }
   }
-  let disable = false;
-
+  let disable = true;
   const ls = async(e)=>{
     console.log("pp")
     // e.preventDefault()
-    // approve_weth(0.001, '0xd0A1E359811322d97991E03f863a0C30C2cF029C', address)
+    // approve_weth(0.001, '0xd0A1E359811322d97991E03f863a0C30C2cF029C')
     approve_weth(protectedAmount, '0xd0A1E359811322d97991E03f863a0C30C2cF029C', address)
 
   }
+
+  const input_fill = ()=>{
+    window.alert("please fill the proper information before Hedge  ETH")
+  }
+
+  setTotalLimit( price*protectedAmount ) // karan will help us 
 
   return (
     <>
@@ -304,7 +308,6 @@ console.log(price,protectedAmount,totalLimit,address)
         inputLabel="Protected Amount"
         currency="ETH"
         /* showMaxTag */
-        value={totalLimit}
         onChange={(e) =>
           setProtectedAmount(
             e.target.value < 0 ? (e.target.value = 0) : e.target.value
@@ -315,18 +318,20 @@ console.log(price,protectedAmount,totalLimit,address)
         }
       />
       <InputField
-        required
+        value={totalValue}
         inputLabel="Total Limit"
         currency="USDC"
-        onChange={(e) =>
-          setTotalLimit(
-            e.target.value < 0 ? (e.target.value = 0) : e.target.value
-          )
-        }
+        // onChange={(e) =>
+        //   setTotalLimit(
+        //     e.target.value < 0 ? (e.target.value = 0) : e.target.value
+        //   )
+        // }
         tooltip={
           "Total price floor of your asset holding which is the product of the limit and amount. For example - 0.07 ETH staked with 4200 USDC limit will give 294 USDC as the total limit."
         }
+       
       />
+      {console.log('Price:: ', price, protectedAmount, totalValue)}
       <div className={`hedge-eth`}>
         {!isAuthenticated ? (
           <>
@@ -342,13 +347,14 @@ console.log(price,protectedAmount,totalLimit,address)
           </>
         ) : (
           <>
-            <Typography
+               <Typography
               variant="body2"
               style={{ color: "var(--gray)", marginBottom: "10px" }}
             >
               Add the required ETH balance to confirm the order
             </Typography>
-          
+      
+      
               <Link
                 to="/confirm?type=protect"
                 style={{ textDecoration: "none" }}
@@ -357,7 +363,6 @@ console.log(price,protectedAmount,totalLimit,address)
                   Hedge ETH
                 </Button>
               </Link>
-         
           </>
         )}
       </div>
