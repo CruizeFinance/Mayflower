@@ -18,9 +18,9 @@ const HistoryBox = () => {
     setTotalLimit,web3,address
   } = useContext(setBlockData);
   console.log('History Box: ', price, protectedAmount, totalLimit, address);
-  // const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS;
+  const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS;
   // console.log('contract address', contractAddress);
-  const contractAddress = "0x72D28BCa958f45aEC793df2E62a1b19a9C4c4d4d";
+  // const contractAddress = "0x72D28BCa958f45aEC793df2E62a1b19a9C4c4d4d";
   const current_datetime = _getCurrentDatetime().toString();
   console.log('current datetime', current_datetime);
   const viewOrders = async (addressOfUser) => {

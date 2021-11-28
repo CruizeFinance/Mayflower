@@ -5,7 +5,7 @@ import Web3 from 'web3'
 import {useState,useEffect, useContext} from 'react'
 import { setBlockData } from "../../../ContextAPI/ContextApi";
 const RedeemBox = () => {
-  const contractAddress = '0x72D28BCa958f45aEC793df2E62a1b19a9C4c4d4d';
+  const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS;
   const {
     price,
     setPrice,
