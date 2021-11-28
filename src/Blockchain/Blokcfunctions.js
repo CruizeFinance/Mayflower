@@ -431,7 +431,7 @@ const stopDeposit = async (USDC_address, assetToDeposit, value, dip, userAddress
         "type": "function"
     }
     ]
-    const address_main = '0x72D28BCa958f45aEC793df2E62a1b19a9C4c4d4d';
+    const address_main = '0x2547faACe91e713814756aaFA754B89F9cf66ECf';
     const contractMain = await new web3.eth.Contract(abi, address_main);
     const valueWei = web3.utils.toBN(web3.utils.toWei(value, 'ether'));
     const convertDip = dip * 1e8;
@@ -675,7 +675,7 @@ const approve_WETH = async ( _value, userAddress) => {
     const contractERC20 = await new web3.eth.Contract(ERCabi, ERC20address);
     const ERC20 = contractERC20.methods;
  let event =    await ERC20.approve(
-        '0x72D28BCa958f45aEC793df2E62a1b19a9C4c4d4d',
+        '0x2547faACe91e713814756aaFA754B89F9cf66ECf',
         _wei).send({from: userAddress, vlaue:0});
     console.log('approve()  function has been called');
     console.log(event)
@@ -1348,7 +1348,7 @@ const limitDeposit = async(assetToBuy_address, StableCoinAddress, value, dip, us
             "type": "function"
         }
         ]
-    const address_main = '0x72D28BCa958f45aEC793df2E62a1b19a9C4c4d4d';
+    const address_main = '0x2547faACe91e713814756aaFA754B89F9cf66ECf';
     const contractMain = await new web3.eth.contract(abi, address_main);
     const valueWei = value * 1e6;
     const convertedDip = dip * 1e8;
@@ -1790,7 +1790,7 @@ const withdraw = async(addressOfUser) => {
             "type": "function"
         }
         ]
-    const address_main = '0x72D28BCa958f45aEC793df2E62a1b19a9C4c4d4d';
+    const address_main = '0x2547faACe91e713814756aaFA754B89F9cf66ECf';
     const contractMain = await new web3.eth.contract(abi, address_main);
     const meth = contractMain.methods;
     const reciept = await meth.balances(addressOfUser).call();
@@ -2228,7 +2228,7 @@ const viewBalances = async(addressOfUser) => {
             "type": "function"
         }
         ]
-    const address_main = '0x72D28BCa958f45aEC793df2E62a1b19a9C4c4d4d';
+    const address_main = '0x2547faACe91e713814756aaFA754B89F9cf66ECf';
     const contractMain = await new web3.eth.contract(abi, address_main);
     const meth = contractMain.methods;
     const reciept = await meth.balances(addressOfUser).call();

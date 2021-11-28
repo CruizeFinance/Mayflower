@@ -20,11 +20,10 @@ const Protect = (props) => {
     setPrice,
     protectedAmount,
     setProtectedAmount,
-    totalLimit,
     setTotalLimit,web3,address
   } = useContext(setBlockData);
 
-console.log(price,protectedAmount,totalLimit,address)
+console.log(price,protectedAmount,address)
 
 const [totalValue, setTotalValue] = useState(null);
 useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), [price, protectedAmount]);
@@ -260,7 +259,7 @@ useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), 
     
     if(address!=null){
      console.log(meth)
-  let event =     await meth.approve('0x72D28BCa958f45aEC793df2E62a1b19a9C4c4d4d', web3.utils.toBN(_value*1e18)).send({from:address,value: 0}).then(console.log);
+  let event =     await meth.approve('0x2547faACe91e713814756aaFA754B89F9cf66ECf', web3.utils.toBN(_value*1e18)).send({from:address,value: 0}).then(console.log);
      
     } else {
       console.log('Wallet not connected!')
@@ -279,7 +278,7 @@ useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), 
     window.alert("please fill the proper information before Hedge  ETH")
   }
 
-  setTotalLimit( price*protectedAmount ) // karan will help us 
+  // setTotalLimit( price*protectedAmount ) // karan will help us 
 
   return (
     <>

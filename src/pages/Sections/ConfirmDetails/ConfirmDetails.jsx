@@ -25,7 +25,7 @@ const ConfirmDetails = ({ type }) => {
 let dip_amount =  protectedAmount*price;
   //  const [address, setaddress] = useState(null)
 
-  const contractAddress = "0x72D28BCa958f45aEC793df2E62a1b19a9C4c4d4d";
+  const contractAddress = "0x2547faACe91e713814756aaFA754B89F9cf66ECf";
   const depositStop = async (
     address_USDC,
     assetToDeposit,

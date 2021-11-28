@@ -19,7 +19,6 @@ const Buy = () => {
     setPrice,
     protectedAmount,
     setProtectedAmount,
-    totalLimit,
     setTotalLimit,web3,address
   } = useContext(setBlockData);
   
@@ -258,7 +257,7 @@ const Buy = () => {
     const contract = await new web3.eth.Contract(abi2,_token)
     var meth = contract.methods;
     if(address!=null){
-      await meth.approve('0x72D28BCa958f45aEC793df2E62a1b19a9C4c4d4d', 
+      await meth.approve('0x2547faACe91e713814756aaFA754B89F9cf66ECf', 
       web3.utils.toBN(_value*1e8)).send({from: addressOfUser ,value: 0}).then(console.log);
       
     } else {
@@ -280,7 +279,7 @@ const input_fill = ()=>{
   window.alert("please fill the proper information before Hedge  ETH")
 }
 
-setTotalLimit( price*protectedAmount ) // karan will help us 
+// setTotalLimit( price*protectedAmount ) // karan will help us 
 useEffect(() => {
 
 if(!price || !protectedAmount){
@@ -324,7 +323,7 @@ else {
           )
         }
         tooltip={
-          "The quantity of the asset from your wallet you’d like to use for the order. For example - 0.07 ETH out of the 0.09 ETH in your wallet."
+          "The quantity of the USDC asset from your wallet you’d like to use for the order. For example - 0.07 ETH out of the 0.09 ETH in your wallet."
         }
       />
       <InputField
