@@ -23,7 +23,7 @@ const InfoBox = ({ hideDialogOne, dialogTwoLabel, showSetUpLink, type }) => {
           </Typography>
           <div className={`details`}>
             <Typography variant={"body2"}>
-              <b>ETH APY</b>&nbsp;(before conversion)&nbsp;<b>- 12.78%</b>
+              <b>WETH APY</b>&nbsp;(before conversion)&nbsp;<b>- 12.78%</b>
             </Typography>
             <Typography variant={"body2"}>
               <b>USDC APY</b>&nbsp;(after conversion)&nbsp;<b>- 22.37%</b>

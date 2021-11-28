@@ -24,7 +24,7 @@ const HistoryBox = () => {
     protectedAmount,
     setProtectedAmount,
     totalLimit,
-    setTotalLimit,web3,address
+    setTotalLimit,web3,address,type
   } = useContext(setBlockData);
 
   const current_datetime = _getCurrentDatetime().toString();
@@ -64,10 +64,10 @@ const HistoryBox = () => {
         {ACTIVITY_HISTORY.map((activity, index) => (
           <div
             className={`history-row result`}
-            key={`${activity.type} - ${index}`}
+            key={`${type} - ${index}`}
           >
             <div className={`col-1`}>
-              <Typography variant={"body1"}>{activity.type}</Typography>
+              <Typography variant={"body1"}>{type}</Typography>
               <Typography variant={"body2"}>{activity.currency}</Typography>
             </div>
             <div className={`col-2`}>
@@ -75,7 +75,7 @@ const HistoryBox = () => {
                 {price} USDC
               </Typography>
               <Typography variant={"body2"}>
-                {protectedAmount} ETH
+                {protectedAmount} WETH 
               </Typography>
             </div>
             <div className={`col-3`}>

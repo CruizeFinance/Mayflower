@@ -18,6 +18,7 @@ const RedeemBox = () => {
     address,
     type,
   } = useContext(setBlockData);
+  console.log(type)
   const [userBalance, setuserBalance] = useState("");
   console.log(address);
 
@@ -880,7 +881,7 @@ const RedeemBox = () => {
   const redeem = async (e) => {
     withdraw(address);
   };
-  console.log(userBalance);
+  console.log('user Balance '+ userBalance);
   // convert to eth from Wei
 
   return (
@@ -897,33 +898,33 @@ const RedeemBox = () => {
       </div> */}
       {type === "Protect" ? (
         <div className={`redeem-details`}>
-          <div className={`token-details`}>
-            <Typography variant={"body1"}>234.78 USDC</Typography>
+          {/* <div className={`token-details`}>
+            <Typography variant={"body1"}>{Convert_toWei(userBalance,Math.pow(10,18))} WETH</Typography>
             <Typography variant={"body2"}>
               35.76% APY (
-              <Sprite id="eth" width={14} height={14} /> USDC)
+              <Sprite id="eth" width={14} height={14} /> WETH)
             </Typography>
-          </div>
-          <Button onClick={redeem}>
+          </div> */}
+          <Button  onClick={redeem}>
             Redeem
             <br />
-            USDC
+            Asset
           </Button>
         </div>
       ) : (
         <div className={`redeem-details`}>
-          <div className={`token-details`}>
-            <Typography variant={"body1"}>{Convert_toWei(userBalance)}</Typography>
+          {/* <div className={`token-details`}>
+            <Typography variant={"body1"}>{Convert_toWei(userBalance)} USDC</Typography>
             <Typography variant={"body2"}>
               35.76% APY (
               <Sprite id="eth" width={14} height={14} />{" "}
-              ETH)
+              WETH )
             </Typography>
-          </div>
-          <Button onClick={redeem}  >
+          </div> */}
+          <Button width={100} onClick={redeem}  >
             Redeem
             <br />
-            ETH
+            Asset
           </Button>
         </div>
       )}

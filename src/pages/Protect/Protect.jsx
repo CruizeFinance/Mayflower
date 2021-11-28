@@ -276,7 +276,7 @@ useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), 
   }
 
   const input_fill = ()=>{
-    window.alert("please fill the proper information before Hedge  ETH")
+    window.alert("please fill the proper information before Hedge  WETH ")
   }
 
   setTotalLimit( price*protectedAmount ) // karan will help us 
@@ -306,7 +306,7 @@ useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), 
       </Box> */}
       <InputField
         inputLabel="Protected Amount"
-        currency="ETH"
+        currency="WETH"
         /* showMaxTag */
         onChange={(e) =>
           setProtectedAmount(
@@ -314,7 +314,7 @@ useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), 
           )
         }
         tooltip={
-          "The quantity of the asset from your wallet you’d like to use for the order. For example - 0.07 ETH out of the 0.09 ETH in your wallet."
+          "The quantity of the asset from your wallet you’d like to use for the order. For example - 0.07 WETH  out of the 0.09 ETH in your wallet."
         }
       />
       <InputField
@@ -327,7 +327,7 @@ useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), 
         //   )
         // }
         tooltip={
-          "Total price floor of your asset holding which is the product of the limit and amount. For example - 0.07 ETH staked with 4200 USDC limit will give 294 USDC as the total limit."
+          "Total price floor of your asset holding which is the product of the limit and amount. For example - 0.07 WETH  staked with 4200 USDC limit will give 294 USDC as the total limit."
         }
        
       />
@@ -351,7 +351,7 @@ useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), 
               variant="body2"
               style={{ color: "var(--gray)", marginBottom: "10px" }}
             >
-              Add the required ETH balance to confirm the order
+              Add the required WETH  balance to confirm the order
             </Typography>
       
       
@@ -360,7 +360,7 @@ useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), 
                 style={{ textDecoration: "none" }}
               >
                 <Button width={400} onClick={ls}>
-                  Hedge ETH
+                  Hedge WETH 
                 </Button>
               </Link>
           </>
