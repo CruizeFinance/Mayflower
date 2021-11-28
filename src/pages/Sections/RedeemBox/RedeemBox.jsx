@@ -886,7 +886,7 @@ const RedeemBox = () => {
 
   return (
     <div className={`dialog`} style={{ alignItems: "flex-start", gap: "8px" }}>
-      <Typography variant={"h6"}>Total Redeemable Value</Typography>
+      {/* <Typography variant={"h6"}>Total Redeemable Value</Typography> */}
       {/* removed it for now  */}
       {/* <div>
         <Typography variant={"h5"}>$459.89</Typography>

@@ -23,14 +23,33 @@ This protocol allows you to enter a desired price, <br> lock up USDC worth this 
 Our protection tower or as we call them as [watch dog](https://github.com/CruizeFinance/watch_dog) is a repository that contains our solidity IERC20 protocols.
 
 
+## Local development setup
+<li>clone the git repository
+<li>run <b> npm i</b>
+<li>install truffle
+<li>install metamask
+<li>Create a kovan testnet acount on metamask.
+<li>run <b>npm start</b>
+
+<br> 
+
+### You are ready to go
+<br>
+
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `yarn start`
+### `yarn start` or `npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
+
+<br>
+
+# Prerequisites
+<li>Add some WETH and USDC to your Kovan Testnet account to execute our protocols.
+<br><li>Install Metamask web-browser plugin 
