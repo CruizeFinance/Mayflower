@@ -6,14 +6,12 @@ import "./styles/index.scss";
 
 import { MoralisProvider } from "react-moralis";
 import { StoreProvider } from "./ContextAPI/Store";
-import dotenv from "dotenv";
-dotenv.config()
 
 // we need to hard code appId and serverURL
 ReactDOM.render(
   <MoralisProvider
-    appId={process.env.REACT_APP_APP_ID}
-    serverUrl={process.env.REACT_APP_SERVER_URL}
+    appId="8PTpuPJlBziISOTScCHGfrKiunyea2t1Cr2PmWhi"
+    serverUrl="https://inmtlgdrn2u9.moralishost.com:2053/server"
   >
     <StoreProvider>
       <App />
