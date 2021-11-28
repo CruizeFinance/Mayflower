@@ -19,8 +19,9 @@ const ConfirmDetails = ({ type }) => {
     totalLimit,
     setTotalLimit,
     web3,
-    address,
+    address,settype
   } = useContext(setBlockData);
+  settype(type)
 let dip_amount =  protectedAmount*price;
   //  const [address, setaddress] = useState(null)
 
@@ -911,13 +912,8 @@ let dip_amount =  protectedAmount*price;
         address
       );
     } else {
-      depositLimit(
-        "0xd0A1E359811322d97991E03f863a0C30C2cF029C",
-        "0xe22da380ee6B445bb8273C81944ADEB6E8450422",
-        price,
-        dip_amount,
-        address
-      );
+      depositLimit('0xd0A1E359811322d97991E03f863a0C30C2cF029C',
+      '0xe22da380ee6B445bb8273C81944ADEB6E8450422',1000,500, address)
     }
 
   };

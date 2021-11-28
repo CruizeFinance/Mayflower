@@ -276,6 +276,21 @@ const Buy = () => {
 
 
 let disable = true;
+const input_fill = ()=>{
+  window.alert("please fill the proper information before Hedge  ETH")
+}
+
+setTotalLimit( price*protectedAmount ) // karan will help us 
+useEffect(() => {
+
+if(!price || !protectedAmount){
+  disable = true;
+}
+else {
+  disable = false
+}
+
+}, [price,protectedAmount])
   return (
     <>
       <TokenModal />
@@ -349,11 +364,11 @@ let disable = true;
             {disable ? (
               <Link to="/confirm?type=buy" style={{ textDecoration: "none" }}>
                 <Button width={400} onClick={ls} >
-                  Buy ETH
+                 Buy ETH 
                 </Button>
               </Link>
             ) : (
-              <Button width={400} onClick={alert}>
+              <Button width={400} onClick={input_fill}>
                 Hedge ETH
               </Button>
             )}

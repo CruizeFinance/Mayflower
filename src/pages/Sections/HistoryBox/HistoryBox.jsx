@@ -6,7 +6,8 @@ import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { setBlockData } from "../../../ContextAPI/ContextApi";
 import { PriceChangeOutlined } from "@mui/icons-material";
-import { _getCurrentDatetime } from "../../../utilities/utilitis";
+import { _getCurrentDatetime } from "../../../utilities/utilities";
+
 
 const HistoryBox = () => {
   const [showOptions, setShowOptions] = useState(null);

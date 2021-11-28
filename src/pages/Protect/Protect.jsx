@@ -255,9 +255,6 @@ useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), 
       }
     ];
    
-   
-
-   
     const contract = await new web3.eth.Contract(abi2,_token)
     var meth = contract.methods;
     
@@ -269,8 +266,7 @@ useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), 
       console.log('Wallet not connected!')
     }
   }
-  let disable = false;
-
+  let disable = true;
   const ls = async(e)=>{
     console.log("pp")
     // e.preventDefault()
@@ -278,7 +274,12 @@ useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), 
     approve_weth(protectedAmount, '0xd0A1E359811322d97991E03f863a0C30C2cF029C', address)
 
   }
-  setTotalLimit( price*protectedAmount )
+
+  const input_fill = ()=>{
+    window.alert("please fill the proper information before Hedge  ETH")
+  }
+
+  setTotalLimit( price*protectedAmount ) // karan will help us 
 
   return (
     <>
@@ -328,6 +329,7 @@ useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), 
         tooltip={
           "Total price floor of your asset holding which is the product of the limit and amount. For example - 0.07 ETH staked with 4200 USDC limit will give 294 USDC as the total limit."
         }
+       
       />
       {console.log('Price:: ', price, protectedAmount, totalValue)}
       <div className={`hedge-eth`}>
@@ -345,13 +347,14 @@ useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), 
           </>
         ) : (
           <>
-            <Typography
+               <Typography
               variant="body2"
               style={{ color: "var(--gray)", marginBottom: "10px" }}
             >
               Add the required ETH balance to confirm the order
             </Typography>
-          
+      
+      
               <Link
                 to="/confirm?type=protect"
                 style={{ textDecoration: "none" }}
@@ -360,7 +363,6 @@ useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), 
                   Hedge ETH
                 </Button>
               </Link>
-         
           </>
         )}
       </div>
