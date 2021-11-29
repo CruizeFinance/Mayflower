@@ -5,6 +5,7 @@ export const _getCurrentDatetime = () => {
     var dateTime = date+' '+time;
     return dateTime;
   }
-export const Convert_toWei =(_value)=>{
-  return (_value * Math.pow(10,18))
+export const Convert_toWei =(_value,_pow=0)=>{
+  
+  return (_value *Math.Pow(10,18))
 }

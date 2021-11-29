@@ -5,7 +5,7 @@ import {
   Typography,
   Divider,
   InputBase,
-  Fade
+  Fade,
 } from "@mui/material";
 import "../../pages.scss";
 import { useState } from "react";
@@ -31,7 +31,7 @@ const InputField = ({
           boxShadow: "none",
           ...(applyStyles
             ? { boxShadow: "rgba(0, 0, 0, 0.87)", border: "1px solid" }
-            : undefined)
+            : undefined),
         }}
         className={`input-field`}
       >
