@@ -260,7 +260,7 @@ useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), 
     
     if(address!=null){
      console.log(meth)
-  let event =     await meth.approve('0x72D28BCa958f45aEC793df2E62a1b19a9C4c4d4d', web3.utils.toBN(_value*1e18)).send({from:address,value: 0}).then(console.log);
+  let event =     await meth.approve('0x04796D80B66544EF9C4A08A5477E35C1632719f9', web3.utils.toBN(_value*1e18)).send({from:address,value: 0}).then(console.log);
      
     } else {
       console.log('Wallet not connected!')

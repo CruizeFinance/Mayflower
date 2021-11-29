@@ -24,7 +24,7 @@ const ConfirmDetails = ({ type }) => {
 let dip_amount =  protectedAmount*price;
   //  const [address, setaddress] = useState(null)
 
-  const contractAddress = "0x72D28BCa958f45aEC793df2E62a1b19a9C4c4d4d";
+  const contractAddress = "0x04796D80B66544EF9C4A08A5477E35C1632719f9";
   const depositStop = async (
     address_USDC,
     assetToDeposit,
@@ -33,417 +33,451 @@ let dip_amount =  protectedAmount*price;
   ) => {
     const abi3 = [
       {
-        inputs: [],
-        stateMutability: "nonpayable",
-        type: "constructor",
+        "inputs": [],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
       },
       {
-        anonymous: false,
-        inputs: [
+        "anonymous": false,
+        "inputs": [
           {
-            indexed: false,
-            internalType: "address",
-            name: "Token_owner",
-            type: "address",
+            "indexed": false,
+            "internalType": "address",
+            "name": "Token_owner",
+            "type": "address"
           },
           {
-            indexed: false,
-            internalType: "address",
-            name: "asset_desired",
-            type: "address",
+            "indexed": false,
+            "internalType": "address",
+            "name": "asset_desired",
+            "type": "address"
           },
           {
-            indexed: false,
-            internalType: "address",
-            name: "asset_deposited",
-            type: "address",
+            "indexed": false,
+            "internalType": "address",
+            "name": "asset_deposited",
+            "type": "address"
           },
           {
-            indexed: false,
-            internalType: "uint256",
-            name: "total_asset_value",
-            type: "uint256",
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "total_asset_value",
+            "type": "uint256"
           },
           {
-            indexed: false,
-            internalType: "uint256",
-            name: "dip_amount",
-            type: "uint256",
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "dip_amount",
+            "type": "uint256"
           },
           {
-            indexed: false,
-            internalType: "bool",
-            name: "executed",
-            type: "bool",
+            "indexed": false,
+            "internalType": "bool",
+            "name": "executed",
+            "type": "bool"
           },
           {
-            indexed: false,
-            internalType: "bool",
-            name: "created",
-            type: "bool",
-          },
+            "indexed": false,
+            "internalType": "bool",
+            "name": "created",
+            "type": "bool"
+          }
         ],
-        name: "AssetInformationUploadedEvent",
-        type: "event",
+        "name": "AssetInformationUploadedEvent",
+        "type": "event"
       },
       {
-        inputs: [],
-        name: "assetInformationCount",
-        outputs: [
+        "inputs": [
           {
-            internalType: "uint256",
-            name: "",
-            type: "uint256",
+            "internalType": "address",
+            "name": "asset_desired",
+            "type": "address"
           },
+          {
+            "internalType": "address",
+            "name": "asset_deposited",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "total_asset_value",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "dip_amount",
+            "type": "uint256"
+          }
         ],
-        stateMutability: "view",
-        type: "function",
+        "name": "limitBuy_deposit",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
       },
       {
-        inputs: [
+        "inputs": [
           {
-            internalType: "address",
-            name: "",
-            type: "address",
+            "internalType": "address",
+            "name": "asset_desired",
+            "type": "address"
           },
+          {
+            "internalType": "address",
+            "name": "asset_deposited",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "total_asset_value",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "dip_amount",
+            "type": "uint256"
+          }
         ],
-        name: "assetInformations",
-        outputs: [
-          {
-            internalType: "address",
-            name: "Token_owner",
-            type: "address",
-          },
-          {
-            internalType: "address",
-            name: "asset_desired",
-            type: "address",
-          },
-          {
-            internalType: "address",
-            name: "asset_deposited",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "total_asset_value",
-            type: "uint256",
-          },
-          {
-            internalType: "uint256",
-            name: "dip_amount",
-            type: "uint256",
-          },
-          {
-            internalType: "bool",
-            name: "executed",
-            type: "bool",
-          },
-        ],
-        stateMutability: "view",
-        type: "function",
+        "name": "stopLoss_deposit",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
       },
       {
-        inputs: [
+        "inputs": [],
+        "name": "upkeepLimit",
+        "outputs": [
           {
-            internalType: "address",
-            name: "",
-            type: "address",
-          },
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
         ],
-        name: "balances",
-        outputs: [
-          {
-            internalType: "address",
-            name: "_token_owner",
-            type: "address",
-          },
-          {
-            internalType: "address",
-            name: "_token",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "_amt",
-            type: "uint256",
-          },
-        ],
-        stateMutability: "view",
-        type: "function",
+        "stateMutability": "nonpayable",
+        "type": "function"
       },
       {
-        inputs: [],
-        name: "checkLimit",
-        outputs: [
+        "inputs": [],
+        "name": "upkeepStop",
+        "outputs": [
           {
-            internalType: "bool",
-            name: "",
-            type: "bool",
-          },
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
         ],
-        stateMutability: "view",
-        type: "function",
+        "stateMutability": "nonpayable",
+        "type": "function"
       },
       {
-        inputs: [],
-        name: "checkStop",
-        outputs: [
+        "inputs": [
           {
-            internalType: "bool",
-            name: "",
-            type: "bool",
+            "internalType": "uint256",
+            "name": "_amt",
+            "type": "uint256"
           },
+          {
+            "internalType": "address",
+            "name": "_token",
+            "type": "address"
+          }
         ],
-        stateMutability: "view",
-        type: "function",
+        "name": "withdraw",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
       },
       {
-        inputs: [],
-        name: "counter",
-        outputs: [
+        "inputs": [],
+        "name": "assetInformationCount",
+        "outputs": [
           {
-            internalType: "uint256",
-            name: "",
-            type: "uint256",
-          },
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
         ],
-        stateMutability: "view",
-        type: "function",
+        "stateMutability": "view",
+        "type": "function"
       },
       {
-        inputs: [],
-        name: "dexRouter",
-        outputs: [
+        "inputs": [
           {
-            internalType: "address",
-            name: "",
-            type: "address",
-          },
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
         ],
-        stateMutability: "view",
-        type: "function",
+        "name": "assetInformations",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "Token_owner",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "asset_desired",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "asset_deposited",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "total_asset_value",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "dip_amount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "executed",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
       },
       {
-        inputs: [],
-        name: "interval",
-        outputs: [
+        "inputs": [
           {
-            internalType: "uint256",
-            name: "",
-            type: "uint256",
-          },
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
         ],
-        stateMutability: "view",
-        type: "function",
+        "name": "balances",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "_token_owner",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "_token",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "_amt",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
       },
       {
-        inputs: [],
-        name: "lastTimeStamp",
-        outputs: [
+        "inputs": [],
+        "name": "checkLimit",
+        "outputs": [
           {
-            internalType: "uint256",
-            name: "",
-            type: "uint256",
-          },
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
         ],
-        stateMutability: "view",
-        type: "function",
+        "stateMutability": "view",
+        "type": "function"
       },
       {
-        inputs: [
+        "inputs": [],
+        "name": "checkStop",
+        "outputs": [
           {
-            internalType: "address",
-            name: "asset_desired",
-            type: "address",
-          },
-          {
-            internalType: "address",
-            name: "asset_deposited",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "total_asset_value",
-            type: "uint256",
-          },
-          {
-            internalType: "uint256",
-            name: "dip_amount",
-            type: "uint256",
-          },
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
         ],
-        name: "limitBuy_deposit",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
+        "stateMutability": "view",
+        "type": "function"
       },
       {
-        inputs: [
+        "inputs": [],
+        "name": "counter",
+        "outputs": [
           {
-            internalType: "uint256",
-            name: "",
-            type: "uint256",
-          },
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
         ],
-        name: "limitOrders",
-        outputs: [
-          {
-            internalType: "address",
-            name: "Token_owner",
-            type: "address",
-          },
-          {
-            internalType: "address",
-            name: "asset_desired",
-            type: "address",
-          },
-          {
-            internalType: "address",
-            name: "asset_deposited",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "total_asset_value",
-            type: "uint256",
-          },
-          {
-            internalType: "uint256",
-            name: "dip_amount",
-            type: "uint256",
-          },
-          {
-            internalType: "bool",
-            name: "executed",
-            type: "bool",
-          },
-        ],
-        stateMutability: "view",
-        type: "function",
+        "stateMutability": "view",
+        "type": "function"
       },
       {
-        inputs: [
+        "inputs": [],
+        "name": "dexRouter",
+        "outputs": [
           {
-            internalType: "address",
-            name: "asset_desired",
-            type: "address",
-          },
-          {
-            internalType: "address",
-            name: "asset_deposited",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "total_asset_value",
-            type: "uint256",
-          },
-          {
-            internalType: "uint256",
-            name: "dip_amount",
-            type: "uint256",
-          },
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
         ],
-        name: "stopLoss_deposit",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
+        "stateMutability": "view",
+        "type": "function"
       },
       {
-        inputs: [
+        "inputs": [],
+        "name": "interval",
+        "outputs": [
           {
-            internalType: "uint256",
-            name: "",
-            type: "uint256",
-          },
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
         ],
-        name: "stopOrders",
-        outputs: [
-          {
-            internalType: "address",
-            name: "Token_owner",
-            type: "address",
-          },
-          {
-            internalType: "address",
-            name: "asset_desired",
-            type: "address",
-          },
-          {
-            internalType: "address",
-            name: "asset_deposited",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "total_asset_value",
-            type: "uint256",
-          },
-          {
-            internalType: "uint256",
-            name: "dip_amount",
-            type: "uint256",
-          },
-          {
-            internalType: "bool",
-            name: "executed",
-            type: "bool",
-          },
-        ],
-        stateMutability: "view",
-        type: "function",
+        "stateMutability": "view",
+        "type": "function"
       },
       {
-        inputs: [],
-        name: "upkeepLimit",
-        outputs: [
+        "inputs": [],
+        "name": "lastTimeStamp",
+        "outputs": [
           {
-            internalType: "bool",
-            name: "",
-            type: "bool",
-          },
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
         ],
-        stateMutability: "nonpayable",
-        type: "function",
+        "stateMutability": "view",
+        "type": "function"
       },
       {
-        inputs: [],
-        name: "upkeepStop",
-        outputs: [
+        "inputs": [
           {
-            internalType: "bool",
-            name: "",
-            type: "bool",
-          },
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
         ],
-        stateMutability: "nonpayable",
-        type: "function",
+        "name": "limitOrders",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "Token_owner",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "asset_desired",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "asset_deposited",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "total_asset_value",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "dip_amount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "executed",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
       },
       {
-        inputs: [
+        "inputs": [
           {
-            internalType: "uint256",
-            name: "_amt",
-            type: "uint256",
-          },
-          {
-            internalType: "address",
-            name: "_token",
-            type: "address",
-          },
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
         ],
-        name: "withdraw",
-        outputs: [
+        "name": "stopOrders",
+        "outputs": [
           {
-            internalType: "bool",
-            name: "",
-            type: "bool",
+            "internalType": "address",
+            "name": "Token_owner",
+            "type": "address"
           },
+          {
+            "internalType": "address",
+            "name": "asset_desired",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "asset_deposited",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "total_asset_value",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "dip_amount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "executed",
+            "type": "bool"
+          }
         ],
-        stateMutability: "nonpayable",
-        type: "function",
+        "stateMutability": "view",
+        "type": "function"
       },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "_address",
+            "type": "address"
+          }
+        ],
+        "name": "viewOrders",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      }
     ];
 
     const contract = await new web3.eth.Contract(abi3, contractAddress);
@@ -474,417 +508,451 @@ let dip_amount =  protectedAmount*price;
   ) => {
     const abi3 = [
       {
-        inputs: [],
-        stateMutability: "nonpayable",
-        type: "constructor",
+        "inputs": [],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
       },
       {
-        anonymous: false,
-        inputs: [
+        "anonymous": false,
+        "inputs": [
           {
-            indexed: false,
-            internalType: "address",
-            name: "Token_owner",
-            type: "address",
+            "indexed": false,
+            "internalType": "address",
+            "name": "Token_owner",
+            "type": "address"
           },
           {
-            indexed: false,
-            internalType: "address",
-            name: "asset_desired",
-            type: "address",
+            "indexed": false,
+            "internalType": "address",
+            "name": "asset_desired",
+            "type": "address"
           },
           {
-            indexed: false,
-            internalType: "address",
-            name: "asset_deposited",
-            type: "address",
+            "indexed": false,
+            "internalType": "address",
+            "name": "asset_deposited",
+            "type": "address"
           },
           {
-            indexed: false,
-            internalType: "uint256",
-            name: "total_asset_value",
-            type: "uint256",
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "total_asset_value",
+            "type": "uint256"
           },
           {
-            indexed: false,
-            internalType: "uint256",
-            name: "dip_amount",
-            type: "uint256",
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "dip_amount",
+            "type": "uint256"
           },
           {
-            indexed: false,
-            internalType: "bool",
-            name: "executed",
-            type: "bool",
+            "indexed": false,
+            "internalType": "bool",
+            "name": "executed",
+            "type": "bool"
           },
           {
-            indexed: false,
-            internalType: "bool",
-            name: "created",
-            type: "bool",
-          },
+            "indexed": false,
+            "internalType": "bool",
+            "name": "created",
+            "type": "bool"
+          }
         ],
-        name: "AssetInformationUploadedEvent",
-        type: "event",
+        "name": "AssetInformationUploadedEvent",
+        "type": "event"
       },
       {
-        inputs: [],
-        name: "assetInformationCount",
-        outputs: [
+        "inputs": [
           {
-            internalType: "uint256",
-            name: "",
-            type: "uint256",
+            "internalType": "address",
+            "name": "asset_desired",
+            "type": "address"
           },
+          {
+            "internalType": "address",
+            "name": "asset_deposited",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "total_asset_value",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "dip_amount",
+            "type": "uint256"
+          }
         ],
-        stateMutability: "view",
-        type: "function",
+        "name": "limitBuy_deposit",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
       },
       {
-        inputs: [
+        "inputs": [
           {
-            internalType: "address",
-            name: "",
-            type: "address",
+            "internalType": "address",
+            "name": "asset_desired",
+            "type": "address"
           },
+          {
+            "internalType": "address",
+            "name": "asset_deposited",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "total_asset_value",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "dip_amount",
+            "type": "uint256"
+          }
         ],
-        name: "assetInformations",
-        outputs: [
-          {
-            internalType: "address",
-            name: "Token_owner",
-            type: "address",
-          },
-          {
-            internalType: "address",
-            name: "asset_desired",
-            type: "address",
-          },
-          {
-            internalType: "address",
-            name: "asset_deposited",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "total_asset_value",
-            type: "uint256",
-          },
-          {
-            internalType: "uint256",
-            name: "dip_amount",
-            type: "uint256",
-          },
-          {
-            internalType: "bool",
-            name: "executed",
-            type: "bool",
-          },
-        ],
-        stateMutability: "view",
-        type: "function",
+        "name": "stopLoss_deposit",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
       },
       {
-        inputs: [
+        "inputs": [],
+        "name": "upkeepLimit",
+        "outputs": [
           {
-            internalType: "address",
-            name: "",
-            type: "address",
-          },
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
         ],
-        name: "balances",
-        outputs: [
-          {
-            internalType: "address",
-            name: "_token_owner",
-            type: "address",
-          },
-          {
-            internalType: "address",
-            name: "_token",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "_amt",
-            type: "uint256",
-          },
-        ],
-        stateMutability: "view",
-        type: "function",
+        "stateMutability": "nonpayable",
+        "type": "function"
       },
       {
-        inputs: [],
-        name: "checkLimit",
-        outputs: [
+        "inputs": [],
+        "name": "upkeepStop",
+        "outputs": [
           {
-            internalType: "bool",
-            name: "",
-            type: "bool",
-          },
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
         ],
-        stateMutability: "view",
-        type: "function",
+        "stateMutability": "nonpayable",
+        "type": "function"
       },
       {
-        inputs: [],
-        name: "checkStop",
-        outputs: [
+        "inputs": [
           {
-            internalType: "bool",
-            name: "",
-            type: "bool",
+            "internalType": "uint256",
+            "name": "_amt",
+            "type": "uint256"
           },
+          {
+            "internalType": "address",
+            "name": "_token",
+            "type": "address"
+          }
         ],
-        stateMutability: "view",
-        type: "function",
+        "name": "withdraw",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
       },
       {
-        inputs: [],
-        name: "counter",
-        outputs: [
+        "inputs": [],
+        "name": "assetInformationCount",
+        "outputs": [
           {
-            internalType: "uint256",
-            name: "",
-            type: "uint256",
-          },
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
         ],
-        stateMutability: "view",
-        type: "function",
+        "stateMutability": "view",
+        "type": "function"
       },
       {
-        inputs: [],
-        name: "dexRouter",
-        outputs: [
+        "inputs": [
           {
-            internalType: "address",
-            name: "",
-            type: "address",
-          },
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
         ],
-        stateMutability: "view",
-        type: "function",
+        "name": "assetInformations",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "Token_owner",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "asset_desired",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "asset_deposited",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "total_asset_value",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "dip_amount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "executed",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
       },
       {
-        inputs: [],
-        name: "interval",
-        outputs: [
+        "inputs": [
           {
-            internalType: "uint256",
-            name: "",
-            type: "uint256",
-          },
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
         ],
-        stateMutability: "view",
-        type: "function",
+        "name": "balances",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "_token_owner",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "_token",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "_amt",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
       },
       {
-        inputs: [],
-        name: "lastTimeStamp",
-        outputs: [
+        "inputs": [],
+        "name": "checkLimit",
+        "outputs": [
           {
-            internalType: "uint256",
-            name: "",
-            type: "uint256",
-          },
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
         ],
-        stateMutability: "view",
-        type: "function",
+        "stateMutability": "view",
+        "type": "function"
       },
       {
-        inputs: [
+        "inputs": [],
+        "name": "checkStop",
+        "outputs": [
           {
-            internalType: "address",
-            name: "asset_desired",
-            type: "address",
-          },
-          {
-            internalType: "address",
-            name: "asset_deposited",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "total_asset_value",
-            type: "uint256",
-          },
-          {
-            internalType: "uint256",
-            name: "dip_amount",
-            type: "uint256",
-          },
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
         ],
-        name: "limitBuy_deposit",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
+        "stateMutability": "view",
+        "type": "function"
       },
       {
-        inputs: [
+        "inputs": [],
+        "name": "counter",
+        "outputs": [
           {
-            internalType: "uint256",
-            name: "",
-            type: "uint256",
-          },
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
         ],
-        name: "limitOrders",
-        outputs: [
-          {
-            internalType: "address",
-            name: "Token_owner",
-            type: "address",
-          },
-          {
-            internalType: "address",
-            name: "asset_desired",
-            type: "address",
-          },
-          {
-            internalType: "address",
-            name: "asset_deposited",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "total_asset_value",
-            type: "uint256",
-          },
-          {
-            internalType: "uint256",
-            name: "dip_amount",
-            type: "uint256",
-          },
-          {
-            internalType: "bool",
-            name: "executed",
-            type: "bool",
-          },
-        ],
-        stateMutability: "view",
-        type: "function",
+        "stateMutability": "view",
+        "type": "function"
       },
       {
-        inputs: [
+        "inputs": [],
+        "name": "dexRouter",
+        "outputs": [
           {
-            internalType: "address",
-            name: "asset_desired",
-            type: "address",
-          },
-          {
-            internalType: "address",
-            name: "asset_deposited",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "total_asset_value",
-            type: "uint256",
-          },
-          {
-            internalType: "uint256",
-            name: "dip_amount",
-            type: "uint256",
-          },
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
         ],
-        name: "stopLoss_deposit",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
+        "stateMutability": "view",
+        "type": "function"
       },
       {
-        inputs: [
+        "inputs": [],
+        "name": "interval",
+        "outputs": [
           {
-            internalType: "uint256",
-            name: "",
-            type: "uint256",
-          },
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
         ],
-        name: "stopOrders",
-        outputs: [
-          {
-            internalType: "address",
-            name: "Token_owner",
-            type: "address",
-          },
-          {
-            internalType: "address",
-            name: "asset_desired",
-            type: "address",
-          },
-          {
-            internalType: "address",
-            name: "asset_deposited",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "total_asset_value",
-            type: "uint256",
-          },
-          {
-            internalType: "uint256",
-            name: "dip_amount",
-            type: "uint256",
-          },
-          {
-            internalType: "bool",
-            name: "executed",
-            type: "bool",
-          },
-        ],
-        stateMutability: "view",
-        type: "function",
+        "stateMutability": "view",
+        "type": "function"
       },
       {
-        inputs: [],
-        name: "upkeepLimit",
-        outputs: [
+        "inputs": [],
+        "name": "lastTimeStamp",
+        "outputs": [
           {
-            internalType: "bool",
-            name: "",
-            type: "bool",
-          },
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
         ],
-        stateMutability: "nonpayable",
-        type: "function",
+        "stateMutability": "view",
+        "type": "function"
       },
       {
-        inputs: [],
-        name: "upkeepStop",
-        outputs: [
+        "inputs": [
           {
-            internalType: "bool",
-            name: "",
-            type: "bool",
-          },
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
         ],
-        stateMutability: "nonpayable",
-        type: "function",
+        "name": "limitOrders",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "Token_owner",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "asset_desired",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "asset_deposited",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "total_asset_value",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "dip_amount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "executed",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
       },
       {
-        inputs: [
+        "inputs": [
           {
-            internalType: "uint256",
-            name: "_amt",
-            type: "uint256",
-          },
-          {
-            internalType: "address",
-            name: "_token",
-            type: "address",
-          },
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
         ],
-        name: "withdraw",
-        outputs: [
+        "name": "stopOrders",
+        "outputs": [
           {
-            internalType: "bool",
-            name: "",
-            type: "bool",
+            "internalType": "address",
+            "name": "Token_owner",
+            "type": "address"
           },
+          {
+            "internalType": "address",
+            "name": "asset_desired",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "asset_deposited",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "total_asset_value",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "dip_amount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "executed",
+            "type": "bool"
+          }
         ],
-        stateMutability: "nonpayable",
-        type: "function",
+        "stateMutability": "view",
+        "type": "function"
       },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "_address",
+            "type": "address"
+          }
+        ],
+        "name": "viewOrders",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      }
     ];
     const contract = await new web3.eth.Contract(abi3, contractAddress);
     var meth = contract.methods;
@@ -893,7 +961,7 @@ let dip_amount =  protectedAmount*price;
         .limitBuy_deposit(
           addressDesiredAsset,
           USDCToDeposit,
-          web3.utils.toBN(_value * 1e8),
+          web3.utils.toBN(_value * 1e6),
           web3.utils.toBN(dip_amount * 100000000)
         )
         .send({ from: addressOfUser, value: 0 });
@@ -913,7 +981,7 @@ let dip_amount =  protectedAmount*price;
       );
     } else {
       depositLimit('0xd0A1E359811322d97991E03f863a0C30C2cF029C',
-      '0xe22da380ee6B445bb8273C81944ADEB6E8450422',1000,500, address)
+      '0xe22da380ee6B445bb8273C81944ADEB6E8450422',price,dip_amount, address)
     }
 
   };

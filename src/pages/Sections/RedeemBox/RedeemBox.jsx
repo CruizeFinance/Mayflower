@@ -6,7 +6,7 @@ import { useState, useEffect, useContext } from "react";
 import { setBlockData } from "../../../ContextAPI/ContextApi";
 import { Convert_toWei } from "../../../utilities/utilities";
 const RedeemBox = () => {
-  const contractAddress = "0x72D28BCa958f45aEC793df2E62a1b19a9C4c4d4d";
+  const contractAddress = "0x04796D80B66544EF9C4A08A5477E35C1632719f9";
   const {
     price,
     setPrice,
