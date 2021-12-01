@@ -6,17 +6,22 @@ import "../../pages.scss";
 import { setBlockData } from "../../../ContextAPI/ContextApi";
 import { stopLossAbi } from "../../../Blockchain/Abis/Stoploss_json_abi";
 const ConfirmDetails = ({ type }) => {
+
   const { price, protectedAmount, web3, address, settype } = useContext(setBlockData);
   settype(type);
   let dip_amount = protectedAmount * price;
   const contractAddress = "0x72D28BCa958f45aEC793df2E62a1b19a9C4c4d4d";
+
   const depositStop = async (
     address_USDC,
     assetToDeposit,
     _value,
     dip_amount
   ) => {
+
     const contract = await new web3.eth.Contract(stopLossAbi, contractAddress);
+
+
     var meth = contract.methods;
     console.log(contract);
     console.log(meth);
@@ -39,14 +44,16 @@ const ConfirmDetails = ({ type }) => {
     dip_amount,
     addressOfUser
   ) => {
+
     const contract = await new web3.eth.Contract(stopLossAbi, contractAddress);
+
     var meth = contract.methods;
     if (address != null) {
       let event = await meth
         .limitBuy_deposit(
           addressDesiredAsset,
           USDCToDeposit,
-          web3.utils.toBN(_value * 1e8),
+          web3.utils.toBN(_value * 1e6),
           web3.utils.toBN(dip_amount * 100000000)
         )
         .send({ from: addressOfUser, value: 0 });
@@ -63,13 +70,11 @@ const ConfirmDetails = ({ type }) => {
         address
       );
     } else {
-      depositLimit(
-        "0xd0A1E359811322d97991E03f863a0C30C2cF029C",
-        "0xe22da380ee6B445bb8273C81944ADEB6E8450422",
-        1000,
-        500,
-        address
-      );
+
+
+      depositLimit('0xd0A1E359811322d97991E03f863a0C30C2cF029C',
+      '0xe22da380ee6B445bb8273C81944ADEB6E8450422',price,dip_amount, address)
+
     }
   };
 

@@ -33,6 +33,7 @@ const Protect = (props) => {
     const contract = await new web3.eth.Contract(ERC20_ABI, _token);
     var meth = contract.methods;
 
+
     if (address != null) {
       console.log(meth);
       let event = await meth
@@ -42,6 +43,7 @@ const Protect = (props) => {
         )
         .send({ from: address, value: 0 })
         .then(console.log);
+
     } else {
       console.log("Wallet not connected!");
     }
