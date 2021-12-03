@@ -7,21 +7,18 @@ import { InfoBox, InputField, ViewLinks, TokenModal } from "../Sections";
 import { useMoralis } from "react-moralis";
 import { Link } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
-
-
-
 import { setBlockData } from "../../ContextAPI/ContextApi";
-
+import Web3 from "web3";
 const Protect = (props) => {
   //  const { address, balance, message, setBalance, setAddress } = useStoreApi();
-  const { isAuthenticated, authenticate } = useMoralis();
+  // const { isAuthenticated, authenticate } = useMoralis();
   const {
     price,
     setPrice,
     protectedAmount,
     setProtectedAmount,
     totalLimit,
-    setTotalLimit,web3,address
+    setTotalLimit,web3,address,setweb3,setaddress,
   } = useContext(setBlockData);
 
 console.log(price,protectedAmount,totalLimit,address)
@@ -280,7 +277,23 @@ useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), 
   }
 
   setTotalLimit( price*protectedAmount ) // karan will help us 
+  const loadWeb3 = async () => {
+  
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum);
+      await window.ethereum.enable(); 
+    }}
 
+
+  const loadContract = async () => {
+    loadWeb3()
+    const web1 = window.web3;
+    setweb3(web1)
+  let accounts =  await web1.eth.getAccounts()
+  console.log(accounts)
+  setaddress(accounts[0]);
+
+  };
   return (
     <>
       <TokenModal />
@@ -333,7 +346,7 @@ useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), 
       />
       {console.log('Price:: ', price, protectedAmount, totalValue)}
       <div className={`hedge-eth`}>
-        {!isAuthenticated ? (
+        {!address ? (
           <>
             <Typography
               variant="body2"
@@ -341,7 +354,7 @@ useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), 
             >
               Connect your wallet to continue
             </Typography>
-            <Button width={400} onClick={authenticate}>
+            <Button width={400} onClick={loadContract}>
               Connect Wallet
             </Button>
           </>
