@@ -39,10 +39,8 @@ const App = () => {
   
 useEffect(() => {
   loadWeb3()
-
     loadContract()
-
-
+   
 }, [])
   return isMobile ? (
     <div className={`mobile`}>

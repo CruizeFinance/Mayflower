@@ -20,7 +20,7 @@ const Buy = () => {
     protectedAmount,
     setProtectedAmount,
     totalLimit,
-    setTotalLimit,web3,address
+    setTotalLimit,web3,address,setweb3,setaddress
   } = useContext(setBlockData);
   
   const [totalValue, setTotalValue] = useState(null);
@@ -287,6 +287,25 @@ else {
 }
 
 }, [price,protectedAmount])
+
+const loadWeb3 = async () => {
+  
+  if (window.ethereum) {
+    window.web3 = new Web3(window.ethereum);
+    await window.ethereum.enable(); 
+  }}
+
+
+const loadContract = async () => {
+  loadWeb3()
+  const web1 = window.web3;
+  setweb3(web1)
+let accounts =  await web1.eth.getAccounts()
+console.log(accounts)
+setaddress(accounts[0]);
+
+};
+
   return (
     <>
       <TokenModal />
@@ -337,7 +356,7 @@ else {
         }
       />
       <div className={`hedge-eth`}>
-        {!isAuthenticated ? (
+        {!address ? (
           <>
             <Typography
               variant="body2"
@@ -345,7 +364,7 @@ else {
             >
               Connect your wallet to continue
             </Typography>
-            <Button width={400} onClick={authenticate}>
+            <Button width={400} onClick={loadContract}>
               Connect Wallet
             </Button>
           </>

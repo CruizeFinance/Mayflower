@@ -4,7 +4,7 @@ import { styles } from "../../styles/styles";
 import { Button } from "../../components";
 import { useMoralis } from "react-moralis";
 import "./Header.scss";
-import {useContext} from 'react'
+import {useContext,  useEffect} from 'react'
 import {setBlockData} from '../../ContextAPI/ContextApi'
 import Web3 from "web3";
 const Header = () => {
@@ -36,6 +36,7 @@ const Header = () => {
   setaddress(accounts[0]);
 
   };
+
   return (
     <AppBar
       position="fixed"
