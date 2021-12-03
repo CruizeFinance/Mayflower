@@ -66,7 +66,7 @@ useEffect(() => {
           setProtectedAmount,
           totalLimit,
           setTotalLimit,
-          assetsAddress,
+          assetsAddress,web3, setweb3,
           setAssetsAddress,web3,address,type, settype
         }}
       >
