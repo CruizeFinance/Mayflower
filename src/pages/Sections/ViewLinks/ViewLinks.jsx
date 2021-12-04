@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import "../../pages.scss";
 
 const ViewLinks = ({ map, page }) => {
-  const { isAuthenticated } = useMoralis();
-
+  // const { isAuthenticated } = useMoralis();
+  let isAuthenticated = true;
   const [hashMap, setHashMap] = useState(map);
 
   useEffect(() => {
