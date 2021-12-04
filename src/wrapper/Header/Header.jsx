@@ -36,6 +36,7 @@ const Header = () => {
   setaddress(accounts[0]);
 
   };
+  // we have to change something 
 
   return (
     <AppBar
