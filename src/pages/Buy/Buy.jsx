@@ -1,5 +1,4 @@
 import { Slider, Typography } from "@mui/material";
-import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
 import { MARKS, VIEW } from "../../utils/constants";
 import { InfoBox, InputField, ViewLinks, TokenModal } from "../Sections";
@@ -7,10 +6,9 @@ import { Button } from "../../components";
 import { useMoralis } from "react-moralis";
 import "../pages.scss";
 import { useContext, useEffect, useState } from "react";
-
+import { ERC20_ABI } from "../../Blockchain/Abis/ERC20_json_abi";
 import { loadContract } from "../../Blockchain/LoadSmartContract";
 import { setBlockData } from "../../ContextAPI/ContextApi";
-import Web3 from "web3";
 
 const Buy = () => {
   // const { isAuthenticated, authenticate } = useMoralis();
@@ -19,8 +17,8 @@ const Buy = () => {
     setPrice,
     protectedAmount,
     setProtectedAmount,
-    totalLimit,
-    setTotalLimit,web3,address,setweb3,setaddress
+    setTotalLimit,web3,address
+
   } = useContext(setBlockData);
   
   const [totalValue, setTotalValue] = useState(null);
@@ -30,229 +28,8 @@ const Buy = () => {
   
 
     const  approve_usdc = async (_value, _token, addressOfUser) => {
-    const abi2 = [
-      {
-          "constant": true,
-          "inputs": [],
-          "name": "name",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "string"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-      },
-      {
-          "constant": false,
-          "inputs": [
-              {
-                  "name": "_spender",
-                  "type": "address"
-              },
-              {
-                  "name": "_value",
-                  "type": "uint256"
-              }
-          ],
-          "name": "approve",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "bool"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-      },
-      {
-          "constant": true,
-          "inputs": [],
-          "name": "totalSupply",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "uint256"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-      },
-      {
-          "constant": false,
-          "inputs": [
-              {
-                  "name": "_from",
-                  "type": "address"
-              },
-              {
-                  "name": "_to",
-                  "type": "address"
-              },
-              {
-                  "name": "_value",
-                  "type": "uint256"
-              }
-          ],
-          "name": "transferFrom",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "bool"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-      },
-      {
-          "constant": true,
-          "inputs": [],
-          "name": "decimals",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "uint8"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-      },
-      {
-          "constant": true,
-          "inputs": [
-              {
-                  "name": "_owner",
-                  "type": "address"
-              }
-          ],
-          "name": "balanceOf",
-          "outputs": [
-              {
-                  "name": "balance",
-                  "type": "uint256"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-      },
-      {
-          "constant": true,
-          "inputs": [],
-          "name": "symbol",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "string"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-      },
-      {
-          "constant": false,
-          "inputs": [
-              {
-                  "name": "_to",
-                  "type": "address"
-              },
-              {
-                  "name": "_value",
-                  "type": "uint256"
-              }
-          ],
-          "name": "transfer",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "bool"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-      },
-      {
-          "constant": true,
-          "inputs": [
-              {
-                  "name": "_owner",
-                  "type": "address"
-              },
-              {
-                  "name": "_spender",
-                  "type": "address"
-              }
-          ],
-          "name": "allowance",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "uint256"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-      },
-      {
-          "payable": true,
-          "stateMutability": "payable",
-          "type": "fallback"
-      },
-      {
-          "anonymous": false,
-          "inputs": [
-              {
-                  "indexed": true,
-                  "name": "owner",
-                  "type": "address"
-              },
-              {
-                  "indexed": true,
-                  "name": "spender",
-                  "type": "address"
-              },
-              {
-                  "indexed": false,
-                  "name": "value",
-                  "type": "uint256"
-              }
-          ],
-          "name": "Approval",
-          "type": "event"
-      },
-      {
-          "anonymous": false,
-          "inputs": [
-              {
-                  "indexed": true,
-                  "name": "from",
-                  "type": "address"
-              },
-              {
-                  "indexed": true,
-                  "name": "to",
-                  "type": "address"
-              },
-              {
-                  "indexed": false,
-                  "name": "value",
-                  "type": "uint256"
-              }
-          ],
-          "name": "Transfer",
-          "type": "event"
-      }
-    ];
-    const contract = await new web3.eth.Contract(abi2,_token)
+ 
+    const contract = await new web3.eth.Contract(ERC20_ABI,_token)
     var meth = contract.methods;
     console.log(address);
     if(address!=null){
@@ -263,8 +40,8 @@ const Buy = () => {
       console.log('Wallet not connected!')
     }
   }
-  /** for developer only  */
-  const ls = async (e)=>{
+
+  const approve_Usdc = async (e)=>{
     approve_usdc(price, '0xe22da380ee6B445bb8273C81944ADEB6E8450422', address)
   }
 
@@ -362,17 +139,11 @@ else {
             >
               Add the required USDC balance to confirm the order
             </Typography>
-            {disable ? (
               <Link to="/confirm?type=buy" style={{ textDecoration: "none" }}>
-                <Button width={400} onClick={ls} >
+                <Button width={400} onClick={approve_Usdc} >
                  Buy WETH 
                 </Button>
               </Link>
-            ) : (
-              <Button width={400} onClick={input_fill}>
-                Hedge WETH 
-              </Button>
-            )}
           </>
         )}
       </div>

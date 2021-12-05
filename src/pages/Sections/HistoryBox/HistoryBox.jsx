@@ -20,11 +20,7 @@ const HistoryBox = () => {
   };
   const {
     price,
-    setPrice,
-    protectedAmount,
-    setProtectedAmount,
-    totalLimit,
-    setTotalLimit,web3,address,type
+    protectedAmount,type
   } = useContext(setBlockData);
 
   const current_datetime = _getCurrentDatetime().toString();
