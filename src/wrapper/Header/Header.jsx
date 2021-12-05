@@ -19,22 +19,12 @@ const Header = () => {
     totalLimit,
     setTotalLimit,web3,address, setweb3,setaddress
   } = useContext(setBlockData);
-  const loadWeb3 = async () => {
-  
-    if (window.ethereum) {
-      window.web3 = new Web3(window.ethereum);
-      await window.ethereum.enable(); 
-    }}
+  console.log(address)
+
 
 
   const loadContract = async () => {
-    loadWeb3()
-    const web1 = window.web3;
-    setweb3(web1)
-  let accounts =  await web1.eth.getAccounts()
-  console.log(accounts)
-  setaddress(accounts[0]);
-
+    window.location.reload()  
   };
 
   return (

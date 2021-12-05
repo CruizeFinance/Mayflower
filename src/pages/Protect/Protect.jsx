@@ -4,7 +4,7 @@ import { MARKS, VIEW } from "../../utils/constants";
 import "../pages.scss";
 import { Button } from "../../components";
 import { InfoBox, InputField, ViewLinks, TokenModal } from "../Sections";
-import { useMoralis } from "react-moralis";
+// import { useMoralis } from "react-moralis";
 import { Link } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import { setBlockData } from "../../ContextAPI/ContextApi";
@@ -20,7 +20,10 @@ const Protect = (props) => {
     totalLimit,
     setTotalLimit,web3,address,setweb3,setaddress,
   } = useContext(setBlockData);
-
+  // this will reload the page 
+  const loadContract = async () => {
+    window.location.reload()  
+  };
 console.log(price,protectedAmount,totalLimit,address)
 
 const [totalValue, setTotalValue] = useState(null);
@@ -277,23 +280,7 @@ useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), 
   }
 
   setTotalLimit( price*protectedAmount ) // karan will help us 
-  const loadWeb3 = async () => {
-  
-    if (window.ethereum) {
-      window.web3 = new Web3(window.ethereum);
-      await window.ethereum.enable(); 
-    }}
-
-
-  const loadContract = async () => {
-    loadWeb3()
-    const web1 = window.web3;
-    setweb3(web1)
-  let accounts =  await web1.eth.getAccounts()
-  console.log(accounts)
-  setaddress(accounts[0]);
-
-  };
+ 
   return (
     <>
       <TokenModal />

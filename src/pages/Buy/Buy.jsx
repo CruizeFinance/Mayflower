@@ -13,7 +13,7 @@ import { setBlockData } from "../../ContextAPI/ContextApi";
 import Web3 from "web3";
 
 const Buy = () => {
-  const { isAuthenticated, authenticate } = useMoralis();
+  // const { isAuthenticated, authenticate } = useMoralis();
   const {
     price,
     setPrice,
@@ -288,23 +288,9 @@ else {
 
 }, [price,protectedAmount])
 
-const loadWeb3 = async () => {
-  
-  if (window.ethereum) {
-    window.web3 = new Web3(window.ethereum);
-    await window.ethereum.enable(); 
-  }}
-
-
-const loadContract = async () => {
-  loadWeb3()
-  const web1 = window.web3;
-  setweb3(web1)
-let accounts =  await web1.eth.getAccounts()
-console.log(accounts)
-setaddress(accounts[0]);
-
-};
+  const loadContract = async () => {
+    window.location.reload()  
+  };
 
   return (
     <>
