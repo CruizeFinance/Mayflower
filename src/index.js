@@ -9,14 +9,9 @@ import { StoreProvider } from "./ContextAPI/Store";
 
 // we need to hard code appId and serverURL
 ReactDOM.render(
-  <MoralisProvider
-    appId="8PTpuPJlBziISOTScCHGfrKiunyea2t1Cr2PmWhi"
-    serverUrl="https://inmtlgdrn2u9.moralishost.com:2053/server"
-  >
     <StoreProvider>
       <App />
-    </StoreProvider>
-  </MoralisProvider>,
+    </StoreProvider>,
   document.getElementById("root")
 );
 

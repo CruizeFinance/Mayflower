@@ -5,7 +5,7 @@ import "./styles/app.scss";
 
 import { isMobile } from "react-device-detect";
 import { useEffect, useState } from "react";
-import useStoreApi from "./ContextAPI/StoreApi";
+
 import Web3 from "web3";
 import { setBlockData } from "./ContextAPI/ContextApi";
 
@@ -20,30 +20,34 @@ const App = () => {
   const [type, settype] = useState()
   // const {address, balance, message, setBalance, setAddress} = useStoreApi(); To be removed
   const loadWeb3 = async () => {
-  
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum);
       await window.ethereum.enable(); 
     }}
-
-
   const loadContract = async () => {
-    const web1 = window.web3;
-    setweb3(web1)
-  let accounts =  await web1.eth.getAccounts()
-  console.log(accounts)
-  setaddress(accounts[0]);
+    loadWeb3();
+    const web = window.web3;
+    // loading  the smart contract
+    // scan = new web3.eth.Contract(Stoploss.abi, process.env.STOP_LOOST_CONTRACT);
+    /** for developer  only */
+    // console.log(scan);
+     console.log(web)
+    setweb3(web)
+    let account =  await  web.eth.getAccounts()
 
+    console.log(account[0])
+    setaddress(account[0])
+    console.log("successfully get contract");
   };
+
   
   
 useEffect(() => {
-  loadWeb3()
-
+    loadWeb3();
     loadContract()
-
-
+   
 }, [])
+
   return isMobile ? (
     <div className={`mobile`}>
       <img
@@ -66,7 +70,7 @@ useEffect(() => {
           setProtectedAmount,
           totalLimit,
           setTotalLimit,
-          assetsAddress,
+          assetsAddress,web3, setweb3,
           setAssetsAddress,web3,address,type, settype
         }}
       >

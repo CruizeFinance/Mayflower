@@ -3,13 +3,14 @@ import { VIEW } from "../../utils/constants";
 import "../pages.scss";
 import { Button } from "../../components";
 import { InfoBox, InputField, ViewLinks, TokenModal } from "../Sections";
-import { useMoralis } from "react-moralis";
+// import { useMoralis } from "react-moralis";
 import { Link } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import { ERC20_ABI } from "../../Blockchain/Abis/ERC20_json_abi";
 import { setBlockData } from "../../ContextAPI/ContextApi";
 const Protect = (props) => {
-  const { isAuthenticated, authenticate } = useMoralis();
+//   const { isAuthenticated, authenticate } = useMoralis();
+
   const {
     price,
     setPrice,
@@ -22,6 +23,7 @@ const Protect = (props) => {
   } = useContext(setBlockData);
 
   console.log(price, protectedAmount, totalLimit, address);
+
 
   const [totalValue, setTotalValue] = useState(null);
   useEffect(
@@ -57,6 +59,7 @@ const Protect = (props) => {
     );
   };
   setTotalLimit(price * protectedAmount); 
+
   return (
     <>
       <TokenModal />
@@ -108,7 +111,7 @@ const Protect = (props) => {
       />
       {console.log("Price:: ", price, protectedAmount, totalValue)}
       <div className={`hedge-eth`}>
-        {!isAuthenticated ? (
+        {!address ? (
           <>
             <Typography
               variant="body2"
@@ -116,7 +119,7 @@ const Protect = (props) => {
             >
               Connect your wallet to continue
             </Typography>
-            <Button width={400} onClick={authenticate}>
+            <Button width={400} onClick={loadContract}>
               Connect Wallet
             </Button>
           </>

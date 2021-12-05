@@ -11,13 +11,14 @@ import { loadContract } from "../../Blockchain/LoadSmartContract";
 import { setBlockData } from "../../ContextAPI/ContextApi";
 
 const Buy = () => {
-  const { isAuthenticated, authenticate } = useMoralis();
+  // const { isAuthenticated, authenticate } = useMoralis();
   const {
     price,
     setPrice,
     protectedAmount,
     setProtectedAmount,
     setTotalLimit,web3,address
+
   } = useContext(setBlockData);
   
   const [totalValue, setTotalValue] = useState(null);
@@ -63,6 +64,11 @@ else {
 }
 
 }, [price,protectedAmount])
+
+  const loadContract = async () => {
+    window.location.reload()  
+  };
+
   return (
     <>
       <TokenModal />
@@ -113,7 +119,7 @@ else {
         }
       />
       <div className={`hedge-eth`}>
-        {!isAuthenticated ? (
+        {!address ? (
           <>
             <Typography
               variant="body2"
@@ -121,7 +127,7 @@ else {
             >
               Connect your wallet to continue
             </Typography>
-            <Button width={400} onClick={authenticate}>
+            <Button width={400} onClick={loadContract}>
               Connect Wallet
             </Button>
           </>
