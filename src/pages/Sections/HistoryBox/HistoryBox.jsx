@@ -5,9 +5,7 @@ import "../../pages.scss";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { setBlockData } from "../../../ContextAPI/ContextApi";
-import { PriceChangeOutlined } from "@mui/icons-material";
-import { _getCurrentDatetime } from "../../../utilities/utilities";
-
+import { _getCurrentDatetime } from "../../../utils/utilities";
 
 const HistoryBox = () => {
   const [showOptions, setShowOptions] = useState(null);
@@ -18,14 +16,7 @@ const HistoryBox = () => {
     }
     setShowOptions(i);
   };
-  const {
-    price,
-    setPrice,
-    protectedAmount,
-    setProtectedAmount,
-    totalLimit,
-    setTotalLimit,web3,address,type
-  } = useContext(setBlockData);
+  const { price, protectedAmount, type } = useContext(setBlockData);
 
   const current_datetime = _getCurrentDatetime().toString();
   return (
@@ -62,25 +53,22 @@ const HistoryBox = () => {
       </div>
       <div className={`results-area`}>
         {ACTIVITY_HISTORY.map((activity, index) => (
-          <div
-            className={`history-row result`}
-            key={`${type} - ${index}`}
-          >
+          <div className={`history-row result`} key={`${type} - ${index}`}>
             <div className={`col-1`}>
               <Typography variant={"body1"}>{type}</Typography>
               <Typography variant={"body2"}>{activity.currency}</Typography>
             </div>
             <div className={`col-2`}>
-              <Typography variant={"body1"}>
-                {price} USDC
-              </Typography>
-              <Typography variant={"body2"}>
-                {protectedAmount} WETH 
-              </Typography>
+              <Typography variant={"body1"}>{price} USDC</Typography>
+              <Typography variant={"body2"}>{protectedAmount} WETH</Typography>
             </div>
             <div className={`col-3`}>
-            <Typography variant={"body1"}>{current_datetime.split(' ')[0]}</Typography>
-              <Typography variant={"body2"}>{current_datetime.split(' ')[1]}</Typography>
+              <Typography variant={"body1"}>
+                {current_datetime.split(" ")[0]}
+              </Typography>
+              <Typography variant={"body2"}>
+                {current_datetime.split(" ")[1]}
+              </Typography>
             </div>
             <div
               className={`col-4`}

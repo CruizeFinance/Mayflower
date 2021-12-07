@@ -1,295 +1,58 @@
 import { Slider, Typography } from "@mui/material";
-import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
-import { MARKS, VIEW } from "../../utils/constants";
+import { buy_abi2, CONTRACT_ADDRESS, MARKS, VIEW } from "../../utils/constants";
 import { InfoBox, InputField, ViewLinks, TokenModal } from "../Sections";
 import { Button } from "../../components";
-import { useMoralis } from "react-moralis";
 import "../pages.scss";
 import { useContext, useEffect, useState } from "react";
-
-import { loadContract } from "../../Blockchain/LoadSmartContract";
 import { setBlockData } from "../../ContextAPI/ContextApi";
-import Web3 from "web3";
+import { useWeb3React } from "@web3-react/core";
+import { injectors } from "../../wallet/connectors";
 
 const Buy = () => {
-  // const { isAuthenticated, authenticate } = useMoralis();
-  const {
-    price,
-    setPrice,
-    protectedAmount,
-    setProtectedAmount,
-    totalLimit,
-    setTotalLimit,web3,address,setweb3,setaddress
-  } = useContext(setBlockData);
-  
+  const { price, setPrice, protectedAmount, setProtectedAmount, web3 } =
+    useContext(setBlockData);
+  const [disable, setDisable] = useState(false);
   const [totalValue, setTotalValue] = useState(null);
-  useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), [price, protectedAmount]);
-  
- 
-  
-
-    const  approve_usdc = async (_value, _token, addressOfUser) => {
-    const abi2 = [
-      {
-          "constant": true,
-          "inputs": [],
-          "name": "name",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "string"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-      },
-      {
-          "constant": false,
-          "inputs": [
-              {
-                  "name": "_spender",
-                  "type": "address"
-              },
-              {
-                  "name": "_value",
-                  "type": "uint256"
-              }
-          ],
-          "name": "approve",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "bool"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-      },
-      {
-          "constant": true,
-          "inputs": [],
-          "name": "totalSupply",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "uint256"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-      },
-      {
-          "constant": false,
-          "inputs": [
-              {
-                  "name": "_from",
-                  "type": "address"
-              },
-              {
-                  "name": "_to",
-                  "type": "address"
-              },
-              {
-                  "name": "_value",
-                  "type": "uint256"
-              }
-          ],
-          "name": "transferFrom",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "bool"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-      },
-      {
-          "constant": true,
-          "inputs": [],
-          "name": "decimals",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "uint8"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-      },
-      {
-          "constant": true,
-          "inputs": [
-              {
-                  "name": "_owner",
-                  "type": "address"
-              }
-          ],
-          "name": "balanceOf",
-          "outputs": [
-              {
-                  "name": "balance",
-                  "type": "uint256"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-      },
-      {
-          "constant": true,
-          "inputs": [],
-          "name": "symbol",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "string"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-      },
-      {
-          "constant": false,
-          "inputs": [
-              {
-                  "name": "_to",
-                  "type": "address"
-              },
-              {
-                  "name": "_value",
-                  "type": "uint256"
-              }
-          ],
-          "name": "transfer",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "bool"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-      },
-      {
-          "constant": true,
-          "inputs": [
-              {
-                  "name": "_owner",
-                  "type": "address"
-              },
-              {
-                  "name": "_spender",
-                  "type": "address"
-              }
-          ],
-          "name": "allowance",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "uint256"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-      },
-      {
-          "payable": true,
-          "stateMutability": "payable",
-          "type": "fallback"
-      },
-      {
-          "anonymous": false,
-          "inputs": [
-              {
-                  "indexed": true,
-                  "name": "owner",
-                  "type": "address"
-              },
-              {
-                  "indexed": true,
-                  "name": "spender",
-                  "type": "address"
-              },
-              {
-                  "indexed": false,
-                  "name": "value",
-                  "type": "uint256"
-              }
-          ],
-          "name": "Approval",
-          "type": "event"
-      },
-      {
-          "anonymous": false,
-          "inputs": [
-              {
-                  "indexed": true,
-                  "name": "from",
-                  "type": "address"
-              },
-              {
-                  "indexed": true,
-                  "name": "to",
-                  "type": "address"
-              },
-              {
-                  "indexed": false,
-                  "name": "value",
-                  "type": "uint256"
-              }
-          ],
-          "name": "Transfer",
-          "type": "event"
-      }
-    ];
-    const contract = await new web3.eth.Contract(abi2,_token)
-    var meth = contract.methods;
-    console.log(address);
-    if(address!=null){
-      await meth.approve('0x04796D80B66544EF9C4A08A5477E35C1632719f9', 
-      web3.utils.toBN(_value*1e8)).send({from: addressOfUser ,value: 0}).then(console.log);
-      
+  useEffect(() => {
+    setTotalValue(parseFloat(price) * parseFloat(protectedAmount));
+    if (!price || !protectedAmount) {
+      setDisable(true);
     } else {
-      console.log('Wallet not connected!')
+      setDisable(false);
+    }
+  }, [price, protectedAmount]);
+
+  const { active, account, activate } = useWeb3React();
+
+  async function connect() {
+    try {
+      await activate(injectors);
+    } catch (e) {
+      console.log(e);
     }
   }
-  /** for developer only  */
-  const ls = async (e)=>{
-    approve_usdc(price, '0xe22da380ee6B445bb8273C81944ADEB6E8450422', address)
-  }
 
+  const approve_usdc = async (_value, _token, addressOfUser) => {
+    const contract = await new web3.eth.Contract(buy_abi2, _token);
+    var meth = contract.methods;
+    if (!account) {
+      await meth
+        .approve(
+          CONTRACT_ADDRESS,
+          web3.utils.toBN(_value * 1e8)
+        )
+        .send({ from: addressOfUser, value: 0 })
+    } else {
+      console.log("Wallet not connected!");
+    }
+  };
+  const ls = async (e) => {
+    approve_usdc(price, "0xe22da380ee6B445bb8273C81944ADEB6E8450422", account);
+  };
 
-
-
-let disable = true;
-const input_fill = ()=>{
-  window.alert("please fill the proper information before Hedge WETH ")
-}
-
-setTotalLimit( price*protectedAmount ) // karan will help us 
-useEffect(() => {
-
-if(!price || !protectedAmount){
-  disable = true;
-}
-else {
-  disable = false
-}
-
-}, [price,protectedAmount])
-
-  const loadContract = async () => {
-    window.location.reload()  
+  const input_fill = () => {
+    window.alert("please fill the proper information before Hedge WETH ");
   };
 
   return (
@@ -332,17 +95,12 @@ else {
         value={totalValue}
         inputLabel="Total Limit"
         currency="USDC"
-        // onChange={(e) =>
-        //   setTotalLimit(
-        //     e.target.value < 0 ? (e.target.value = 0) : e.target.value
-        //   )
-        // }
         tooltip={
           "Total price floor of your asset holding which is the product of the limit and amount. For example - 0.07 WETH  staked with 4200 USDC limit will give 294 USDC as the total limit."
         }
       />
       <div className={`hedge-eth`}>
-        {!address ? (
+        {!active ? (
           <>
             <Typography
               variant="body2"
@@ -350,7 +108,7 @@ else {
             >
               Connect your wallet to continue
             </Typography>
-            <Button width={400} onClick={loadContract}>
+            <Button width={400} onClick={connect}>
               Connect Wallet
             </Button>
           </>
@@ -364,13 +122,13 @@ else {
             </Typography>
             {disable ? (
               <Link to="/confirm?type=buy" style={{ textDecoration: "none" }}>
-                <Button width={400} onClick={ls} >
-                 Buy WETH 
+                <Button width={400} onClick={ls}>
+                  Buy WETH
                 </Button>
               </Link>
             ) : (
               <Button width={400} onClick={input_fill}>
-                Hedge WETH 
+                Hedge WETH
               </Button>
             )}
           </>

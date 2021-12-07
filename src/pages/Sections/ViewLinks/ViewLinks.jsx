@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
-import { useMoralis } from "react-moralis";
 import { Link } from "react-router-dom";
 import "../../pages.scss";
+import { useWeb3React } from "@web3-react/core";
 
 const ViewLinks = ({ map, page }) => {
-  // const { isAuthenticated } = useMoralis();
-  let isAuthenticated = true;
+
+  const { active } = useWeb3React();
+
   const [hashMap, setHashMap] = useState(map);
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (active) {
       setHashMap({
         ...map,
         ...{
@@ -20,7 +21,7 @@ const ViewLinks = ({ map, page }) => {
         }
       });
     }
-  }, [isAuthenticated]);
+  }, [active]);
 
   return (
     <div className={`view-links`}>
