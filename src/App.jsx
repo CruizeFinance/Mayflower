@@ -14,15 +14,18 @@ const App = () => {
   const [protectedAmount, setProtectedAmount] = useState(0);
   const [totalLimit, setTotalLimit] = useState(0);
 
-  const [address, setaddress] = useState(null);
-  const [web3, setweb3] = useState();
+  /* remove this */
   const [type, settype] = useState();
 
+  /** 
+   * @provider - web3 provider
+   * function to connect to the web3 library
+  */
   function getLibrary(provider) {
     return new Web3(provider);
   }
 
-  return isMobile ? (
+  return isMobile || isTablet ? (
     <div className={`mobile`}>
       <img
         src={"assets/images/cruize.svg"}
@@ -46,11 +49,7 @@ const App = () => {
             totalLimit,
             setTotalLimit,
             assetsAddress,
-            web3,
-            setweb3,
             setAssetsAddress,
-            web3,
-            address,
             type,
             settype
           }}

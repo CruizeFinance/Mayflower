@@ -10,7 +10,7 @@ import { useWeb3React } from "@web3-react/core";
 import { injectors } from "../../wallet/connectors";
 
 const Buy = () => {
-  const { price, setPrice, protectedAmount, setProtectedAmount, web3 } =
+  const { price, setPrice, protectedAmount, setProtectedAmount } =
     useContext(setBlockData);
   const [disable, setDisable] = useState(false);
   const [totalValue, setTotalValue] = useState(null);
@@ -23,7 +23,7 @@ const Buy = () => {
     }
   }, [price, protectedAmount]);
 
-  const { active, account, activate } = useWeb3React();
+  const { active, account, activate, library } = useWeb3React();
 
   async function connect() {
     try {
@@ -34,13 +34,13 @@ const Buy = () => {
   }
 
   const approve_usdc = async (_value, _token, addressOfUser) => {
-    const contract = await new web3.eth.Contract(buy_abi2, _token);
+    const contract = await new library.eth.Contract(buy_abi2, _token);
     var meth = contract.methods;
     if (!account) {
       await meth
         .approve(
           CONTRACT_ADDRESS,
-          web3.utils.toBN(_value * 1e8)
+          library.utils.toBN(_value * 1e8)
         )
         .send({ from: addressOfUser, value: 0 })
     } else {

@@ -9,9 +9,12 @@ import {
   confirm_details_deposit_stop_abi,
   CONTRACT_ADDRESS
 } from "../../../utils/constants";
+import { useWeb3React } from "@web3-react/core";
 
 const ConfirmDetails = ({ type }) => {
-  const { price, protectedAmount, web3, address } = useContext(setBlockData);
+  const { price, protectedAmount } = useContext(setBlockData);
+  const { account, library } = useWeb3React();
+  
   let dip_amount = protectedAmount * price;
 
   const depositStop = async (
@@ -20,22 +23,23 @@ const ConfirmDetails = ({ type }) => {
     _value,
     dip_amount
   ) => {
-    const contract = await new web3.eth.Contract(
+    const contract = await new library.eth.Contract(
       confirm_details_deposit_stop_abi,
       CONTRACT_ADDRESS
     );
     var meth = contract.methods;
-    if (address != null) {
-      let event = await meth
+    if (account != null) {
+      await meth
         .stopLoss_deposit(
           address_USDC,
           assetToDeposit,
-          web3.utils.toBN(_value * 1e18),
-          web3.utils.toBN(dip_amount * 100000000)
+          library.utils.toBN(_value * 1e18),
+          library.utils.toBN(dip_amount * 100000000)
         )
-        .send({ from: address, value: 0 });
+        .send({ from: account, value: 0 });
     }
   };
+  
   const depositLimit = async (
     addressDesiredAsset,
     USDCToDeposit,
@@ -43,18 +47,19 @@ const ConfirmDetails = ({ type }) => {
     dip_amount,
     addressOfUser
   ) => {
-    const contract = await new web3.eth.Contract(
+    
+    const contract = await new library.eth.Contract(
       confirm_details_deposit_limit_abi,
       CONTRACT_ADDRESS
     );
     var meth = contract.methods;
-    if (address != null) {
-      let event = await meth
+    if (account != null) {
+      await meth
         .limitBuy_deposit(
           addressDesiredAsset,
           USDCToDeposit,
-          web3.utils.toBN(_value * 1e6),
-          web3.utils.toBN(dip_amount * 100000000)
+          library.utils.toBN(_value * 1e6),
+          library.utils.toBN(dip_amount * 100000000)
         )
         .send({ from: addressOfUser, value: 0 });
     }
@@ -66,7 +71,7 @@ const ConfirmDetails = ({ type }) => {
         "0xd0A1E359811322d97991E03f863a0C30C2cF029C",
         protectedAmount,
         dip_amount,
-        address
+        account
       );
     } else {
       depositLimit(
@@ -74,7 +79,7 @@ const ConfirmDetails = ({ type }) => {
         "0xe22da380ee6B445bb8273C81944ADEB6E8450422",
         price,
         dip_amount,
-        address
+        account
       );
     }
   };

@@ -1,20 +1,20 @@
 import { Button } from "../../../components";
 import "../../pages.scss";
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 import { setBlockData } from "../../../ContextAPI/ContextApi";
 import {
   CONTRACT_ADDRESS,
   redeem_box_view_balance_abi,
   redeem_box_withdraw_abi
 } from "../../../utils/constants";
+import { useWeb3React } from "@web3-react/core";
 
 const RedeemBox = () => {
-  const { web3, address, type } = useContext(setBlockData);
-
-  const [userBalance, setuserBalance] = useState("");
+  const { type } = useContext(setBlockData);
+  const { account, library } = useWeb3React();
 
   const viewBalances = async (addressOfUser) => {
-    const contract = await new web3.eth.Contract(
+    const contract = await new library.eth.Contract(
       redeem_box_view_balance_abi,
       CONTRACT_ADDRESS
     );
@@ -24,7 +24,7 @@ const RedeemBox = () => {
     return reciept;
   };
   const withdraw = async (addressOfUser) => {
-    const contract = await new web3.eth.Contract(
+    const contract = await new library.eth.Contract(
       redeem_box_withdraw_abi,
       CONTRACT_ADDRESS
     );
@@ -36,15 +36,8 @@ const RedeemBox = () => {
       .send({ from: addressOfUser, value: 0 });
   };
 
-  const getUserBalance = async () => {
-    let Balance_info = await viewBalances(address);
-    setuserBalance(Balance_info);
-  };
-  useEffect(() => {
-    getUserBalance();
-  }, []);
   const redeem = async (e) => {
-    withdraw(address);
+    withdraw(account);
   };
 
   return (
@@ -59,7 +52,7 @@ const RedeemBox = () => {
           <span>24 H</span>
         </Typography>
       </div> */}
-      {type === "Protect" ? (
+      {/* {type === "Protect" ? ( */}
         <div className={`redeem-details`}>
           {/* <div className={`token-details`}>
             <Typography variant={"body1"}>{Convert_toWei(userBalance,Math.pow(10,18))} WETH</Typography>
@@ -74,8 +67,8 @@ const RedeemBox = () => {
             Asset
           </Button>
         </div>
-      ) : (
-        <div className={`redeem-details`}>
+      {/* ) : (
+        <div className={`redeem-details`}> */}
           {/* <div className={`token-details`}>
             <Typography variant={"body1"}>{Convert_toWei(userBalance)} USDC</Typography>
             <Typography variant={"body2"}>
@@ -84,13 +77,13 @@ const RedeemBox = () => {
               WETH )
             </Typography>
           </div> */}
-          <Button width={100} onClick={redeem}>
+          {/* <Button width={100} onClick={redeem}>
             Redeem
             <br />
             Asset
           </Button>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

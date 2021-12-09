@@ -60,6 +60,14 @@ export const ASSETS_VALUE = [
   "weth",
 ];
 
+/* export const SUPPORTED_ASSETS = {
+  weth: {
+    symbol: 'weth',
+    contract: '',
+    label: '',
+  },
+} */
+
 export const protect_abi2 = [
   {
     constant: true,

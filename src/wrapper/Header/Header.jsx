@@ -8,7 +8,7 @@ import { injectors } from "../../wallet/connectors";
 
 const Header = () => {
   const classes = styles();
-  const { active, account, activate } = useWeb3React();
+  const { active, account, activate, library } = useWeb3React();
 
   async function connect() {
     try {

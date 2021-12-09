@@ -15,7 +15,7 @@ import { useWeb3React } from "@web3-react/core";
 import { injectors } from "../../wallet/connectors";
 
 const Protect = (props) => {
-  const { price, setPrice, protectedAmount, setProtectedAmount, web3 } =
+  const { price, setPrice, protectedAmount, setProtectedAmount } =
     useContext(setBlockData);
 
   const [totalValue, setTotalValue] = useState(null);
@@ -23,7 +23,7 @@ const Protect = (props) => {
     setTotalValue(parseFloat(price) * parseFloat(protectedAmount));
   }, [price, protectedAmount]);
 
-  const { active, account, activate } = useWeb3React();
+  const { active, account, activate, library } = useWeb3React();
 
   async function connect() {
     try {
@@ -34,13 +34,12 @@ const Protect = (props) => {
   }
 
   const approve_weth = async (_value, _token) => {
-    const contract = await new web3.eth.Contract(protect_abi2, _token);
+    const contract = await new library.eth.Contract(protect_abi2, _token);
     var meth = contract.methods;
 
-    if (!account) {
-      console.log(meth);
-      let event = await meth
-        .approve(CONTRACT_ADDRESS, web3.utils.toBN(_value * 1e18))
+    if (account) {
+      await meth
+        .approve(CONTRACT_ADDRESS, library.utils.toBN(_value * 1e18))
         .send({ from: account, value: 0 })
         .then(console.log);
     } else {
