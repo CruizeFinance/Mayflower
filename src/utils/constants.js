@@ -26,7 +26,7 @@ export const MARKS = [
 export const VIEW = {
   protect: {
     label: "Protect",
-    route: "/",
+    route: "/protect",
   },
   buy: {
     label: "Buy",

@@ -39,7 +39,7 @@ const ConfirmDetails = ({ type }) => {
         .send({ from: account, value: 0 });
     }
   };
-  
+
   const depositLimit = async (
     addressDesiredAsset,
     USDCToDeposit,
@@ -88,7 +88,7 @@ const ConfirmDetails = ({ type }) => {
     <div className={`dialog`} style={{ alignItems: "flex-start", gap: "10px" }}>
       <div className={`confirm`}>
         <Typography variant="subtitle1">Confirm Order</Typography>
-        <Link to={"/"}>
+        <Link to={"/protect"}>
           <Sprite id="close" width={18} height={18} />
         </Link>
       </div>
