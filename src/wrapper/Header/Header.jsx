@@ -5,7 +5,6 @@ import { Button } from "../../components";
 import "./Header.scss";
 import { useWeb3React } from "@web3-react/core";
 import { injectors } from "../../wallet/connectors";
-
 const Header = () => {
   const classes = styles();
   const { active, account, activate } = useWeb3React();

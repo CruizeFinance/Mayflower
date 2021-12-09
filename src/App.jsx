@@ -7,22 +7,20 @@ import { isMobile, isTablet } from "react-device-detect";
 import { useState } from "react";
 import Web3 from "web3";
 import { setBlockData } from "./ContextAPI/ContextApi";
-
 const App = () => {
+  
   const [assetsAddress, setAssetsAddress] = useState("eth");
   const [price, setPrice] = useState(0);
   const [protectedAmount, setProtectedAmount] = useState(0);
   const [totalLimit, setTotalLimit] = useState(0);
-
-  const [address, setaddress] = useState(null);
-  const [web3, setweb3] = useState();
+  const [stopLoos_Contract, setstopLoos_Contract] = useState();
   const [type, settype] = useState();
-
+ let a = 1;
   function getLibrary(provider) {
     return new Web3(provider);
   }
 
-  return isMobile ? (
+  return isMobile || isTablet ? (
     <div className={`mobile`}>
       <img
         src={"assets/images/cruize.svg"}
@@ -46,13 +44,11 @@ const App = () => {
             totalLimit,
             setTotalLimit,
             assetsAddress,
-            web3,
-            setweb3,
             setAssetsAddress,
-            web3,
-            address,
             type,
-            settype
+            settype,
+            stopLoos_Contract,
+            setstopLoos_Contract,
           }}
         >
           <CssBaseline />

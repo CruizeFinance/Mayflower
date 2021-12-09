@@ -1,10 +1,7 @@
-import { Slider, Typography } from "@mui/material";
-import {
-  CONTRACT_ADDRESS,
-  MARKS,
-  protect_abi2,
-  VIEW
-} from "../../utils/constants";
+import { Typography } from "@mui/material";
+import { CONTRACT_ADDRESS, VIEW, WETH_ADDRESS } from "../../utils/constants";
+import { abi as protect_abi2 } from "../../Blockchain/Abis/ERC20.json";
+import { abi as stopLoss_Contract_abi } from "../../Blockchain/Abis/Stoploss.json";
 import "../pages.scss";
 import { Button } from "../../components";
 import { InfoBox, InputField, ViewLinks, TokenModal } from "../Sections";
@@ -15,16 +12,28 @@ import { useWeb3React } from "@web3-react/core";
 import { injectors } from "../../wallet/connectors";
 
 const Protect = (props) => {
-  const { price, setPrice, protectedAmount, setProtectedAmount, web3 } =
-    useContext(setBlockData);
+  // getting context API
+  const {
+    price,
+    setPrice,
+    protectedAmount,
+    setProtectedAmount,
+    setstopLoos_Contract,
+  } = useContext(setBlockData);
 
   const [totalValue, setTotalValue] = useState(null);
+
   useEffect(() => {
     setTotalValue(parseFloat(price) * parseFloat(protectedAmount));
   }, [price, protectedAmount]);
-
-  const { active, account, activate } = useWeb3React();
-
+  /** active - user wallet status  , active will be true if the  site is connected with the user wallet.
+   *  account -  user wallet address.
+   *  libray - Web3 or ether .
+   */
+  const { active, account, activate, library } = useWeb3React();
+  /**
+   * @function connect - This will connect our  website to the user wallet
+   */
   async function connect() {
     try {
       await activate(injectors);
@@ -32,30 +41,60 @@ const Protect = (props) => {
       console.log(e);
     }
   }
-
+  /**
+   * @function approve_weth - This function will approve a amount of WETH  that user want to Protect.
+   * @param {the value  of WETH that user want to approve} _value
+   * @param {the token  address of WETH} _token
+   */
   const approve_weth = async (_value, _token) => {
-    const contract = await new web3.eth.Contract(protect_abi2, _token);
+    // protect_abi2  - abi of the ERC20 token
+    const contract = await new library.eth.Contract(protect_abi2, _token);
+    // meth will contain all the method that our smart contract have.
     var meth = contract.methods;
-
-    if (!account) {
-      console.log(meth);
-      let event = await meth
-        .approve(CONTRACT_ADDRESS, web3.utils.toBN(_value * 1e18))
+    /** call the stopLoss_deposite function from th smart contract if  the user is connected with user wallet.else show wallet not connected. */
+    if (account) {
+      await meth
+        .approve(CONTRACT_ADDRESS, library.utils.toBN(_value * 1e18))
         .send({ from: account, value: 0 })
         .then(console.log);
     } else {
       console.log("Wallet not connected!");
     }
   };
-
-  const ls = async (e) => {
-    approve_weth(
-      protectedAmount,
-      "0xd0A1E359811322d97991E03f863a0C30C2cF029C",
-      account
-    );
+  /**
+   *@function Approve_Weth - This function will call the @function approve_weth for approving WETH.
+   * @param WETH_ADDRESS  - WETH token address .
+   * @param  account - user wallet address.
+   * @param protectedAmount  - the amount that user want to protect.
+   */
+  const Approve_Weth = async (e) => {
+    approve_weth(protectedAmount, WETH_ADDRESS, account);
   };
+  /**
+   * @function loadContract -  this will load the Stoploss smart contract.
+   *@param stopLoss_Contract_abi - this is the ABI for the Stoploss Contract.
+   *@param CONTRACT_ADDRESS - is the contract Address where we have deployed our Smart Contract.
+   *
+   */
 
+  const loadContract = async () => {
+    if (account) {
+      // loading smart contract .
+      const contract = await new library.eth.Contract(
+        stopLoss_Contract_abi,
+        CONTRACT_ADDRESS
+      );
+      // setting smart contract to Stoploss usestate.
+      setstopLoos_Contract(contract);
+
+    }
+  };
+  /**
+   * loading smart contract everytime  if the user  wallet address get changed .
+   */
+  useEffect(() => {
+    loadContract();
+  }, [account]);
   return (
     <>
       <TokenModal />
@@ -122,7 +161,7 @@ const Protect = (props) => {
             </Typography>
 
             <Link to="/confirm?type=protect" style={{ textDecoration: "none" }}>
-              <Button width={400} onClick={ls}>
+              <Button width={400} onClick={Approve_Weth}>
                 Hedge WETH
               </Button>
             </Link>

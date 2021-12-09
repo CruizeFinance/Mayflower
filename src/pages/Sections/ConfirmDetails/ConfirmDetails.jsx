@@ -4,38 +4,53 @@ import { Link } from "react-router-dom";
 import { Sprite, Button } from "../../../components";
 import "../../pages.scss";
 import { setBlockData } from "../../../ContextAPI/ContextApi";
-import {
-  confirm_details_deposit_limit_abi,
-  confirm_details_deposit_stop_abi,
-  CONTRACT_ADDRESS
-} from "../../../utils/constants";
-
+import { USDC_ADDRESS, WETH_ADDRESS } from "../../../utils/constants";
+import { useWeb3React } from "@web3-react/core";
 const ConfirmDetails = ({ type }) => {
-  const { price, protectedAmount, web3, address } = useContext(setBlockData);
+  // getting context
+  const { price, protectedAmount, stopLoos_Contract } =
+    useContext(setBlockData);
+  /** @dev account  contain  user wallet address ,  library is the web3 */
+  const { account, library } = useWeb3React();
+  //calculating dip_amount
   let dip_amount = protectedAmount * price;
-
+  /**
+   * @function depositStope -
+   * @param { USDC token address } address_USDC
+   * @param {The assets User want to deposit i.e. (link, weth ,eth ,dai) etc } assetToDeposit
+   * @param { the amount of assets  that user want to Protect} _value
+   * @param {} dip_amount
+   */
   const depositStop = async (
     address_USDC,
     assetToDeposit,
     _value,
     dip_amount
   ) => {
-    const contract = await new web3.eth.Contract(
-      confirm_details_deposit_stop_abi,
-      CONTRACT_ADDRESS
-    );
-    var meth = contract.methods;
-    if (address != null) {
-      let event = await meth
+    // meth will contain all the method that our smart contract have.
+    var meth = stopLoos_Contract.methods;
+    /** call the stopLoss_deposite function from the smart contract if  the user is connected with user wallet. */
+    if (account != null) {
+      console.log(meth);
+      await meth
         .stopLoss_deposit(
           address_USDC,
           assetToDeposit,
-          web3.utils.toBN(_value * 1e18),
-          web3.utils.toBN(dip_amount * 100000000)
+          library.utils.toBN(_value * 1e18),
+          library.utils.toBN(dip_amount * 100000000)
         )
-        .send({ from: address, value: 0 });
+        .send({ from: account, value: 0 });
     }
   };
+
+  /**
+   * @function depositLimit -
+   * @param { } addressDesiredAsset
+   * @param {Address of the USDC Token } USDCToDeposit
+   * @param {the amount that user want to Buy} _value
+   * @param { } dip_amount
+   * @param {user wallet address} addressOfUser
+   */
   const depositLimit = async (
     addressDesiredAsset,
     USDCToDeposit,
@@ -43,39 +58,39 @@ const ConfirmDetails = ({ type }) => {
     dip_amount,
     addressOfUser
   ) => {
-    const contract = await new web3.eth.Contract(
-      confirm_details_deposit_limit_abi,
-      CONTRACT_ADDRESS
-    );
-    var meth = contract.methods;
-    if (address != null) {
-      let event = await meth
+    // meth will contain all the method that our smart contract have.
+    var meth = stopLoos_Contract.methods;
+    /** call the stopLoss_deposite function from th smart contract if  the user is connected with user wallet. */
+    if (account != null) {
+      await meth
         .limitBuy_deposit(
           addressDesiredAsset,
           USDCToDeposit,
-          web3.utils.toBN(_value * 1e6),
-          web3.utils.toBN(dip_amount * 100000000)
+          library.utils.toBN(_value * 1e6),
+          library.utils.toBN(dip_amount * 100000000)
         )
         .send({ from: addressOfUser, value: 0 });
     }
   };
-  const ls = async (e) => {
-    if (type == "Protect") {
+  /**
+   * @param USDC_ADDRESS - USDC token address.
+   * @param WETH_ADDRESS  - WETH address.
+   * @param protectedAmount -
+   * @param account - user Wallet address.
+   *@param dip_amount -
+   @param price -
+   */
+  const Confirm_Order = async (e) => {
+    if (type === "Protect") {
       depositStop(
-        "0xe22da380ee6B445bb8273C81944ADEB6E8450422",
-        "0xd0A1E359811322d97991E03f863a0C30C2cF029C",
+        USDC_ADDRESS,
+        WETH_ADDRESS,
         protectedAmount,
         dip_amount,
-        address
+        account
       );
     } else {
-      depositLimit(
-        "0xd0A1E359811322d97991E03f863a0C30C2cF029C",
-        "0xe22da380ee6B445bb8273C81944ADEB6E8450422",
-        price,
-        dip_amount,
-        address
-      );
+      depositLimit(WETH_ADDRESS, USDC_ADDRESS, price, dip_amount, account);
     }
   };
 
@@ -83,7 +98,7 @@ const ConfirmDetails = ({ type }) => {
     <div className={`dialog`} style={{ alignItems: "flex-start", gap: "10px" }}>
       <div className={`confirm`}>
         <Typography variant="subtitle1">Confirm Order</Typography>
-        <Link to={"/"}>
+        <Link to={"/protect"}>
           <Sprite id="close" width={18} height={18} />
         </Link>
       </div>
@@ -120,7 +135,7 @@ const ConfirmDetails = ({ type }) => {
         to={`/created?type=${type?.toLowerCase()}`}
         style={{ textDecoration: "none", width: "100%" }}
       >
-        <Button className={`full-width`} onClick={ls}>
+        <Button className={`full-width`} onClick={Confirm_Order}>
           Confirm Order
         </Button>
       </Link>

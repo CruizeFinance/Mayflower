@@ -81,7 +81,7 @@ const HistoryBox = () => {
             {showOptions === index ? (
               <div className={`history-activity`}>
                 <Link
-                  to="/"
+                  to="/protect"
                   style={{
                     fontSize: "14px",
                     textDecoration: "none"
@@ -90,7 +90,7 @@ const HistoryBox = () => {
                   Modify Order
                 </Link>
                 <Link
-                  to="/"
+                  to="/protect"
                   style={{ fontSize: "14px", textDecoration: "none" }}
                 >
                   Cancel Order
