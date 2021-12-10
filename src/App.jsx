@@ -13,9 +13,10 @@ const App = () => {
   const [price, setPrice] = useState(0);
   const [protectedAmount, setProtectedAmount] = useState(0);
   const [totalLimit, setTotalLimit] = useState(0);
+
   const [stopLoos_Contract, setstopLoos_Contract] = useState();
   const [type, settype] = useState();
- let a = 1;
+
   function getLibrary(provider) {
     return new Web3(provider);
   }

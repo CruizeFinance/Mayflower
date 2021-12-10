@@ -1,5 +1,6 @@
 import { Button } from "../../../components";
 import "../../pages.scss";
+
 import { useContext, useEffect, useState } from "react";
 import { setBlockData } from "../../../ContextAPI/ContextApi";
 import { WETH_ADDRESS } from "../../../utils/constants";
@@ -16,6 +17,7 @@ const RedeemBox = () => {
    */
   const viewBalances = async (addressOfUser) => {
     var meth = stopLoos_Contract.methods;
+
     const reciept = await meth.balances(addressOfUser).call();
 
     return reciept;
@@ -25,6 +27,7 @@ const RedeemBox = () => {
    * @param {user wallet address} addressOfUser
    */
   const withdraw = async (addressOfUser) => {
+
     const reciept = await viewBalances(addressOfUser);
     var meth = stopLoos_Contract.methods;
     await meth .withdraw(reciept._amt, reciept._token)
@@ -34,6 +37,7 @@ const RedeemBox = () => {
   const redeem = async (e) => {
     withdraw(account);
   };
+
   /**
    * @function getBalanceInfo -  will proived the information about the user asset's  value that is belong to user account 
    * i.e.
@@ -53,6 +57,7 @@ const RedeemBox = () => {
     getBalanceInfo();
   }, []);
 
+
   return (
     <div className={`dialog`} style={{ alignItems: "flex-start", gap: "8px" }}>
       {/* <Typography variant={"h6"}>Total Redeemable Value</Typography> */}
@@ -66,14 +71,17 @@ const RedeemBox = () => {
         </Typography>
       </div> */}
       {/* {type === "Protect" ? ( */}
+
       <div className={`redeem-details`}>
         {/* <div className={`token-details`}>
+
             <Typography variant={"body1"}>{Convert_toWei(userBalance,Math.pow(10,18))} WETH</Typography>
             <Typography variant={"body2"}>
               35.76% APY (
               <Sprite id="eth" width={14} height={14} /> WETH)
             </Typography>
           </div> */}
+
         <Button onClick={redeem}>
           Redeem
           <br />
@@ -83,6 +91,7 @@ const RedeemBox = () => {
       {/* ) : (
         <div className={`redeem-details`}> */}
       {/* <div className={`token-details`}>
+
             <Typography variant={"body1"}>{Convert_toWei(userBalance)} USDC</Typography>
             <Typography variant={"body2"}>
               35.76% APY (
@@ -90,7 +99,9 @@ const RedeemBox = () => {
               WETH )
             </Typography>
           </div> */}
+
       {/* <Button width={100} onClick={redeem}>
+
             Redeem
             <br />
             Asset

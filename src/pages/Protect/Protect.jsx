@@ -12,6 +12,7 @@ import { useWeb3React } from "@web3-react/core";
 import { injectors } from "../../wallet/connectors";
 
 const Protect = (props) => {
+
   // getting context API
   const {
     price,
@@ -21,11 +22,13 @@ const Protect = (props) => {
     setstopLoos_Contract,
   } = useContext(setBlockData);
 
+
   const [totalValue, setTotalValue] = useState(null);
 
   useEffect(() => {
     setTotalValue(parseFloat(price) * parseFloat(protectedAmount));
   }, [price, protectedAmount]);
+
   /** active - user wallet status  , active will be true if the  site is connected with the user wallet.
    *  account -  user wallet address.
    *  libray - Web3 or ether .
@@ -34,6 +37,7 @@ const Protect = (props) => {
   /**
    * @function connect - This will connect our  website to the user wallet
    */
+
   async function connect() {
     try {
       await activate(injectors);
@@ -47,11 +51,13 @@ const Protect = (props) => {
    * @param {the token  address of WETH} _token
    */
   const approve_weth = async (_value, _token) => {
+
     // protect_abi2  - abi of the ERC20 token
     const contract = await new library.eth.Contract(protect_abi2, _token);
     // meth will contain all the method that our smart contract have.
     var meth = contract.methods;
     /** call the stopLoss_deposite function from th smart contract if  the user is connected with user wallet.else show wallet not connected. */
+
     if (account) {
       await meth
         .approve(CONTRACT_ADDRESS, library.utils.toBN(_value * 1e18))
