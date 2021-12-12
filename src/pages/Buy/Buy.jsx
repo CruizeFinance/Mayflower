@@ -23,15 +23,17 @@ const Buy = () => {
       setDisable(false);
     }
   }, [price, protectedAmount]);
-  /** active - user wallet status  , active will be true if the  site is connected with the user wallet.
+
+  /** active - user wallet status  , active will be true if the  site is connected with the MetaMask wallet.
    * account -  user wallet address.
    * libray - Web3 or ether .
    */
   const { active, account, activate, library } = useWeb3React();
+
   /**
-   * @function connect - this will connect site to the user wallet
+   * @function connect - this will connect site to the user wallet.
    */
-  async function connect() {
+  async function connect_To_User_Wallate() {
     try {
       await activate(injectors);
     } catch (e) {
@@ -40,15 +42,15 @@ const Buy = () => {
   }
 
   /**
-   * @function approve_usdc -  this function will approve value of USDC  that user want to deposite.
-   * @param {the value  of USDC that user want to deposite } _value
-   * @param {the address of usdc} _token
+   * @function approve_usdc -  this function will approve value of USDC  that user want to deposit.
+   * @param {the value of USDC that user want to deposit} _value
+   * @param {the address of USDC} _token
    * @param {user wallet address} addressOfUser
    */
   const approve_usdc = async (_value, _token, addressOfUser) => {
     //loding ERC20 contract
     const contract = await new library.eth.Contract(buy_abi2, _token);
-    // meth will contain all the method that our smart contract have.
+    // meth contains all the methods that ERC20 smart contract has.
     var meth = contract.methods;
     if (account) {
       await meth
@@ -120,7 +122,7 @@ const Buy = () => {
             >
               Connect your wallet to continue
             </Typography>
-            <Button width={400} onClick={connect}>
+            <Button width={400} onClick={connect_To_User_Wallate}>
               Connect Wallet
             </Button>
           </>
