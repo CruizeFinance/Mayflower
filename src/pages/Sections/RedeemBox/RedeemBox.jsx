@@ -1,9 +1,5 @@
 import { Button } from "../../../components";
 import "../../pages.scss";
-<<<<<<< HEAD
-=======
-
->>>>>>> 0911d10a5145f0f21031b9bcb71c1c7d2a3e8634
 import { useContext, useEffect, useState } from "react";
 import { setBlockData } from "../../../ContextAPI/ContextApi";
 import { WETH_ADDRESS } from "../../../utils/constants";
@@ -20,10 +16,6 @@ const RedeemBox = () => {
    */
   const viewBalances = async (addressOfUser) => {
     var meth = stopLoos_Contract.methods;
-<<<<<<< HEAD
-=======
-
->>>>>>> 0911d10a5145f0f21031b9bcb71c1c7d2a3e8634
     const reciept = await meth.balances(addressOfUser).call();
     return reciept;
   };
@@ -32,10 +24,6 @@ const RedeemBox = () => {
    * @param {user wallet address} addressOfUser
    */
   const withdraw = async (addressOfUser) => {
-<<<<<<< HEAD
-=======
-
->>>>>>> 0911d10a5145f0f21031b9bcb71c1c7d2a3e8634
     const reciept = await viewBalances(addressOfUser);
     var meth = stopLoos_Contract.methods;
     await meth .withdraw(reciept._amt, reciept._token)
@@ -52,17 +40,7 @@ const RedeemBox = () => {
    * 2.  token - the asset's address that user currently have on Smart  contract .
    * @dev stopLoos_Contract -  this contain's   our smart contract .
    */
-  const getBalanceInfo = async () => {
-    var meth = stopLoos_Contract.methods;
-    // meth -   will cantains all the function that our smarct contract has. 
-    let  userAssetsInfo = await meth.balances(account).call();
-    // setting up the token address that  is associate with user in our Smart contract.
-    setwithdraw_Token( userAssetsInfo._token);
-  };
-  // calling the getBalanceInfo everytime when page will  load.
-  useEffect(() => {
-    getBalanceInfo();
-  }, []);
+
 
   /**
    * @function getBalanceInfo -  will proived the information about the user asset's  value that is belong to user account 
