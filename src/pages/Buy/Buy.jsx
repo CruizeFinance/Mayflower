@@ -1,9 +1,10 @@
 import { Slider, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import { buy_abi2, CONTRACT_ADDRESS, MARKS, VIEW } from "../../utils/constants";
+import { CONTRACT_ADDRESS, USDC_ADDRESS, VIEW } from "../../utils/constants";
 import { InfoBox, InputField, ViewLinks, TokenModal } from "../Sections";
 import { Button } from "../../components";
 import "../pages.scss";
+import { abi as buy_abi2 } from "../../Blockchain/Abis/ERC20.json";
 import { useContext, useEffect, useState } from "react";
 import { setBlockData } from "../../ContextAPI/ContextApi";
 import { useWeb3React } from "@web3-react/core";
@@ -23,9 +24,16 @@ const Buy = () => {
     }
   }, [price, protectedAmount]);
 
+  /** active - user wallet status  , active will be true if the  site is connected with the MetaMask wallet.
+   * account -  user wallet address.
+   * libray - Web3 or ether .
+   */
   const { active, account, activate, library } = useWeb3React();
 
-  async function connect() {
+  /**
+   * @function connect - this will connect site to the user wallet.
+   */
+  async function connect_To_User_Wallate() {
     try {
       await activate(injectors);
     } catch (e) {
@@ -33,22 +41,31 @@ const Buy = () => {
     }
   }
 
+  /**
+   * @function approve_usdc -  this function will approve value of USDC  that user want to deposit.
+   * @param {the value of USDC that user want to deposit} _value
+   * @param {the address of USDC} _token
+   * @param {user wallet address} addressOfUser
+   */
   const approve_usdc = async (_value, _token, addressOfUser) => {
+
+    //loding ERC20 contract
     const contract = await new library.eth.Contract(buy_abi2, _token);
+    // meth contains all the methods that ERC20 smart contract has.
     var meth = contract.methods;
-    if (!account) {
+    if (account) {
       await meth
-        .approve(
-          CONTRACT_ADDRESS,
-          library.utils.toBN(_value * 1e8)
-        )
-        .send({ from: addressOfUser, value: 0 })
+
+        .approve(CONTRACT_ADDRESS, library.utils.toBN(_value * 1e8))
+        .send({ from: addressOfUser, value: 0 });
+
     } else {
       console.log("Wallet not connected!");
     }
   };
-  const ls = async (e) => {
-    approve_usdc(price, "0xe22da380ee6B445bb8273C81944ADEB6E8450422", account);
+
+  const approve_Usdc = async (e) => {
+    approve_usdc(price, USDC_ADDRESS, account);
   };
 
   const input_fill = () => {
@@ -108,7 +125,7 @@ const Buy = () => {
             >
               Connect your wallet to continue
             </Typography>
-            <Button width={400} onClick={connect}>
+            <Button width={400} onClick={connect_To_User_Wallate}>
               Connect Wallet
             </Button>
           </>
@@ -120,9 +137,9 @@ const Buy = () => {
             >
               Add the required USDC balance to confirm the order
             </Typography>
-            {disable ? (
+            {!disable ? (
               <Link to="/confirm?type=buy" style={{ textDecoration: "none" }}>
-                <Button width={400} onClick={ls}>
+                <Button width={400} onClick={approve_Usdc}>
                   Buy WETH
                 </Button>
               </Link>
