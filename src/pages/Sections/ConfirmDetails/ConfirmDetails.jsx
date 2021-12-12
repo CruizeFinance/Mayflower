@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Sprite, Button } from "../../../components";
 import "../../pages.scss";
 import { setBlockData } from "../../../ContextAPI/ContextApi";
+
 import { USDC_ADDRESS, WETH_ADDRESS } from "../../../utils/constants";
 import { useWeb3React } from "@web3-react/core";
 const ConfirmDetails = ({ type }) => {
@@ -13,6 +14,7 @@ const ConfirmDetails = ({ type }) => {
   /** @dev account  contain  user wallet address ,  library is the web3 */
   const { account, library } = useWeb3React();
   //calculating dip_amount
+
   let dip_amount = protectedAmount * price;
   /**
    * @function depositStope -
@@ -27,11 +29,16 @@ const ConfirmDetails = ({ type }) => {
     _value,
     dip_amount
   ) => {
+<<<<<<< HEAD
     // meth contains all the methods that our smart contract has.
+=======
+
+    // meth will contain all the method that our smart contract have.
+>>>>>>> 222e6fa8905de287d90fcfe2f3ce1acde4f45338
     var meth = stopLoos_Contract.methods;
     /** call the stopLoss_deposit function from the smart contract if the user is connected with MetaMask wallet. */
     if (account != null) {
-      console.log(meth);
+
       await meth
         .stopLoss_deposit(
           address_USDC,
@@ -43,6 +50,7 @@ const ConfirmDetails = ({ type }) => {
     }
   };
 
+
   /**
    * @function depositLimit - To buy an asset at a limit price.
    * @param {The asset that the user desires} addressDesiredAsset
@@ -51,6 +59,7 @@ const ConfirmDetails = ({ type }) => {
    * @param {The price value at which the user want to buy desires assets } dip_amount
    * @param {user wallet address} addressOfUser
    */
+
   const depositLimit = async (
     addressDesiredAsset,
     USDCToDeposit,
@@ -58,9 +67,17 @@ const ConfirmDetails = ({ type }) => {
     dip_amount,
     addressOfUser
   ) => {
+<<<<<<< HEAD
     // meth contains all the methods that our smart contract has.
     var meth = stopLoos_Contract.methods;
     /** call the limitBuy_deposit  function from the smart contract if the user is connected with MetaMask wallet. */
+=======
+
+    // meth will contain all the method that our smart contract have.
+    var meth = stopLoos_Contract.methods;
+    /** call the stopLoss_deposite function from th smart contract if  the user is connected with user wallet. */
+
+>>>>>>> 222e6fa8905de287d90fcfe2f3ce1acde4f45338
     if (account != null) {
       await meth
         .limitBuy_deposit(
@@ -83,7 +100,9 @@ const ConfirmDetails = ({ type }) => {
         account
       );
     } else {
+
       depositLimit(WETH_ADDRESS, USDC_ADDRESS, price, dip_amount, account);
+
     }
   };
 

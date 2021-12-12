@@ -24,7 +24,11 @@ const Buy = () => {
     }
   }, [price, protectedAmount]);
 
+<<<<<<< HEAD
   /** active - user wallet status  , active will be true if the  site is connected with the MetaMask wallet.
+=======
+  /** active - user wallet status  , active will be true if the  site is connected with the user wallet.
+>>>>>>> 222e6fa8905de287d90fcfe2f3ce1acde4f45338
    * account -  user wallet address.
    * libray - Web3 or ether .
    */
@@ -33,7 +37,12 @@ const Buy = () => {
   /**
    * @function connect - this will connect site to the user wallet.
    */
+<<<<<<< HEAD
   async function connect_To_User_Wallate() {
+=======
+
+  async function connect() {
+>>>>>>> 222e6fa8905de287d90fcfe2f3ce1acde4f45338
     try {
       await activate(injectors);
     } catch (e) {
@@ -48,14 +57,22 @@ const Buy = () => {
    * @param {user wallet address} addressOfUser
    */
   const approve_usdc = async (_value, _token, addressOfUser) => {
+
     //loding ERC20 contract
     const contract = await new library.eth.Contract(buy_abi2, _token);
+<<<<<<< HEAD
     // meth contains all the methods that ERC20 smart contract has.
+=======
+    // meth will contain all the method that our smart contract have.
+
+>>>>>>> 222e6fa8905de287d90fcfe2f3ce1acde4f45338
     var meth = contract.methods;
     if (account) {
       await meth
+
         .approve(CONTRACT_ADDRESS, library.utils.toBN(_value * 1e8))
         .send({ from: addressOfUser, value: 0 });
+
     } else {
       console.log("Wallet not connected!");
     }
