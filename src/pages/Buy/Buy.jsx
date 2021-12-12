@@ -24,7 +24,11 @@ const Buy = () => {
     }
   }, [price, protectedAmount]);
 
+
   /** active - user wallet status  , active will be true if the  site is connected with the MetaMask wallet.
+
+  /** active - user wallet status  , active will be true if the  site is connected with the user wallet.
+
    * account -  user wallet address.
    * libray - Web3 or ether .
    */
@@ -33,7 +37,11 @@ const Buy = () => {
   /**
    * @function connect - this will connect site to the user wallet.
    */
+
   async function connect_To_User_Wallate() {
+
+
+
     try {
       await activate(injectors);
     } catch (e) {
@@ -51,7 +59,9 @@ const Buy = () => {
 
     //loding ERC20 contract
     const contract = await new library.eth.Contract(buy_abi2, _token);
-    // meth contains all the methods that ERC20 smart contract has.
+
+    // meth will contain all the method that our smart contract have.
+
     var meth = contract.methods;
     if (account) {
       await meth

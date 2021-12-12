@@ -27,11 +27,14 @@ const ConfirmDetails = ({ type }) => {
     _value,
     dip_amount
   ) => {
+
     // meth contains all the methods that our smart contract has.
+
     var meth = stopLoos_Contract.methods;
     /** call the stopLoss_deposit function from the smart contract if the user is connected with MetaMask wallet. */
     if (account != null) {
-      console.log(meth);
+
+
       await meth
         .stopLoss_deposit(
           address_USDC,
@@ -58,9 +61,10 @@ const ConfirmDetails = ({ type }) => {
     dip_amount,
     addressOfUser
   ) => {
-    // meth contains all the methods that our smart contract has.
+
+    // meth will contain all the method that our smart contract have.
     var meth = stopLoos_Contract.methods;
-    /** call the limitBuy_deposit  function from the smart contract if the user is connected with MetaMask wallet. */
+    /** call the stopLoss_deposite function from th smart contract if  the user is connected with user wallet. */
     if (account != null) {
       await meth
         .limitBuy_deposit(

@@ -37,7 +37,16 @@ const Protect = (props) => {
   /**
    * @function connect - This will connect our  website to the user wallet
    */
+<<<<<<< HEAD
   async function connect_To_User_wallet() {
+=======
+<<<<<<< HEAD
+  async function connect_To_User_wallet() {
+=======
+
+  async function connect() {
+>>>>>>> 222e6fa8905de287d90fcfe2f3ce1acde4f45338
+>>>>>>> 0911d10a5145f0f21031b9bcb71c1c7d2a3e8634
     try {
       await activate(injectors);
     } catch (e) {
@@ -81,6 +90,7 @@ const Protect = (props) => {
    *@param CONTRACT_ADDRESS - is the contract Address where we have deployed our Smart Contract.
    *
    */
+<<<<<<< HEAD
 
   const loadContract = async () => {
     if (account) {
@@ -92,6 +102,19 @@ const Protect = (props) => {
       // setting smart contract to Stoploss usestate.
       setstopLoos_Contract(contract);
 
+=======
+
+  const loadContract = async () => {
+    if (account) {
+      // loading smart contract .
+      const contract = await new library.eth.Contract(
+        stopLoss_Contract_abi,
+        CONTRACT_ADDRESS
+      );
+      // setting smart contract to Stoploss usestate.
+      setstopLoos_Contract(contract);
+
+>>>>>>> 0911d10a5145f0f21031b9bcb71c1c7d2a3e8634
     }
   };
   /**
