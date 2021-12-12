@@ -34,7 +34,7 @@ const Protect = (props) => {
   /**
    * @function connect - This will connect our  website to the user wallet
    */
-  async function connect() {
+  async function connect_To_User_wallet() {
     try {
       await activate(injectors);
     } catch (e) {
@@ -147,7 +147,7 @@ const Protect = (props) => {
             >
               Connect your wallet to continue
             </Typography>
-            <Button width={400} onClick={connect}>
+            <Button width={400} onClick={connect_To_User_wallet}>
               Connect Wallet
             </Button>
           </>
