@@ -7,16 +7,20 @@ import { isMobile, isTablet } from "react-device-detect";
 import { useState } from "react";
 import Web3 from "web3";
 import { setBlockData } from "./ContextAPI/ContextApi";
+
 const App = () => {
-  
   const [assetsAddress, setAssetsAddress] = useState("eth");
   const [price, setPrice] = useState(0);
   const [protectedAmount, setProtectedAmount] = useState(0);
   const [totalLimit, setTotalLimit] = useState(0);
 
-  const [stopLoos_Contract, setstopLoos_Contract] = useState();
+  /* remove this */
   const [type, settype] = useState();
 
+  /** 
+   * @provider - web3 provider
+   * function to connect to the web3 library
+  */
   function getLibrary(provider) {
     return new Web3(provider);
   }
@@ -47,9 +51,7 @@ const App = () => {
             assetsAddress,
             setAssetsAddress,
             type,
-            settype,
-            stopLoos_Contract,
-            setstopLoos_Contract,
+            settype
           }}
         >
           <CssBaseline />
