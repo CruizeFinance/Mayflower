@@ -10,18 +10,17 @@ const RedeemBox = () => {
   const { account } = useWeb3React();
   const [withdraw_Token, setwithdraw_Token] = useState();
   /**
-   * @function viewBalances - this function will return the asset's value  that is associate with the user  address.
+   * @function viewBalances - this function will return the asset's value  that is associate with the user address.
    * @param {user wallet address } addressOfUser
-   * @returns it will return the asset's value  that is associate with the user  address.
+   * @returns it will return the asset's value that is associate with the user  address.
    */
   const viewBalances = async (addressOfUser) => {
     var meth = stopLoos_Contract.methods;
     const reciept = await meth.balances(addressOfUser).call();
-
     return reciept;
   };
   /**
-   * @function withdraw  -  this will withdraw the asset's that is associate to user address e.i WETH , USDC .
+   * @function withdraw  - this will withdraw the asset's that is associate to user address e.i WETH , USDC .
    * @param {user wallet address} addressOfUser
    */
   const withdraw = async (addressOfUser) => {

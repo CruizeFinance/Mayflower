@@ -17,9 +17,9 @@ const ConfirmDetails = ({ type }) => {
   /**
    * @function depositStope -
    * @param { USDC token address } address_USDC
-   * @param {The assets User want to deposit i.e. (link, weth ,eth ,dai) etc } assetToDeposit
-   * @param { the amount of assets  that user want to Protect} _value
-   * @param {} dip_amount
+   * @param {The assets User want to deposit i.e. (link, weth ,eth ,dai) etc} assetToDeposit
+   * @param {the amount of assets  that user want to Protect} _value
+   * @param {once the price limit of the asset's goes below which the asset will be swapped with a stable token} dip_amount
    */
   const depositStop = async (
     address_USDC,
@@ -27,9 +27,9 @@ const ConfirmDetails = ({ type }) => {
     _value,
     dip_amount
   ) => {
-    // meth will contain all the method that our smart contract have.
+    // meth contains all the methods that our smart contract has.
     var meth = stopLoos_Contract.methods;
-    /** call the stopLoss_deposite function from the smart contract if  the user is connected with user wallet. */
+    /** call the stopLoss_deposit function from the smart contract if the user is connected with MetaMask wallet. */
     if (account != null) {
       console.log(meth);
       await meth
@@ -44,11 +44,11 @@ const ConfirmDetails = ({ type }) => {
   };
 
   /**
-   * @function depositLimit -
-   * @param { } addressDesiredAsset
+   * @function depositLimit - To buy an asset at a limit price.
+   * @param {The asset that the user desires} addressDesiredAsset
    * @param {Address of the USDC Token } USDCToDeposit
-   * @param {the amount that user want to Buy} _value
-   * @param { } dip_amount
+   * @param {the amount  of the desired asset that the user wants to Buy} _value
+   * @param {The price value at which the user want to buy desires assets } dip_amount
    * @param {user wallet address} addressOfUser
    */
   const depositLimit = async (
@@ -58,9 +58,9 @@ const ConfirmDetails = ({ type }) => {
     dip_amount,
     addressOfUser
   ) => {
-    // meth will contain all the method that our smart contract have.
+    // meth contains all the methods that our smart contract has.
     var meth = stopLoos_Contract.methods;
-    /** call the stopLoss_deposite function from th smart contract if  the user is connected with user wallet. */
+    /** call the limitBuy_deposit  function from the smart contract if the user is connected with MetaMask wallet. */
     if (account != null) {
       await meth
         .limitBuy_deposit(
@@ -72,14 +72,7 @@ const ConfirmDetails = ({ type }) => {
         .send({ from: addressOfUser, value: 0 });
     }
   };
-  /**
-   * @param USDC_ADDRESS - USDC token address.
-   * @param WETH_ADDRESS  - WETH address.
-   * @param protectedAmount -
-   * @param account - user Wallet address.
-   *@param dip_amount -
-   @param price -
-   */
+
   const Confirm_Order = async (e) => {
     if (type === "Protect") {
       depositStop(
