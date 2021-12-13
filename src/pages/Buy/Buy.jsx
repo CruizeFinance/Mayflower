@@ -1,4 +1,4 @@
-import { Slider, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { CONTRACT_ADDRESS, USDC_ADDRESS, VIEW } from "../../utils/constants";
 import { InfoBox, InputField, ViewLinks, TokenModal } from "../Sections";
@@ -8,46 +8,40 @@ import { abi as buy_abi2 } from "../../Blockchain/Abis/ERC20.json";
 import { useContext, useEffect, useState } from "react";
 import { setBlockData } from "../../ContextAPI/ContextApi";
 import { useWeb3React } from "@web3-react/core";
-import { injectors } from "../../wallet/connectors";
 
 const Buy = () => {
-  const { price, setPrice, protectedAmount, setProtectedAmount } =
-    useContext(setBlockData);
+  const {
+    setPrice,
+    setProtectedAmount,
+    setTotalLimit,
+    connect_to_user_wallet
+  } = useContext(setBlockData);
+
+  /* using different local and context variables to clear data on view change */
+
   const [disable, setDisable] = useState(false);
   const [totalValue, setTotalValue] = useState(null);
+  const [buyLimit, setBuyLimit] = useState(null);
+  const [protectedAmountLocal, setProtectedAmountLocal] = useState(null);
+
   useEffect(() => {
-    setTotalValue(parseFloat(price) * parseFloat(protectedAmount));
-    if (!price || !protectedAmount) {
+    /* setting local value here */
+    setTotalValue(parseFloat(buyLimit) * parseFloat(protectedAmountLocal));
+    /* setting context value here */
+    setTotalLimit(parseFloat(buyLimit) * parseFloat(protectedAmountLocal));
+    if (!buyLimit || !protectedAmountLocal) {
       setDisable(true);
     } else {
       setDisable(false);
     }
-  }, [price, protectedAmount]);
+  }, [buyLimit, protectedAmountLocal]);
 
-
-  /** active - user wallet status  , active will be true if the  site is connected with the MetaMask wallet.
-
-  /** active - user wallet status  , active will be true if the  site is connected with the user wallet.
-
+  /**
+   * active - user wallet status  , active will be true if the  site is connected with the user wallet.
    * account -  user wallet address.
    * libray - Web3 or ether .
    */
-  const { active, account, activate, library } = useWeb3React();
-
-  /**
-   * @function connect - this will connect site to the user wallet.
-   */
-
-  async function connect_To_User_Wallate() {
-
-
-
-    try {
-      await activate(injectors);
-    } catch (e) {
-      console.log(e);
-    }
-  }
+  const { active, account, library } = useWeb3React();
 
   /**
    * @function approve_usdc -  this function will approve value of USDC  that user want to deposit.
@@ -56,30 +50,17 @@ const Buy = () => {
    * @param {user wallet address} addressOfUser
    */
   const approve_usdc = async (_value, _token, addressOfUser) => {
-
     //loding ERC20 contract
     const contract = await new library.eth.Contract(buy_abi2, _token);
-
     // meth will contain all the method that our smart contract have.
-
     var meth = contract.methods;
     if (account) {
       await meth
-
         .approve(CONTRACT_ADDRESS, library.utils.toBN(_value * 1e8))
         .send({ from: addressOfUser, value: 0 });
-
     } else {
       console.log("Wallet not connected!");
     }
-  };
-
-  const approve_Usdc = async (e) => {
-    approve_usdc(price, USDC_ADDRESS, account);
-  };
-
-  const input_fill = () => {
-    window.alert("please fill the proper information before Hedge WETH ");
   };
 
   return (
@@ -89,9 +70,12 @@ const Buy = () => {
       <InputField
         inputLabel="Buy Prices"
         currency="USDC"
-        onChange={(e) =>
-          setPrice(e.target.value < 0 ? (e.target.value = 0) : e.target.value)
-        }
+        onChange={(e) => {
+          setBuyLimit(
+            e.target.value < 0 ? (e.target.value = 0) : e.target.value
+          );
+          setPrice(e.target.value < 0 ? (e.target.value = 0) : e.target.value);
+        }}
         tooltip={
           "Order is triggered when the market price of the asset reaches this price. For example - Price Limit of 4200 USDC for ETH with a market price of 4400 USDC"
         }
@@ -109,11 +93,14 @@ const Buy = () => {
         inputLabel="Buy Amount"
         currency="WETH"
         /* showMaxTag */
-        onChange={(e) =>
+        onChange={(e) => {
+          setProtectedAmountLocal(
+            e.target.value < 0 ? (e.target.value = 0) : e.target.value
+          );
           setProtectedAmount(
             e.target.value < 0 ? (e.target.value = 0) : e.target.value
-          )
-        }
+          );
+        }}
         tooltip={
           "The quantity of the asset from your wallet you’d like to use for the order. For example - 0.07 WETH  out of the 0.09 ETH in your wallet."
         }
@@ -135,7 +122,7 @@ const Buy = () => {
             >
               Connect your wallet to continue
             </Typography>
-            <Button width={400} onClick={connect_To_User_Wallate}>
+            <Button width={400} onClick={connect_to_user_wallet}>
               Connect Wallet
             </Button>
           </>
@@ -149,12 +136,22 @@ const Buy = () => {
             </Typography>
             {!disable ? (
               <Link to="/confirm?type=buy" style={{ textDecoration: "none" }}>
-                <Button width={400} onClick={approve_Usdc}>
+                <Button
+                  width={400}
+                  onClick={() => approve_usdc(buyLimit, USDC_ADDRESS, account)}
+                >
                   Buy WETH
                 </Button>
               </Link>
             ) : (
-              <Button width={400} onClick={input_fill}>
+              <Button
+                width={400}
+                onClick={() =>
+                  window.alert(
+                    "please fill the proper information before Hedge WETH "
+                  )
+                }
+              >
                 Hedge WETH
               </Button>
             )}

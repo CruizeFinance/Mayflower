@@ -4,19 +4,13 @@ import Wrapper from "./wrapper/Wrapper";
 import "./styles/app.scss";
 import { Web3ReactProvider } from "@web3-react/core";
 import { isMobile, isTablet } from "react-device-detect";
-import { useState } from "react";
 import Web3 from "web3";
-import { setBlockData } from "./ContextAPI/ContextApi";
 const App = () => {
-  
-  const [assetsAddress, setAssetsAddress] = useState("eth");
-  const [price, setPrice] = useState(0);
-  const [protectedAmount, setProtectedAmount] = useState(0);
-  const [totalLimit, setTotalLimit] = useState(0);
 
-  const [stopLoos_Contract, setstopLoos_Contract] = useState();
-  const [type, settype] = useState();
-
+  /**
+   * @provider - web library provider
+   * function to utilise the web3 library
+   */
   function getLibrary(provider) {
     return new Web3(provider);
   }
@@ -36,25 +30,8 @@ const App = () => {
   ) : (
     <ThemeProvider theme={theme}>
       <Web3ReactProvider getLibrary={getLibrary}>
-        <setBlockData.Provider
-          value={{
-            price,
-            setPrice,
-            protectedAmount,
-            setProtectedAmount,
-            totalLimit,
-            setTotalLimit,
-            assetsAddress,
-            setAssetsAddress,
-            type,
-            settype,
-            stopLoos_Contract,
-            setstopLoos_Contract,
-          }}
-        >
-          <CssBaseline />
-          <Wrapper />
-        </setBlockData.Provider>
+        <CssBaseline />
+        <Wrapper />
       </Web3ReactProvider>
     </ThemeProvider>
   );

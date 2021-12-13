@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import { ACTIVITY_HISTORY } from "../../../utils/constants";
 import { Sprite } from "../../../components";
 import "../../pages.scss";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { setBlockData } from "../../../ContextAPI/ContextApi";
 import { _getCurrentDatetime } from "../../../utils/utilities";
@@ -18,7 +18,12 @@ const HistoryBox = () => {
   };
   const { price, protectedAmount, type } = useContext(setBlockData);
 
-  const current_datetime = _getCurrentDatetime().toString();
+  const [currentDateTime, setCurrentDateTime] = useState(null);
+
+  useEffect(() => {
+    setCurrentDateTime(_getCurrentDatetime().toString());
+  }, []);
+
   return (
     <div className={`history`}>
       <div className={`history-row`} style={{ marginBottom: "0" }}>
@@ -64,10 +69,10 @@ const HistoryBox = () => {
             </div>
             <div className={`col-3`}>
               <Typography variant={"body1"}>
-                {current_datetime.split(" ")[0]}
+                {currentDateTime.split(" ")[0]}
               </Typography>
               <Typography variant={"body2"}>
-                {current_datetime.split(" ")[1]}
+                {currentDateTime.split(" ")[1]}
               </Typography>
             </div>
             <div
