@@ -2,30 +2,16 @@ import { AppBar, Toolbar, Typography } from "@mui/material";
 import logo from "../../components/Sprite/cruize.svg";
 import { styles } from "../../styles/styles";
 import { Button } from "../../components";
-import { useMoralis } from "react-moralis";
 import "./Header.scss";
-import {useContext,  useEffect} from 'react'
-import {setBlockData} from '../../ContextAPI/ContextApi'
-import Web3 from "web3";
+import { useWeb3React } from "@web3-react/core";
+import { injectors } from "../../wallet/connectors";
+import { useContext } from "react";
+import { setBlockData } from "../../ContextAPI/ContextApi";
+
 const Header = () => {
   const classes = styles();
-
-  // const { isAuthenticated, authenticate, user } = useMoralis();
-  const {
-    price,
-    setPrice,
-    protectedAmount,
-    setProtectedAmount,
-    totalLimit,
-    setTotalLimit,web3,address, setweb3,setaddress
-  } = useContext(setBlockData);
-  console.log(address)
-
-
-
-  const loadContract = async () => {
-    window.location.reload()  
-  };
+  const { active, account } = useWeb3React();
+  const { connect_to_user_wallet } = useContext(setBlockData);
 
   return (
     <AppBar
@@ -34,15 +20,15 @@ const Header = () => {
     >
       <Toolbar className={`${classes.toolBar}`}>
         <img src={logo} alt="logo" />
-        {!address ? (
-          <Button type="secondary" onClick={loadContract}>
+        {!active ? (
+          <Button type="secondary" onClick={connect_to_user_wallet}>
             Connect Wallet
           </Button>
         ) : (
           <Button type="secondary" className={`details`}>
             <div className={`add`}>
               <Typography style={{ lineHeight: 1 }} variant="body2">
-                {address}...
+                {account.substring(0, 8)}...
               </Typography>
               <Typography
                 style={{ lineHeight: 1 }}
@@ -56,7 +42,7 @@ const Header = () => {
                     height: "8px",
                     borderRadius: "50%",
                     background: "var(--green)",
-                    marginRight: "2px",
+                    marginRight: "2px"
                   }}
                 />
                 Connected

@@ -1,295 +1,66 @@
-import { Slider, Typography } from "@mui/material";
-import { Box } from "@mui/system";
+import { Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import { MARKS, VIEW } from "../../utils/constants";
+import { CONTRACT_ADDRESS, USDC_ADDRESS, VIEW } from "../../utils/constants";
 import { InfoBox, InputField, ViewLinks, TokenModal } from "../Sections";
 import { Button } from "../../components";
-import { useMoralis } from "react-moralis";
 import "../pages.scss";
+import { abi as buy_abi2 } from "../../Blockchain/Abis/ERC20.json";
 import { useContext, useEffect, useState } from "react";
-
-import { loadContract } from "../../Blockchain/LoadSmartContract";
 import { setBlockData } from "../../ContextAPI/ContextApi";
-import Web3 from "web3";
+import { useWeb3React } from "@web3-react/core";
 
 const Buy = () => {
-  // const { isAuthenticated, authenticate } = useMoralis();
   const {
-    price,
     setPrice,
-    protectedAmount,
     setProtectedAmount,
-    totalLimit,
-    setTotalLimit,web3,address,setweb3,setaddress
+    setTotalLimit,
+    connect_to_user_wallet
   } = useContext(setBlockData);
-  
+
+  /* using different local and context variables to clear data on view change */
+
+  const [disable, setDisable] = useState(false);
   const [totalValue, setTotalValue] = useState(null);
-  useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), [price, protectedAmount]);
-  
- 
-  
+  const [buyLimit, setBuyLimit] = useState(null);
+  const [protectedAmountLocal, setProtectedAmountLocal] = useState(null);
 
-    const  approve_usdc = async (_value, _token, addressOfUser) => {
-    const abi2 = [
-      {
-          "constant": true,
-          "inputs": [],
-          "name": "name",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "string"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-      },
-      {
-          "constant": false,
-          "inputs": [
-              {
-                  "name": "_spender",
-                  "type": "address"
-              },
-              {
-                  "name": "_value",
-                  "type": "uint256"
-              }
-          ],
-          "name": "approve",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "bool"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-      },
-      {
-          "constant": true,
-          "inputs": [],
-          "name": "totalSupply",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "uint256"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-      },
-      {
-          "constant": false,
-          "inputs": [
-              {
-                  "name": "_from",
-                  "type": "address"
-              },
-              {
-                  "name": "_to",
-                  "type": "address"
-              },
-              {
-                  "name": "_value",
-                  "type": "uint256"
-              }
-          ],
-          "name": "transferFrom",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "bool"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-      },
-      {
-          "constant": true,
-          "inputs": [],
-          "name": "decimals",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "uint8"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-      },
-      {
-          "constant": true,
-          "inputs": [
-              {
-                  "name": "_owner",
-                  "type": "address"
-              }
-          ],
-          "name": "balanceOf",
-          "outputs": [
-              {
-                  "name": "balance",
-                  "type": "uint256"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-      },
-      {
-          "constant": true,
-          "inputs": [],
-          "name": "symbol",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "string"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-      },
-      {
-          "constant": false,
-          "inputs": [
-              {
-                  "name": "_to",
-                  "type": "address"
-              },
-              {
-                  "name": "_value",
-                  "type": "uint256"
-              }
-          ],
-          "name": "transfer",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "bool"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-      },
-      {
-          "constant": true,
-          "inputs": [
-              {
-                  "name": "_owner",
-                  "type": "address"
-              },
-              {
-                  "name": "_spender",
-                  "type": "address"
-              }
-          ],
-          "name": "allowance",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "uint256"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-      },
-      {
-          "payable": true,
-          "stateMutability": "payable",
-          "type": "fallback"
-      },
-      {
-          "anonymous": false,
-          "inputs": [
-              {
-                  "indexed": true,
-                  "name": "owner",
-                  "type": "address"
-              },
-              {
-                  "indexed": true,
-                  "name": "spender",
-                  "type": "address"
-              },
-              {
-                  "indexed": false,
-                  "name": "value",
-                  "type": "uint256"
-              }
-          ],
-          "name": "Approval",
-          "type": "event"
-      },
-      {
-          "anonymous": false,
-          "inputs": [
-              {
-                  "indexed": true,
-                  "name": "from",
-                  "type": "address"
-              },
-              {
-                  "indexed": true,
-                  "name": "to",
-                  "type": "address"
-              },
-              {
-                  "indexed": false,
-                  "name": "value",
-                  "type": "uint256"
-              }
-          ],
-          "name": "Transfer",
-          "type": "event"
-      }
-    ];
-    const contract = await new web3.eth.Contract(abi2,_token)
-    var meth = contract.methods;
-    console.log(address);
-    if(address!=null){
-      await meth.approve('0x04796D80B66544EF9C4A08A5477E35C1632719f9', 
-      web3.utils.toBN(_value*1e8)).send({from: addressOfUser ,value: 0}).then(console.log);
-      
+  useEffect(() => {
+    /* setting local value here */
+    setTotalValue(parseFloat(buyLimit) * parseFloat(protectedAmountLocal));
+    /* setting context value here */
+    setTotalLimit(parseFloat(buyLimit) * parseFloat(protectedAmountLocal));
+    if (!buyLimit || !protectedAmountLocal) {
+      setDisable(true);
     } else {
-      console.log('Wallet not connected!')
+      setDisable(false);
     }
-  }
-  /** for developer only  */
-  const ls = async (e)=>{
-    approve_usdc(price, '0xe22da380ee6B445bb8273C81944ADEB6E8450422', address)
-  }
+  }, [buyLimit, protectedAmountLocal]);
 
+  /**
+   * active - user wallet status  , active will be true if the  site is connected with the user wallet.
+   * account -  user wallet address.
+   * libray - Web3 or ether .
+   */
+  const { active, account, library } = useWeb3React();
 
-
-
-let disable = true;
-const input_fill = ()=>{
-  window.alert("please fill the proper information before Hedge WETH ")
-}
-
-setTotalLimit( price*protectedAmount ) // karan will help us 
-useEffect(() => {
-
-if(!price || !protectedAmount){
-  disable = true;
-}
-else {
-  disable = false
-}
-
-}, [price,protectedAmount])
-
-  const loadContract = async () => {
-    window.location.reload()  
+  /**
+   * @function approve_usdc -  this function will approve value of USDC  that user want to deposit.
+   * @param {the value of USDC that user want to deposit} _value
+   * @param {the address of USDC} _token
+   * @param {user wallet address} addressOfUser
+   */
+  const approve_usdc = async (_value, _token, addressOfUser) => {
+    //loding ERC20 contract
+    const contract = await new library.eth.Contract(buy_abi2, _token);
+    // meth will contain all the method that our smart contract have.
+    var meth = contract.methods;
+    if (account) {
+      await meth
+        .approve(CONTRACT_ADDRESS, library.utils.toBN(_value * 1e8))
+        .send({ from: addressOfUser, value: 0 });
+    } else {
+      console.log("Wallet not connected!");
+    }
   };
 
   return (
@@ -299,9 +70,12 @@ else {
       <InputField
         inputLabel="Buy Prices"
         currency="USDC"
-        onChange={(e) =>
-          setPrice(e.target.value < 0 ? (e.target.value = 0) : e.target.value)
-        }
+        onChange={(e) => {
+          setBuyLimit(
+            e.target.value < 0 ? (e.target.value = 0) : e.target.value
+          );
+          setPrice(e.target.value < 0 ? (e.target.value = 0) : e.target.value);
+        }}
         tooltip={
           "Order is triggered when the market price of the asset reaches this price. For example - Price Limit of 4200 USDC for ETH with a market price of 4400 USDC"
         }
@@ -319,11 +93,14 @@ else {
         inputLabel="Buy Amount"
         currency="WETH"
         /* showMaxTag */
-        onChange={(e) =>
+        onChange={(e) => {
+          setProtectedAmountLocal(
+            e.target.value < 0 ? (e.target.value = 0) : e.target.value
+          );
           setProtectedAmount(
             e.target.value < 0 ? (e.target.value = 0) : e.target.value
-          )
-        }
+          );
+        }}
         tooltip={
           "The quantity of the asset from your wallet you’d like to use for the order. For example - 0.07 WETH  out of the 0.09 ETH in your wallet."
         }
@@ -332,17 +109,12 @@ else {
         value={totalValue}
         inputLabel="Total Limit"
         currency="USDC"
-        // onChange={(e) =>
-        //   setTotalLimit(
-        //     e.target.value < 0 ? (e.target.value = 0) : e.target.value
-        //   )
-        // }
         tooltip={
           "Total price floor of your asset holding which is the product of the limit and amount. For example - 0.07 WETH  staked with 4200 USDC limit will give 294 USDC as the total limit."
         }
       />
       <div className={`hedge-eth`}>
-        {!address ? (
+        {!active ? (
           <>
             <Typography
               variant="body2"
@@ -350,7 +122,7 @@ else {
             >
               Connect your wallet to continue
             </Typography>
-            <Button width={400} onClick={loadContract}>
+            <Button width={400} onClick={connect_to_user_wallet}>
               Connect Wallet
             </Button>
           </>
@@ -362,15 +134,25 @@ else {
             >
               Add the required USDC balance to confirm the order
             </Typography>
-            {disable ? (
+            {!disable ? (
               <Link to="/confirm?type=buy" style={{ textDecoration: "none" }}>
-                <Button width={400} onClick={ls} >
-                 Buy WETH 
+                <Button
+                  width={400}
+                  onClick={() => approve_usdc(buyLimit, USDC_ADDRESS, account)}
+                >
+                  Buy WETH
                 </Button>
               </Link>
             ) : (
-              <Button width={400} onClick={input_fill}>
-                Hedge WETH 
+              <Button
+                width={400}
+                onClick={() =>
+                  window.alert(
+                    "please fill the proper information before Hedge WETH "
+                  )
+                }
+              >
+                Hedge WETH
               </Button>
             )}
           </>

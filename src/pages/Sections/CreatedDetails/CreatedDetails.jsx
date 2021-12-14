@@ -8,7 +8,7 @@ const CreatedDetails = ({ type }) => {
     <div className={`dialog`} style={{ gap: "10px" }}>
       <div className={`confirm`}>
         <Typography variant="subtitle1">Order Created</Typography>
-        <Link to={"/"}>
+        <Link to={"/protect"}>
           <Sprite id="close" width={18} height={18} />
         </Link>
       </div>

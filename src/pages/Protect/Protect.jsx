@@ -1,286 +1,90 @@
-import { Slider, Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import { MARKS, VIEW } from "../../utils/constants";
+import { Typography } from "@mui/material";
+import { CONTRACT_ADDRESS, VIEW, WETH_ADDRESS } from "../../utils/constants";
+import { abi as protect_abi2 } from "../../Blockchain/Abis/ERC20.json";
+import { abi as stopLoss_Contract_abi } from "../../Blockchain/Abis/Stoploss.json";
 import "../pages.scss";
 import { Button } from "../../components";
 import { InfoBox, InputField, ViewLinks, TokenModal } from "../Sections";
-// import { useMoralis } from "react-moralis";
 import { Link } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import { setBlockData } from "../../ContextAPI/ContextApi";
-import Web3 from "web3";
+import { useWeb3React } from "@web3-react/core";
+
 const Protect = (props) => {
-  //  const { address, balance, message, setBalance, setAddress } = useStoreApi();
-  // const { isAuthenticated, authenticate } = useMoralis();
+  // getting context API
   const {
-    price,
     setPrice,
-    protectedAmount,
     setProtectedAmount,
-    totalLimit,
-    setTotalLimit,web3,address,setweb3,setaddress,
+    setstopLoos_Contract,
+    setTotalLimit,
+    connect_to_user_wallet
   } = useContext(setBlockData);
-  // this will reload the page 
-  const loadContract = async () => {
-    window.location.reload()  
-  };
-console.log(price,protectedAmount,totalLimit,address)
 
-const [totalValue, setTotalValue] = useState(null);
-useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), [price, protectedAmount]);
+  /* using different local and context variables to clear data on view change */
 
+  const [priceLimit, setPriceLimit] = useState(null);
+  const [protectedAmountLocal, setProtectedAmountLocal] = useState(null);
+  const [totalValue, setTotalValue] = useState(null);
 
-  const  approve_weth = async (_value, _token) => {
-    
-    const abi2 = [
-      {
-          "constant": true,
-          "inputs": [],
-          "name": "name",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "string"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-      },
-      {
-          "constant": false,
-          "inputs": [
-              {
-                  "name": "_spender",
-                  "type": "address"
-              },
-              {
-                  "name": "_value",
-                  "type": "uint256"
-              }
-          ],
-          "name": "approve",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "bool"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-      },
-      {
-          "constant": true,
-          "inputs": [],
-          "name": "totalSupply",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "uint256"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-      },
-      {
-          "constant": false,
-          "inputs": [
-              {
-                  "name": "_from",
-                  "type": "address"
-              },
-              {
-                  "name": "_to",
-                  "type": "address"
-              },
-              {
-                  "name": "_value",
-                  "type": "uint256"
-              }
-          ],
-          "name": "transferFrom",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "bool"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-      },
-      {
-          "constant": true,
-          "inputs": [],
-          "name": "decimals",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "uint8"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-      },
-      {
-          "constant": true,
-          "inputs": [
-              {
-                  "name": "_owner",
-                  "type": "address"
-              }
-          ],
-          "name": "balanceOf",
-          "outputs": [
-              {
-                  "name": "balance",
-                  "type": "uint256"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-      },
-      {
-          "constant": true,
-          "inputs": [],
-          "name": "symbol",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "string"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-      },
-      {
-          "constant": false,
-          "inputs": [
-              {
-                  "name": "_to",
-                  "type": "address"
-              },
-              {
-                  "name": "_value",
-                  "type": "uint256"
-              }
-          ],
-          "name": "transfer",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "bool"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-      },
-      {
-          "constant": true,
-          "inputs": [
-              {
-                  "name": "_owner",
-                  "type": "address"
-              },
-              {
-                  "name": "_spender",
-                  "type": "address"
-              }
-          ],
-          "name": "allowance",
-          "outputs": [
-              {
-                  "name": "",
-                  "type": "uint256"
-              }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-      },
-      {
-          "payable": true,
-          "stateMutability": "payable",
-          "type": "fallback"
-      },
-      {
-          "anonymous": false,
-          "inputs": [
-              {
-                  "indexed": true,
-                  "name": "owner",
-                  "type": "address"
-              },
-              {
-                  "indexed": true,
-                  "name": "spender",
-                  "type": "address"
-              },
-              {
-                  "indexed": false,
-                  "name": "value",
-                  "type": "uint256"
-              }
-          ],
-          "name": "Approval",
-          "type": "event"
-      },
-      {
-          "anonymous": false,
-          "inputs": [
-              {
-                  "indexed": true,
-                  "name": "from",
-                  "type": "address"
-              },
-              {
-                  "indexed": true,
-                  "name": "to",
-                  "type": "address"
-              },
-              {
-                  "indexed": false,
-                  "name": "value",
-                  "type": "uint256"
-              }
-          ],
-          "name": "Transfer",
-          "type": "event"
-      }
-    ];
-   
-    const contract = await new web3.eth.Contract(abi2,_token)
+  useEffect(() => {
+    /* setting local value here */
+    setTotalValue(parseFloat(priceLimit) * parseFloat(protectedAmountLocal));
+    /* setting context value here */
+    setTotalLimit(parseFloat(priceLimit) * parseFloat(protectedAmountLocal));
+  }, [priceLimit, protectedAmountLocal]);
+
+  /** active - user wallet status  , active will be true if the  site is connected with the user wallet.
+   *  account -  user wallet address.
+   *  libray - Web3 or ether .
+   */
+  const { active, account, library } = useWeb3React();
+
+  /**
+   * @function approve_weth - This function will approve a amount of WETH  that user want to Protect.
+   * @param {the value  of WETH that user want to approve} _value
+   * @param {the token  address of WETH} _token
+   */
+  const approve_weth = async (_value, _token) => {
+    // protect_abi2  - abi of the ERC20 token
+    const contract = await new library.eth.Contract(protect_abi2, _token);
+    // meth will contain all the method that our smart contract have.
     var meth = contract.methods;
-    
-    if(address!=null){
-     console.log(meth)
-  let event =     await meth.approve('0x04796D80B66544EF9C4A08A5477E35C1632719f9', web3.utils.toBN(_value*1e18)).send({from:address,value: 0}).then(console.log);
-     
+    /** call the stopLoss_deposite function from th smart contract if  the user is connected with user wallet.else show wallet not connected. */
+    if (account) {
+      await meth
+        .approve(CONTRACT_ADDRESS, library.utils.toBN(_value * 1e18))
+        .send({ from: account, value: 0 })
+        .then(console.log);
     } else {
-      console.log('Wallet not connected!')
+      console.log("Wallet not connected!");
     }
-  }
-  let disable = true;
-  const ls = async(e)=>{
-    console.log("pp")
-    // e.preventDefault()
-    // approve_weth(0.001, '0xd0A1E359811322d97991E03f863a0C30C2cF029C')
-    approve_weth(protectedAmount, '0xd0A1E359811322d97991E03f863a0C30C2cF029C', address)
+  };
 
-  }
+  /**
+   * @function loadContract -  this will load the Stoploss smart contract.
+   *@param stopLoss_Contract_abi - this is the ABI for the Stoploss Contract.
+   *@param CONTRACT_ADDRESS - is the contract Address where we have deployed our Smart Contract.
+   *
+   */
+  const loadContract = async () => {
+    if (account) {
+      // loading smart contract .
+      const contract = await new library.eth.Contract(
+        stopLoss_Contract_abi,
+        CONTRACT_ADDRESS
+      );
+      // setting smart contract to Stoploss usestate.
+      setstopLoos_Contract(contract);
+    }
+  };
 
-  const input_fill = ()=>{
-    window.alert("please fill the proper information before Hedge  WETH ")
-  }
+  /**
+   * loading smart contract everytime  if the user  wallet address get changed .
+   */
+  useEffect(() => {
+    loadContract();
+  }, [account]);
 
-  setTotalLimit( price*protectedAmount ) // karan will help us 
- 
   return (
     <>
       <TokenModal />
@@ -288,9 +92,12 @@ useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), 
       <InputField
         inputLabel="Price Limit"
         currency="USDC"
-        onChange={(e) =>
-          setPrice(e.target.value < 0 ? (e.target.value = 0) : e.target.value)
-        }
+        onChange={(e) => {
+          setPriceLimit(
+            e.target.value < 0 ? (e.target.value = 0) : e.target.value
+          );
+          setPrice(e.target.value < 0 ? (e.target.value = 0) : e.target.value);
+        }}
         tooltip={
           "Order is triggered when the market price of the asset reaches this price. For example - Price Limit of 4200 USDC for ETH with a market price of 4400 USDC"
         }
@@ -307,12 +114,14 @@ useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), 
       <InputField
         inputLabel="Protected Amount"
         currency="WETH"
-        /* showMaxTag */
-        onChange={(e) =>
+        onChange={(e) => {
+          setProtectedAmountLocal(
+            e.target.value < 0 ? (e.target.value = 0) : e.target.value
+          );
           setProtectedAmount(
             e.target.value < 0 ? (e.target.value = 0) : e.target.value
-          )
-        }
+          );
+        }}
         tooltip={
           "The quantity of the asset from your wallet you’d like to use for the order. For example - 0.07 WETH  out of the 0.09 ETH in your wallet."
         }
@@ -321,19 +130,12 @@ useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), 
         value={totalValue}
         inputLabel="Total Limit"
         currency="USDC"
-        // onChange={(e) =>
-        //   setTotalLimit(
-        //     e.target.value < 0 ? (e.target.value = 0) : e.target.value
-        //   )
-        // }
         tooltip={
           "Total price floor of your asset holding which is the product of the limit and amount. For example - 0.07 WETH  staked with 4200 USDC limit will give 294 USDC as the total limit."
         }
-       
       />
-      {console.log('Price:: ', price, protectedAmount, totalValue)}
       <div className={`hedge-eth`}>
-        {!address ? (
+        {!active ? (
           <>
             <Typography
               variant="body2"
@@ -341,28 +143,24 @@ useEffect(() => setTotalValue(parseFloat(price) * parseFloat(protectedAmount)), 
             >
               Connect your wallet to continue
             </Typography>
-            <Button width={400} onClick={loadContract}>
+            <Button width={400} onClick={connect_to_user_wallet}>
               Connect Wallet
             </Button>
           </>
         ) : (
           <>
-               <Typography
+            <Typography
               variant="body2"
               style={{ color: "var(--gray)", marginBottom: "10px" }}
             >
-              Add the required WETH  balance to confirm the order
+              Add the required WETH balance to confirm the order
             </Typography>
-      
-      
-              <Link
-                to="/confirm?type=protect"
-                style={{ textDecoration: "none" }}
-              >
-                <Button width={400} onClick={ls}>
-                  Hedge WETH 
-                </Button>
-              </Link>
+
+            <Link to="/confirm?type=protect" style={{ textDecoration: "none" }}>
+              <Button width={400} onClick={() => approve_weth(protectedAmountLocal, WETH_ADDRESS, account)}>
+                Hedge WETH
+              </Button>
+            </Link>
           </>
         )}
       </div>

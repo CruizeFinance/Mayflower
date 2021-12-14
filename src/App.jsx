@@ -2,53 +2,20 @@ import { ThemeProvider, CssBaseline, Typography } from "@mui/material";
 import { theme } from "./styles/styles";
 import Wrapper from "./wrapper/Wrapper";
 import "./styles/app.scss";
-
-import { isMobile } from "react-device-detect";
-import { useEffect, useState } from "react";
-
+import { Web3ReactProvider } from "@web3-react/core";
+import { isMobile, isTablet } from "react-device-detect";
 import Web3 from "web3";
-import { setBlockData } from "./ContextAPI/ContextApi";
-
 const App = () => {
-  const [assetsAddress, setAssetsAddress] = useState("eth");
-  const [price, setPrice] = useState(0);
-  const [protectedAmount, setProtectedAmount] = useState(0);
-  const [totalLimit, setTotalLimit] = useState(0);
 
-  const [address, setaddress] = useState(null)
-  const [web3, setweb3] = useState()
-  const [type, settype] = useState()
-  // const {address, balance, message, setBalance, setAddress} = useStoreApi(); To be removed
-  const loadWeb3 = async () => {
-    if (window.ethereum) {
-      window.web3 = new Web3(window.ethereum);
-      await window.ethereum.enable(); 
-    }}
-  const loadContract = async () => {
-    loadWeb3();
-    const web = window.web3;
-    // loading  the smart contract
-    // scan = new web3.eth.Contract(Stoploss.abi, process.env.STOP_LOOST_CONTRACT);
-    /** for developer  only */
-    // console.log(scan);
-     console.log(web)
-    setweb3(web)
-    let account =  await  web.eth.getAccounts()
+  /**
+   * @provider - web library provider
+   * function to utilise the web3 library
+   */
+  function getLibrary(provider) {
+    return new Web3(provider);
+  }
 
-    console.log(account[0])
-    setaddress(account[0])
-    console.log("successfully get contract");
-  };
-
-  
-  
-useEffect(() => {
-    loadWeb3();
-    loadContract()
-   
-}, [])
-
-  return isMobile ? (
+  return isMobile || isTablet ? (
     <div className={`mobile`}>
       <img
         src={"assets/images/cruize.svg"}
@@ -62,21 +29,10 @@ useEffect(() => {
     </div>
   ) : (
     <ThemeProvider theme={theme}>
-      <setBlockData.Provider
-        value={{
-          price,
-          setPrice,
-          protectedAmount,
-          setProtectedAmount,
-          totalLimit,
-          setTotalLimit,
-          assetsAddress,web3, setweb3,
-          setAssetsAddress,web3,address,type, settype
-        }}
-      >
+      <Web3ReactProvider getLibrary={getLibrary}>
         <CssBaseline />
         <Wrapper />
-      </setBlockData.Provider>
+      </Web3ReactProvider>
     </ThemeProvider>
   );
 };

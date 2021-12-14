@@ -1,3 +1,6 @@
+export const CONTRACT_ADDRESS = "0xA521Fb5BC2ffbA545c7f1202370dbA10fb410312";
+export const WETH_ADDRESS = "0xd0A1E359811322d97991E03f863a0C30C2cF029C";
+export const USDC_ADDRESS = "0xe22da380ee6B445bb8273C81944ADEB6E8450422";
 export const MARKS = [
   {
     value: 0,
@@ -24,7 +27,7 @@ export const MARKS = [
 export const VIEW = {
   protect: {
     label: "Protect",
-    route: "/",
+    route: "/protect",
   },
   buy: {
     label: "Buy",
@@ -41,11 +44,9 @@ export const ACTIVITY_HISTORY = [
     orderDate: "14th Sept, 2021",
     orderTime: "18:22 IST",
   },
-  
 ];
-export const ASSETS_VALUE = [
-  // we can put assets address on the place of assetsname
 
+export const ASSETS_VALUE = [
   "0xd0A1E359811322d97991E03f863a0C30C2cF029C",
 
   "link",
