@@ -22,7 +22,7 @@ const ConfirmDetails = ({ type }) => {
   }, [protectedAmount, price]);
 
   /**
-   * @function depositStope -
+   * @function depositStop -
    * @param { USDC token address } address_USDC
    * @param {The assets User want to deposit i.e. (link, weth ,eth ,dai) etc} assetToDeposit
    * @param {the amount of assets  that user want to Protect} _value

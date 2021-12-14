@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import { ACTIVITY_HISTORY } from "../../../utils/constants";
 import { Sprite } from "../../../components";
 import "../../pages.scss";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { setBlockData } from "../../../ContextAPI/ContextApi";
 import { _getCurrentDatetime } from "../../../utils/utilities";
@@ -18,11 +18,9 @@ const HistoryBox = () => {
   };
   const { price, protectedAmount, type } = useContext(setBlockData);
 
-  const [currentDateTime, setCurrentDateTime] = useState(null);
-
-  useEffect(() => {
-    setCurrentDateTime(_getCurrentDatetime().toString());
-  }, []);
+  const [currentDateTime, setCurrentDateTime] = useState(
+    _getCurrentDatetime().toString()
+  );
 
   return (
     <div className={`history`}>
