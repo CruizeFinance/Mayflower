@@ -1,7 +1,15 @@
 import { Button as MUIButton } from "@mui/material";
 import "./Button.scss";
 
-const Button = ({ type, onClick, width, style, className, ...props }) => {
+const Button = ({
+  type,
+  onClick,
+  width,
+  style,
+  className,
+  disabled,
+  ...props
+}) => {
   return (
     <MUIButton
       variant="contained"
@@ -9,8 +17,12 @@ const Button = ({ type, onClick, width, style, className, ...props }) => {
         type === "secondary" ? "secondary" : ""
       } `}
       color={type || "primary"}
-      onClick={onClick}
-      style={{ ...style, width: width || undefined }}
+      onClick={!disabled ? onClick : undefined}
+      style={{
+        ...style,
+        width: width || undefined,
+      }}
+      disabled={disabled}
     >
       {props.children}
     </MUIButton>

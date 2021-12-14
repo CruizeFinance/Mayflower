@@ -5,12 +5,14 @@ import { abi as stopLoss_Contract_abi } from "../../Blockchain/Abis/Stoploss.jso
 import "../pages.scss";
 import { Button } from "../../components";
 import { InfoBox, InputField, ViewLinks, TokenModal } from "../Sections";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import { setBlockData } from "../../ContextAPI/ContextApi";
 import { useWeb3React } from "@web3-react/core";
 
 const Protect = (props) => {
+  const navigate = useNavigate();
+
   // getting context API
   const {
     setPrice,
@@ -155,12 +157,16 @@ const Protect = (props) => {
             >
               Add the required WETH balance to confirm the order
             </Typography>
-
-            <Link to="/confirm?type=protect" style={{ textDecoration: "none" }}>
-              <Button width={400} onClick={() => approve_weth(protectedAmountLocal, WETH_ADDRESS, account)}>
-                Hedge WETH
-              </Button>
-            </Link>
+            <Button
+              width={400}
+              onClick={() => {
+                approve_weth(protectedAmountLocal, WETH_ADDRESS, account);
+                navigate(`/confirm?type=protect`);
+              }}
+              disabled={!totalValue}
+            >
+              Hedge WETH
+            </Button>
           </>
         )}
       </div>

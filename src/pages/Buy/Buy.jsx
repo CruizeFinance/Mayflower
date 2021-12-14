@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { CONTRACT_ADDRESS, USDC_ADDRESS, VIEW } from "../../utils/constants";
 import { InfoBox, InputField, ViewLinks, TokenModal } from "../Sections";
 import { Button } from "../../components";
@@ -10,6 +10,8 @@ import { setBlockData } from "../../ContextAPI/ContextApi";
 import { useWeb3React } from "@web3-react/core";
 
 const Buy = () => {
+  const navigate = useNavigate();
+
   const {
     setPrice,
     setProtectedAmount,
@@ -19,7 +21,6 @@ const Buy = () => {
 
   /* using different local and context variables to clear data on view change */
 
-  const [disable, setDisable] = useState(false);
   const [totalValue, setTotalValue] = useState(null);
   const [buyLimit, setBuyLimit] = useState(null);
   const [protectedAmountLocal, setProtectedAmountLocal] = useState(null);
@@ -29,11 +30,6 @@ const Buy = () => {
     setTotalValue(parseFloat(buyLimit) * parseFloat(protectedAmountLocal));
     /* setting context value here */
     setTotalLimit(parseFloat(buyLimit) * parseFloat(protectedAmountLocal));
-    if (!buyLimit || !protectedAmountLocal) {
-      setDisable(true);
-    } else {
-      setDisable(false);
-    }
   }, [buyLimit, protectedAmountLocal]);
 
   /**
@@ -134,27 +130,16 @@ const Buy = () => {
             >
               Add the required USDC balance to confirm the order
             </Typography>
-            {!disable ? (
-              <Link to="/confirm?type=buy" style={{ textDecoration: "none" }}>
-                <Button
-                  width={400}
-                  onClick={() => approve_usdc(buyLimit, USDC_ADDRESS, account)}
-                >
-                  Buy WETH
-                </Button>
-              </Link>
-            ) : (
-              <Button
-                width={400}
-                onClick={() =>
-                  window.alert(
-                    "please fill the proper information before Hedge WETH "
-                  )
-                }
-              >
-                Hedge WETH
-              </Button>
-            )}
+            <Button
+              width={400}
+              onClick={() => {
+                approve_usdc(buyLimit, USDC_ADDRESS, account);
+                navigate(`/confirm?type=buy`);
+              }}
+              disabled={!totalValue}
+            >
+              Buy WETH
+            </Button>
           </>
         )}
       </div>

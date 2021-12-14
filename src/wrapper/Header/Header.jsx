@@ -4,7 +4,6 @@ import { styles } from "../../styles/styles";
 import { Button } from "../../components";
 import "./Header.scss";
 import { useWeb3React } from "@web3-react/core";
-import { injectors } from "../../wallet/connectors";
 import { useContext } from "react";
 import { setBlockData } from "../../ContextAPI/ContextApi";
 
