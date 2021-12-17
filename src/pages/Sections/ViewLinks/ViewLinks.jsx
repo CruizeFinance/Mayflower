@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../../pages.scss";
 import { useWeb3React } from "@web3-react/core";
+import { setBlockData } from "../../../ContextAPI/ContextApi";
 
 const ViewLinks = ({ map, page }) => {
-
   const { active } = useWeb3React();
+
+  const { setMetamaskEvent } = useContext(setBlockData);
 
   const [hashMap, setHashMap] = useState(map);
 
@@ -36,6 +38,7 @@ const ViewLinks = ({ map, page }) => {
             fontWeight: "bold",
             letterSpacing: 1
           }}
+          onClick={() => setMetamaskEvent(undefined)}
         >
           {hashMap[view].label}
         </Link>

@@ -1,17 +1,24 @@
 import { Typography } from "@mui/material";
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Sprite, Button } from "../../../components";
 import "../../pages.scss";
 import { setBlockData } from "../../../ContextAPI/ContextApi";
 import { USDC_ADDRESS, WETH_ADDRESS } from "../../../utils/constants";
 import { useWeb3React } from "@web3-react/core";
 import { useEffect } from "react";
+
 const ConfirmDetails = ({ type }) => {
   // getting context
-  const { price, protectedAmount, stopLoos_Contract } =
-    useContext(setBlockData);
+  const {
+    price,
+    protectedAmount,
+    stopLoos_Contract,
+    metamaskEvent,
+    setMetamaskEvent
+  } = useContext(setBlockData);
   const [dipAmount, setDipAmount] = useState(null);
+  const navigate = useNavigate();
 
   /** @dev account  contain  user wallet address ,  library is the web3 */
   const { account, library } = useWeb3React();
@@ -45,7 +52,8 @@ const ConfirmDetails = ({ type }) => {
           library.utils.toBN(_value * 1e18),
           library.utils.toBN(dipAmount * 100000000)
         )
-        .send({ from: account, value: 0 });
+        .send({ from: account, value: 0 })
+        .then((d) => setMetamaskEvent(d));
     }
   };
 
@@ -75,11 +83,13 @@ const ConfirmDetails = ({ type }) => {
           library.utils.toBN(_value * 1e6),
           library.utils.toBN(dipAmount * 100000000)
         )
-        .send({ from: addressOfUser, value: 0 });
+        .send({ from: addressOfUser, value: 0 })
+        .then((d) => setMetamaskEvent(d));
     }
   };
 
   const Confirm_Order = async (e) => {
+    setMetamaskEvent(undefined);
     if (type === "Protect") {
       depositStop(
         USDC_ADDRESS,
@@ -97,7 +107,7 @@ const ConfirmDetails = ({ type }) => {
     <div className={`dialog`} style={{ alignItems: "flex-start", gap: "10px" }}>
       <div className={`confirm`}>
         <Typography variant="subtitle1">Confirm Order</Typography>
-        <Link to={"/protect"}>
+        <Link to={"/protect"} onClick={() => setMetamaskEvent(undefined)}>
           <Sprite id="close" width={18} height={18} />
         </Link>
       </div>
@@ -130,14 +140,16 @@ const ConfirmDetails = ({ type }) => {
           <Typography variant="body2">0.5%</Typography>
         </div> */}
       </div>
-      <Link
-        to={`/created?type=${type?.toLowerCase()}`}
-        style={{ textDecoration: "none", width: "100%" }}
+      <Button
+        className={`full-width`}
+        onClick={() => {
+          Confirm_Order();
+          navigate(`/created?type=${type?.toLowerCase()}`);
+        }}
+        disabled={!(metamaskEvent?.events?.Approval?.type === "mined")}
       >
-        <Button className={`full-width`} onClick={Confirm_Order}>
-          Confirm Order
-        </Button>
-      </Link>
+        {metamaskEvent ? "Confirm Order" : "Confirmation Pending"}
+      </Button>
     </div>
   );
 };

@@ -19,6 +19,7 @@ const Protect = (props) => {
     setProtectedAmount,
     setstopLoos_Contract,
     setTotalLimit,
+    setMetamaskEvent,
     connect_to_user_wallet
   } = useContext(setBlockData);
 
@@ -56,7 +57,7 @@ const Protect = (props) => {
       await meth
         .approve(CONTRACT_ADDRESS, library.utils.toBN(_value * 1e18))
         .send({ from: account, value: 0 })
-        .then(console.log);
+        .then((d) => setMetamaskEvent(d));
     } else {
       console.log("Wallet not connected!");
     }

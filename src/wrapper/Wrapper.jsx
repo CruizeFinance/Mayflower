@@ -14,6 +14,7 @@ const Wrapper = () => {
   const [totalLimit, setTotalLimit] = useState(0);
   const [stopLoos_Contract, setstopLoos_Contract] = useState();
   const [type, settype] = useState();
+  const [metamaskEvent, setMetamaskEvent] = useState();
 
   const { activate } = useWeb3React();
 
@@ -43,7 +44,9 @@ const Wrapper = () => {
         settype,
         stopLoos_Contract,
         setstopLoos_Contract,
-        connect_to_user_wallet
+        connect_to_user_wallet,
+        metamaskEvent,
+        setMetamaskEvent,
       }}
     >
       <Box style={{ height: "100vh" }}>

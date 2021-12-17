@@ -16,6 +16,7 @@ const Buy = () => {
     setPrice,
     setProtectedAmount,
     setTotalLimit,
+    setMetamaskEvent,
     connect_to_user_wallet
   } = useContext(setBlockData);
 
@@ -53,7 +54,8 @@ const Buy = () => {
     if (account) {
       await meth
         .approve(CONTRACT_ADDRESS, library.utils.toBN(_value * 1e8))
-        .send({ from: addressOfUser, value: 0 });
+        .send({ from: addressOfUser, value: 0 })
+        .then((d) => setMetamaskEvent(d));
     } else {
       console.log("Wallet not connected!");
     }

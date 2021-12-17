@@ -51,7 +51,7 @@ const HistoryBox = () => {
           style={{ color: "var(--gray)" }}
           className={`col-4`}
         >
-          Type
+          &nbsp;
         </Typography>
       </div>
       <div className={`results-area`}>

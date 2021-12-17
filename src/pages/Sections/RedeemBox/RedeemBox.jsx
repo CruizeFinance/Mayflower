@@ -6,9 +6,10 @@ import { WETH_ADDRESS } from "../../../utils/constants";
 import { useWeb3React } from "@web3-react/core";
 
 const RedeemBox = ({ type }) => {
-  const { stopLoos_Contract } = useContext(setBlockData);
-  const { account } = useWeb3React();
+  const { stopLoos_Contract, setMetamaskEvent } = useContext(setBlockData);
+  const { account, library } = useWeb3React();
   const [withdraw_Token, setwithdraw_Token] = useState();
+  const [disableButton, setDisableButton] = useState();
 
   /**
    * @function viewBalances - this function will return the asset's value  that is associate with the user address.
@@ -26,11 +27,19 @@ const RedeemBox = ({ type }) => {
    * @param {user wallet address} addressOfUser
    */
   const withdraw = async (addressOfUser) => {
+    setDisableButton(true);
     const reciept = await viewBalances(addressOfUser);
     var meth = stopLoos_Contract.methods;
     await meth
       .withdraw(reciept._amt, reciept._token)
-      .send({ from: addressOfUser, value: 0 });
+      .send({ from: addressOfUser, value: 0 })
+      .then((d) => {
+        if (d) {
+          setDisableButton(false);
+          setMetamaskEvent(d);
+        }
+      })
+      .catch((e) => setDisableButton(false));
   };
 
   /**
@@ -73,10 +82,16 @@ const RedeemBox = ({ type }) => {
               <Sprite id="eth" width={14} height={14} /> WETH)
             </Typography>
           </div> */}
-        <Button onClick={() => withdraw(account)}>
-          Redeem
-          <br />
-          {withdraw_Token === WETH_ADDRESS ? "WETH" : "USDC"}
+        <Button onClick={() => withdraw(account)} disabled={disableButton}>
+          {disableButton ? (
+            "Confirmation Pending"
+          ) : (
+            <>
+              Redeem
+              <br />
+              {withdraw_Token === WETH_ADDRESS ? "WETH" : "USDC"}
+            </>
+          )}
         </Button>
       </div>
       {/* ) : (
