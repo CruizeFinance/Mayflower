@@ -15,7 +15,6 @@ const Wrapper = () => {
   const [stopLoos_Contract, setstopLoos_Contract] = useState();
   const [type, settype] = useState();
   const [metamaskEvent, setMetamaskEvent] = useState();
-
   const { activate } = useWeb3React();
 
   /**
@@ -30,31 +29,33 @@ const Wrapper = () => {
   }
 
   return (
-    <setBlockData.Provider
-      value={{
-        price,
-        setPrice,
-        protectedAmount,
-        setProtectedAmount,
-        totalLimit,
-        setTotalLimit,
-        assetsAddress,
-        setAssetsAddress,
-        type,
-        settype,
-        stopLoos_Contract,
-        setstopLoos_Contract,
-        connect_to_user_wallet,
-        metamaskEvent,
-        setMetamaskEvent,
-      }}
-    >
-      <Box style={{ height: "100vh" }}>
-        <Header />
-        <Toolbar />
-        <Content />
-      </Box>
-    </setBlockData.Provider>
+    <>
+      <setBlockData.Provider
+        value={{
+          price,
+          setPrice,
+          protectedAmount,
+          setProtectedAmount,
+          totalLimit,
+          setTotalLimit,
+          assetsAddress,
+          setAssetsAddress,
+          type,
+          settype,
+          stopLoos_Contract,
+          setstopLoos_Contract,
+          connect_to_user_wallet,
+          metamaskEvent,
+          setMetamaskEvent
+        }}
+      >
+        <Box style={{ height: "100vh" }}>
+          <Header />
+          <Toolbar />
+          <Content />
+        </Box>
+      </setBlockData.Provider>
+    </>
   );
 };
 

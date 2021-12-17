@@ -7,7 +7,7 @@ import { useWeb3React } from "@web3-react/core";
 
 const RedeemBox = ({ type }) => {
   const { stopLoos_Contract, setMetamaskEvent } = useContext(setBlockData);
-  const { account, library } = useWeb3React();
+  const { account } = useWeb3React();
   const [withdraw_Token, setwithdraw_Token] = useState();
   const [disableButton, setDisableButton] = useState();
 
@@ -37,9 +37,15 @@ const RedeemBox = ({ type }) => {
         if (d) {
           setDisableButton(false);
           setMetamaskEvent(d);
+          // once the user Redeem thier asset we must need to disable the Redeem button
+          getBalanceInfo();
         }
       })
-      .catch((e) => setDisableButton(false));
+      .catch((e) => {
+        setDisableButton(false);
+        /**  here you will be able to see what  the transaction status from the metamask if it get falied */
+        console.log(e.message);
+      });
   };
 
   /**
@@ -54,7 +60,7 @@ const RedeemBox = ({ type }) => {
     // meth -  this variable have  all the method that our Smart contract have .
     let userAssetsInfo = await meth.balances(account).call();
     // setting up the token address that  is associate with user in our Smart contract.
-    setwithdraw_Token(userAssetsInfo._token);
+    setwithdraw_Token(userAssetsInfo);
   };
 
   useEffect(() => {
@@ -82,14 +88,18 @@ const RedeemBox = ({ type }) => {
               <Sprite id="eth" width={14} height={14} /> WETH)
             </Typography>
           </div> */}
-        <Button onClick={() => withdraw(account)} disabled={disableButton}>
+
+        <Button
+          onClick={() => withdraw(account)}
+          disabled={withdraw_Token?._amt === "0" || disableButton}
+        >
           {disableButton ? (
             "Confirmation Pending"
           ) : (
             <>
               Redeem
               <br />
-              {withdraw_Token === WETH_ADDRESS ? "WETH" : "USDC"}
+              {withdraw_Token?._token === WETH_ADDRESS ? "WETH" : "USDC"}
             </>
           )}
         </Button>

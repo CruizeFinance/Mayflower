@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import { setBlockData } from "../../ContextAPI/ContextApi";
 import { useWeb3React } from "@web3-react/core";
-
 const Protect = (props) => {
   const navigate = useNavigate();
 
@@ -57,7 +56,14 @@ const Protect = (props) => {
       await meth
         .approve(CONTRACT_ADDRESS, library.utils.toBN(_value * 1e18))
         .send({ from: account, value: 0 })
-        .then((d) => setMetamaskEvent(d));
+        .on("sent", () => {
+          console.log("success");
+        })
+        .then((d) => setMetamaskEvent(d))
+        .catch((error) => {
+          /* the error for the popup is caught in the confirm screen. Need to navigate back to protect. */
+          navigate("/protect");
+        });
     } else {
       console.log("Wallet not connected!");
     }
