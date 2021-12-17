@@ -56,11 +56,14 @@ const Protect = (props) => {
       await meth
         .approve(CONTRACT_ADDRESS, library.utils.toBN(_value * 1e18))
         .send({ from: account, value: 0 })
-        .then((d) => setMetamaskEvent(d)).catch((error)=>{
-          console.log("error",error)
-          window.alert(error.message)
-          navigate('/')
-          });
+        .on("sent", () => {
+          console.log("success");
+        })
+        .then((d) => setMetamaskEvent(d))
+        .catch((error) => {
+          /* the error for the popup is caught in the confirm screen. Need to navigate back to protect. */
+          navigate("/protect");
+        });
     } else {
       console.log("Wallet not connected!");
     }

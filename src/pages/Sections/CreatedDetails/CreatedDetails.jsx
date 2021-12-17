@@ -16,7 +16,6 @@ const CreatedDetails = ({ type }) => {
         <Link to={"/protect"} onClick={() => setMetamaskEvent(undefined)}>
           <Sprite id="close" width={18} height={18} />
         </Link>
-        {console.log(metamaskEvent)}
       </div>
       <div className={`order-details`}>
         <Typography variant="h5">{type}</Typography>

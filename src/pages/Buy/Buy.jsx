@@ -16,8 +16,7 @@ const Buy = () => {
     setProtectedAmount,
     setTotalLimit,
     setMetamaskEvent,
-    connect_to_user_wallet,
-   
+    connect_to_user_wallet
   } = useContext(setBlockData);
 
   /* using different local and context variables to clear data on view change */
@@ -58,7 +57,7 @@ const Buy = () => {
         .then((d) => setMetamaskEvent(d))
         .catch((error) => {
           console.log("error", error.message);
-          window.alert(error.message)
+          /* the error for the popup is caught in the confirm screen. Need to navigate back to buy. */
           navigate("/buy");
         });
     } else {

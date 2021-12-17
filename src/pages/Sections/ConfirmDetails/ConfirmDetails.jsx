@@ -20,7 +20,6 @@ const ConfirmDetails = ({ type }) => {
   } = useContext(setBlockData);
   const [dipAmount, setDipAmount] = useState(null);
 
-
   /** @dev account  contain  user wallet address ,  library is the web3 */
   const { account, library } = useWeb3React();
 
@@ -54,12 +53,12 @@ const ConfirmDetails = ({ type }) => {
           library.utils.toBN(dipAmount * 100000000)
         )
         .send({ from: account, value: 0 })
-        .then((d) => setMetamaskEvent(d)) .catch((error)=>{
-        /**  here you will be able to see what  the transaction status from the metamask if it get falied */
-          console.log("error",error)
-          window.alert(error.message)
-          navigate('/')
-          });
+        .then((d) => setMetamaskEvent(d))
+        .catch((error) => {
+          /**  here you will be able to see what  the transaction status from the metamask if it get falied */
+          console.log("error", error);
+          navigate(`/${type?.toLowerCase()}`);
+        });
     }
   };
 
@@ -90,12 +89,12 @@ const ConfirmDetails = ({ type }) => {
           library.utils.toBN(dipAmount * 100000000)
         )
         .send({ from: addressOfUser, value: 0 })
-        .then((d) => setMetamaskEvent(d)).catch((error)=>{
-      /**  here you will be able to see what  the transaction status from the metamask if it get falied */
-          console.log("error",error)
-          window.alert(error.message)
-          navigate('/buy')
-          });
+        .then((d) => setMetamaskEvent(d))
+        .catch((error) => {
+          /**  here you will be able to see what  the transaction status from the metamask if it get falied */
+          console.log("error", error);
+          navigate(`/${type?.toLowerCase()}`);
+        });
     }
   };
 

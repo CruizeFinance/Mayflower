@@ -5,13 +5,12 @@ import { setBlockData } from "../../../ContextAPI/ContextApi";
 import { WETH_ADDRESS } from "../../../utils/constants";
 import { useWeb3React } from "@web3-react/core";
 
-
 const RedeemBox = ({ type }) => {
   const { stopLoos_Contract, setMetamaskEvent } = useContext(setBlockData);
-  const { account} = useWeb3React();
+  const { account } = useWeb3React();
   const [withdraw_Token, setwithdraw_Token] = useState();
   const [disableButton, setDisableButton] = useState();
- 
+
   /**
    * @function viewBalances - this function will return the asset's value  that is associate with the user address.
    * @param {user wallet address } addressOfUser
@@ -46,7 +45,6 @@ const RedeemBox = ({ type }) => {
         setDisableButton(false);
         /**  here you will be able to see what  the transaction status from the metamask if it get falied */
         console.log(e.message);
-        window.alert(e.message)
       });
   };
 
@@ -63,8 +61,8 @@ const RedeemBox = ({ type }) => {
     let userAssetsInfo = await meth.balances(account).call();
     // setting up the token address that  is associate with user in our Smart contract.
     setwithdraw_Token(userAssetsInfo);
-    }
-    
+  };
+
   useEffect(() => {
     getBalanceInfo();
   }, []);
@@ -91,7 +89,10 @@ const RedeemBox = ({ type }) => {
             </Typography>
           </div> */}
 
-        <Button onClick={() => withdraw(account)} disabled={ withdraw_Token?._amt === "0" || disableButton }>
+        <Button
+          onClick={() => withdraw(account)}
+          disabled={withdraw_Token?._amt === "0" || disableButton}
+        >
           {disableButton ? (
             "Confirmation Pending"
           ) : (
