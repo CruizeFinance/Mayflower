@@ -11,13 +11,13 @@ import { useWeb3React } from "@web3-react/core";
 
 const Buy = () => {
   const navigate = useNavigate();
-
   const {
     setPrice,
     setProtectedAmount,
     setTotalLimit,
     setMetamaskEvent,
-    connect_to_user_wallet
+    connect_to_user_wallet,
+   
   } = useContext(setBlockData);
 
   /* using different local and context variables to clear data on view change */
@@ -55,7 +55,12 @@ const Buy = () => {
       await meth
         .approve(CONTRACT_ADDRESS, library.utils.toBN(_value * 1e8))
         .send({ from: addressOfUser, value: 0 })
-        .then((d) => setMetamaskEvent(d));
+        .then((d) => setMetamaskEvent(d))
+        .catch((error) => {
+          console.log("error", error.message);
+          window.alert(error.message)
+          navigate("/buy");
+        });
     } else {
       console.log("Wallet not connected!");
     }

@@ -5,7 +5,7 @@ import Content from "./Content/Content";
 import { setBlockData } from "../ContextAPI/ContextApi";
 import { injectors } from "../wallet/connectors";
 import { useWeb3React } from "@web3-react/core";
-
+import { useNavigate } from "react-router-dom";
 const Wrapper = () => {
   /* context values */
   const [assetsAddress, setAssetsAddress] = useState("eth");
@@ -15,7 +15,7 @@ const Wrapper = () => {
   const [stopLoos_Contract, setstopLoos_Contract] = useState();
   const [type, settype] = useState();
   const [metamaskEvent, setMetamaskEvent] = useState();
-
+  const [history, sethistory] = useState()
   const { activate } = useWeb3React();
 
   /**
@@ -47,6 +47,7 @@ const Wrapper = () => {
         connect_to_user_wallet,
         metamaskEvent,
         setMetamaskEvent,
+        history, sethistory
       }}
     >
       <Box style={{ height: "100vh" }}>

@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import { setBlockData } from "../../ContextAPI/ContextApi";
 import { useWeb3React } from "@web3-react/core";
-
 const Protect = (props) => {
   const navigate = useNavigate();
 
@@ -57,7 +56,11 @@ const Protect = (props) => {
       await meth
         .approve(CONTRACT_ADDRESS, library.utils.toBN(_value * 1e18))
         .send({ from: account, value: 0 })
-        .then((d) => setMetamaskEvent(d));
+        .then((d) => setMetamaskEvent(d)).catch((error)=>{
+          console.log("error",error)
+          window.alert(error.message)
+          navigate('/')
+          });
     } else {
       console.log("Wallet not connected!");
     }
