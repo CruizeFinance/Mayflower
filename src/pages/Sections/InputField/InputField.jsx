@@ -14,7 +14,7 @@ import { Sprite } from "../../../components";
 const InputField = ({
   inputLabel,
   currency,
-  showMaxTag,
+  onMaxClick,
   onChange,
   tooltip,
   value,
@@ -48,8 +48,8 @@ const InputField = ({
           onFocus={() => setApplyStyles(true)}
           onBlur={() => setApplyStyles(false)}
         />
-        {showMaxTag ? (
-          <div className={`max-label`} onClick={() => console.log("max")}>
+        {onMaxClick ? (
+          <div className={`max-label`} onClick={onMaxClick}>
             Max
           </div>
         ) : null}

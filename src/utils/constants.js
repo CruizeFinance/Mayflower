@@ -29,9 +29,9 @@ export const VIEW = {
     label: "Protect",
     route: "/protect",
   },
-  buy: {
-    label: "Buy",
-    route: "/buy",
+  withdraw: {
+    label: "Withdraw",
+    route: "/withdraw",
   },
 };
 

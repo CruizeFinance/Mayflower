@@ -5,9 +5,9 @@ import "../../pages.scss";
 import { useContext } from "react";
 import { setBlockData } from "../../../ContextAPI/ContextApi";
 
-const CreatedDetails = ({ type }) => {
+const CreatedDetails = (props) => {
   const navigate = useNavigate();
-  const { metamaskEvent, setMetamaskEvent } = useContext(setBlockData);
+  const { type, setMetamaskEvent } = useContext(setBlockData);
 
   return (
     <div className={`dialog`} style={{ gap: "10px" }}>
@@ -20,22 +20,17 @@ const CreatedDetails = ({ type }) => {
       <div className={`order-details`}>
         <Typography variant="h5">{type}</Typography>
         <Typography variant="h6">
-          <Sprite id="eth" width={16} height={16} /> ETH (Ether)
-        </Typography>
-        <Typography variant="subtitle2">
-          Your orders will only get executed if the funds are present in your
-          wallet at the time of execution.
+          <Sprite id="eth" width={16} height={16} /> 0.007 (Ether)
         </Typography>
       </div>
       <Button
         className={`full-width`}
         onClick={() => {
           setMetamaskEvent(undefined);
-          navigate(`/manage`);
+          navigate(`/protect`);
         }}
-        disabled={!(metamaskEvent?.events[0]?.type === "mined")}
       >
-        {metamaskEvent ? "View Orders" : "Confirmation Pending"}
+        Back to Home
       </Button>
     </div>
   );

@@ -1,17 +1,23 @@
 import { Typography } from "@mui/material";
-import { VIEW } from "../../utils/constants";
-import "../pages.scss";
-import { Button } from "../../components";
-import { InputField, ViewLinks, TokenModal, ProtectDetails } from "../Sections";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { CONTRACT_ADDRESS, USDC_ADDRESS, VIEW } from "../../utils/constants";
+import {
+  InfoBox,
+  InputField,
+  ViewLinks,
+  TokenModal,
+  ProtectDetails
+} from "../Sections";
+import { Button } from "../../components";
+import "../pages.scss";
+import { abi as buy_abi2 } from "../../Blockchain/Abis/ERC20.json";
+import { useContext, useEffect, useState } from "react";
 import { setBlockData } from "../../ContextAPI/ContextApi";
 import { useWeb3React } from "@web3-react/core";
-const Protect = (props) => {
-  const navigate = useNavigate();
 
-  // getting context API
-  const { connect_to_user_wallet, setType } = useContext(setBlockData);
+const Withdraw = () => {
+  const navigate = useNavigate();
+  const { setType, connect_to_user_wallet } = useContext(setBlockData);
 
   /**
    * active - user wallet status  , active will be true if the  site is connected with the user wallet.
@@ -21,10 +27,10 @@ const Protect = (props) => {
   return (
     <>
       <TokenModal />
-      <ViewLinks map={VIEW} page={"protect"} />
+      <ViewLinks map={VIEW} page={"withdraw"} />
       <InputField
-        inputLabel="Protected Amount"
-        currency="WETH"
+        inputLabel="Buy Amount"
+        currency="ETH"
         onChange={(e) => console.log(e)}
         onMaxClick={() => console.log("max clicked")}
       />
@@ -66,10 +72,10 @@ const Protect = (props) => {
               width={400}
               onClick={() => {
                 navigate(`/confirm`);
-                setType("Protect");
+                setType("Withdraw");
               }}
             >
-              Protect ETH
+              Withdraw ETH
             </Button>
           </>
         )}
@@ -101,4 +107,4 @@ const Protect = (props) => {
   );
 };
 
-export default Protect;
+export default Withdraw;

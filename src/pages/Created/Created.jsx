@@ -1,4 +1,4 @@
-import { CreatedDetails, HistoryBox, InfoBox } from "../Sections";
+import { CreatedDetails, InfoBox } from "../Sections";
 import { useWeb3React } from "@web3-react/core";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -14,10 +14,7 @@ const Created = (props) => {
 
   return (
     <>
-      <CreatedDetails
-        type={window.location?.search?.includes("protect") ? "Protect" : "Buy"}
-      />
-      <HistoryBox />
+      <CreatedDetails />
       <InfoBox
         hideDialogOne
         dialogTwoLabel={

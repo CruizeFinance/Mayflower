@@ -3,22 +3,17 @@ import { Sprite } from "../../../components";
 import { useState } from "react";
 
 const TokenModal = () => {
-  const [tokenValue, setTokenValue] = useState("weth");
+  const [tokenValue, setTokenValue] = useState("eth");
 
   return (
     <Select
       value={tokenValue}
       onChange={(e) => setTokenValue(e.target.value)}
-      displayEmpty
       className={`select`}
     >
-      <MenuItem value="weth" data-my-value={5}>
-        <Sprite id="weth" width={14} height={14} />
-        &nbsp;WETH
-      </MenuItem>
-      <MenuItem value="usdc" data-my-value={2}>
-        <Sprite id="usdc" width={14} height={14} />
-        &nbsp;USDC
+      <MenuItem value="eth" data-my-value={5}>
+        <Sprite id="eth" width={14} height={14} />
+        &nbsp;Ethereum
       </MenuItem>
     </Select>
   );

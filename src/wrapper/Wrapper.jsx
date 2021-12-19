@@ -8,13 +8,10 @@ import { useWeb3React } from "@web3-react/core";
 
 const Wrapper = () => {
   /* context values */
-  const [assetsAddress, setAssetsAddress] = useState("eth");
-  const [price, setPrice] = useState(0);
   const [protectedAmount, setProtectedAmount] = useState(0);
-  const [totalLimit, setTotalLimit] = useState(0);
-  const [stopLoos_Contract, setstopLoos_Contract] = useState();
-  const [type, settype] = useState();
+  const [type, setType] = useState();
   const [metamaskEvent, setMetamaskEvent] = useState();
+  
   const { activate } = useWeb3React();
 
   /**
@@ -32,18 +29,10 @@ const Wrapper = () => {
     <>
       <setBlockData.Provider
         value={{
-          price,
-          setPrice,
           protectedAmount,
           setProtectedAmount,
-          totalLimit,
-          setTotalLimit,
-          assetsAddress,
-          setAssetsAddress,
           type,
-          settype,
-          stopLoos_Contract,
-          setstopLoos_Contract,
+          setType,
           connect_to_user_wallet,
           metamaskEvent,
           setMetamaskEvent
