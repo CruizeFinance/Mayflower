@@ -1,15 +1,11 @@
 import {
   Paper,
-  IconButton,
-  Tooltip,
   Typography,
   Divider,
   InputBase,
-  Fade
 } from "@mui/material";
 import "../../pages.scss";
 import { useState } from "react";
-import { Sprite } from "../../../components";
 
 const InputField = ({
   inputLabel,
@@ -58,16 +54,6 @@ const InputField = ({
           <Typography variant="subtitle1">{currency}</Typography>
         </div>
       </Paper>
-      <Tooltip
-        title={tooltip}
-        placement="right-start"
-        TransitionComponent={Fade}
-        TransitionProps={{ timeout: 600 }}
-      >
-        <IconButton style={{ padding: "0px" }}>
-          <Sprite id="info" width={12} height={12} />
-        </IconButton>
-      </Tooltip>
     </span>
   );
 };

@@ -1,17 +1,10 @@
 import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { CONTRACT_ADDRESS, USDC_ADDRESS, VIEW } from "../../utils/constants";
-import {
-  InfoBox,
-  InputField,
-  ViewLinks,
-  TokenModal,
-  ProtectDetails
-} from "../Sections";
+import { VIEW } from "../../utils/constants";
+import { InputField, ViewLinks, TokenModal, ProtectDetails } from "../Sections";
 import { Button } from "../../components";
 import "../pages.scss";
-import { abi as buy_abi2 } from "../../Blockchain/Abis/ERC20.json";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { setBlockData } from "../../ContextAPI/ContextApi";
 import { useWeb3React } from "@web3-react/core";
 
@@ -29,7 +22,7 @@ const Withdraw = () => {
       <TokenModal />
       <ViewLinks map={VIEW} page={"withdraw"} />
       <InputField
-        inputLabel="Buy Amount"
+        inputLabel="Witdraw Amount"
         currency="ETH"
         onChange={(e) => console.log(e)}
         onMaxClick={() => console.log("max clicked")}
@@ -43,7 +36,7 @@ const Withdraw = () => {
           },
           {
             label: "Total Price Floor (in USDC)",
-            value: "1200 USDC"
+            value: active ? "1200 USDC" : "-"
           }
         ]}
       />
@@ -80,7 +73,7 @@ const Withdraw = () => {
           </>
         )}
       </div>
-      {!true ? (
+      {active ? (
         <ProtectDetails
           details={[
             {

@@ -24,7 +24,7 @@ const Protect = (props) => {
       <ViewLinks map={VIEW} page={"protect"} />
       <InputField
         inputLabel="Protected Amount"
-        currency="WETH"
+        currency="ETH"
         onChange={(e) => console.log(e)}
         onMaxClick={() => console.log("max clicked")}
       />
@@ -37,7 +37,7 @@ const Protect = (props) => {
           },
           {
             label: "Total Price Floor (in USDC)",
-            value: "1200 USDC"
+            value: active ? "1200 USDC" : "-"
           }
         ]}
       />
@@ -74,7 +74,7 @@ const Protect = (props) => {
           </>
         )}
       </div>
-      {!true ? (
+      {active ? (
         <ProtectDetails
           details={[
             {

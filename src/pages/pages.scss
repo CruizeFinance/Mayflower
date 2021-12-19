@@ -23,7 +23,7 @@
 }
 .protect-details {
   width: 400px;
-  @include flex(column, flex-start, center, 10px);
+  @include flex(column, flex-start, center, 5px);
 }
 .protect-details > span {
   width: 100%;
