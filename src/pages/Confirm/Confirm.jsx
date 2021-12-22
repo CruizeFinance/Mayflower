@@ -33,7 +33,7 @@ const Confirm = (props) => {
    * @param {the amount of assets  that user want to Protect} _value
    * @param {once the price limit of the asset's goes below which the asset will be swapped with a stable token} dipAmount
    */
-  const protect_WETH = async (
+  const protectWETH = async (
     address_USDC,
     assetToDeposit,
     _value,
@@ -61,7 +61,7 @@ const Confirm = (props) => {
   };
 
   /**
-   * @function confrim  - This function will call the withdraw function or the protect_WETH function based on the type .
+   * @function confrim  - This function will call the withdraw function or the protectWETH function based on the type .
    * @param {withdraw_amount} - The amount that user want to withdraw.
    */
 
@@ -69,7 +69,7 @@ const Confirm = (props) => {
     if (type === "Withdraw") {
       withdraw(withdraw_amount, account);
     } else {
-      protect_WETH(USDC_ADDRESS, WETH_ADDRESS, protectedAmount, dipvValue);
+      protectWETH(USDC_ADDRESS, WETH_ADDRESS, protectedAmount, dipvValue);
     }
   };
 

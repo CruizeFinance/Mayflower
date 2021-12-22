@@ -26,7 +26,7 @@ const Protect = (props) => {
    * @param {the value  of WETH that user want to approve} _value
    * @param {the token  address of WETH} _token
    */
-  const approve_WETH = async (_value, _token) => {
+  const approveWETH = async (_value, _token) => {
     // ERC20_ABI  - abi of the ERC20 token
     const contract = await new library.eth.Contract(ERC20_ABI, _token);
     // method will contain all the methodod that our smart contract have.
@@ -126,7 +126,7 @@ const Protect = (props) => {
             <Button
               width={400}
               onClick={() => {
-                approve_WETH(protectedAmount,WETH_ADDRESS)
+                approveWETH(protectedAmount,WETH_ADDRESS)
                 navigate(`/confirm`);
                 setType("Protect");
                 
