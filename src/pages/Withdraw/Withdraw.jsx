@@ -4,19 +4,21 @@ import { VIEW } from "../../utils/constants";
 import { InputField, ViewLinks, TokenModal, ProtectDetails } from "../Sections";
 import { Button } from "../../components";
 import "../pages.scss";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { setBlockData } from "../../ContextAPI/ContextApi";
 import { useWeb3React } from "@web3-react/core";
 
 const Withdraw = () => {
   const navigate = useNavigate();
   const { setType, connect_to_user_wallet } = useContext(setBlockData);
-
+  
   /**
    * active - user wallet status  , active will be true if the  site is connected with the user wallet.
    */
-  const { active } = useWeb3React();
+  const { active} = useWeb3React();
 
+
+  
   return (
     <>
       <TokenModal />
@@ -66,6 +68,7 @@ const Withdraw = () => {
               onClick={() => {
                 navigate(`/confirm`);
                 setType("Withdraw");
+              
               }}
             >
               Withdraw ETH
