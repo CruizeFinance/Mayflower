@@ -12,7 +12,8 @@ const Wrapper = () => {
   const [type, setType] = useState();
   const [metamaskEvent, setMetamaskEvent] = useState();
   const [stoploss_contract,setstoploss_contract] = useState()
-  
+  const [withdraw_amount,setwithdraw_amount] = useState()
+const [userBalanace, setuserBalanace] = useState(0)
   const { activate } = useWeb3React();
 
   /**
@@ -36,7 +37,7 @@ const Wrapper = () => {
           setType,
           connect_to_user_wallet,
           metamaskEvent,
-          setMetamaskEvent,stoploss_contract,setstoploss_contract
+          setMetamaskEvent,stoploss_contract,setstoploss_contract,withdraw_amount,setwithdraw_amount,userBalanace, setuserBalanace
         }}
       >
         <Box style={{ height: "100vh" }}>

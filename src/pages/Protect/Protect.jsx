@@ -14,7 +14,7 @@ const Protect = (props) => {
   const navigate = useNavigate();
 
   // getting context API
-  const { connect_to_user_wallet, setType,protectedAmount,setProtectedAmount,stoploss_contract, setMetamaskEvent,setstoploss_contract} = useContext(setBlockData);
+  const { connect_to_user_wallet, userBalanace, setType,protectedAmount,setProtectedAmount, setMetamaskEvent,setstoploss_contract} = useContext(setBlockData);
 
   /** active - user wallet status  , active will be true if the  site is connected with the user wallet.
    *  account -  user wallet address.
@@ -61,18 +61,21 @@ const Protect = (props) => {
         stoploss_contract_abi,
         CONTRACT_ADDRESS
       );
-      console.log(contract)
+     
       // setting smart contract to Stoploss usestate.
       setstoploss_contract(contract);
     }
-    console.log(stoploss_contract)
+  
   };
   /**
    * loading smart contract everytime  if the user  wallet address get changed .
    */
   useEffect(() => {
     loadContract();
+  
   }, [account]);
+
+
 
 
 
@@ -139,7 +142,7 @@ const Protect = (props) => {
           details={[
             {
               label: "Staked Balance",
-              value: "0.007 ETH",
+              value: `${userBalanace} WETH`,
             },
           ]}
         />

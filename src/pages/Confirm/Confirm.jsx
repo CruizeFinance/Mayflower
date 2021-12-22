@@ -14,8 +14,13 @@ const Confirm = (props) => {
   const [dipvValue, setdipvValue] = useState();
   const navigate = useNavigate();
   // getting context
-  const { type, setMetamaskEvent, stoploss_contract, protectedAmount } =
-    useContext(setBlockData);
+  const {
+    type,
+    setMetamaskEvent,
+    stoploss_contract,
+    protectedAmount,
+    withdraw_amount,
+  } = useContext(setBlockData);
 
   /* redirect back to home, if the wallet is not connected. */
   useEffect(() => {
@@ -36,7 +41,6 @@ const Confirm = (props) => {
   ) => {
     // method contains all the methods that our smart contract has.
     var method = stoploss_contract.methods;
-    console.log(dipAmount)
     /** call the stopLoss_deposit function from the smart contract if the user is connected with MetaMask wallet. */
     if (account != null) {
       await method
@@ -56,15 +60,63 @@ const Confirm = (props) => {
     }
   };
 
-const getDipAmount = async ()=>{
+  /**
+   * @function confrim  - This function will call the withdraw function or the protect_WETH function based on the type .
+   * @param {withdraw_amount} - The amount that user want to withdraw.
+   */
+
+  const confirm = () => {
+    if (type === "Withdraw") {
+      withdraw(withdraw_amount, account);
+    } else {
+      protect_WETH(USDC_ADDRESS, WETH_ADDRESS, protectedAmount, dipvValue);
+    }
+  };
+
+  /**
+   * @function getDipAmount - This function will call the getDipvalue and that return
+   *  calcalute the 85 of value of the USDC of 1 ETH
+   *
+   */
+  const getDipAmount = async () => {
     const dipAmount = await getDipValue();
-    console.log(dipAmount)
-    setdipvValue(dipAmount*protectedAmount);
-  }
+    console.log(dipAmount);
+    setdipvValue(dipAmount * protectedAmount);
+  };
+
   useEffect(() => {
-    getDipAmount()
+    getDipAmount();
   }, []);
 
+  /**
+   * @function viewBalances - this function will return the asset's value  that is associate with the user address.
+   * @param {user wallet address } addressOfUser
+   * @returns it will return the asset's value that is associate with the user  address.
+   */
+  const viewBalances = async (addressOfUser) => {
+    var meth = stoploss_contract.methods;
+    const reciept = await meth.balances(addressOfUser).call();
+    return reciept;
+  };
+  /**
+   * @function withdraw  - this will withdraw the asset's that is associate to user address e.i WETH , USDC .
+   * @param {user wallet address} addressOfUser
+   */
+  const withdraw = async (_withdraw_amount, addressOfUser) => {
+    const reciept = await viewBalances(addressOfUser);
+    var meth = stoploss_contract.methods;
+    await meth
+      .withdraw(library.utils.toBN(_withdraw_amount * 1e18), reciept._token)
+      .send({ from: addressOfUser, value: 0 })
+      .then((d) => {
+       
+
+        if (d) {
+        }
+      })
+      .catch((e) => {});
+  };
+  
   return (
     <>
       <div
@@ -88,7 +140,10 @@ const getDipAmount = async ()=>{
             <Typography variant="body2">
               {type === "Protect" ? "Protected" : "Withdraw"} Amount
             </Typography>
-            <Typography variant="body2">{protectedAmount} ETH</Typography>
+            <Typography variant="body2">
+              {type === "Protect" ? `${protectedAmount}` : `${withdraw_amount}`}{" "}
+              ETH
+            </Typography>
           </div>
         </div>
         <div style={{ width: "100%" }}></div>
@@ -96,12 +151,7 @@ const getDipAmount = async ()=>{
           className={`full-width`}
           onClick={() => {
             navigate(`/created`);
-            protect_WETH(
-              USDC_ADDRESS,
-              WETH_ADDRESS,
-              protectedAmount,
-              dipvValue
-            );
+            confirm();
           }}
         >
           Confirm Order
