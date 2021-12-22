@@ -5,8 +5,6 @@ let USDC_PRICE_OF_ETH = 0;
 const getDipValue = async (userAsset) => {
   
   USDC_PRICE_OF_ETH  =await coinBaseAPI();
-  console.log(USDC_PRICE_OF_ETH*0.85)
-
   return (USDC_PRICE_OF_ETH*0.85)
 };
 const coinBaseAPI = async (userAsset) => {

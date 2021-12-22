@@ -14,7 +14,7 @@ const Protect = (props) => {
   const navigate = useNavigate();
 
   // getting context API
-  const { connect_to_user_wallet, setType,protectedAmount,setProtectedAmount,stoploss_contract, setMetamaskEvent,setstoploss_contract} = useContext(setBlockData);
+  const { connect_to_user_wallet, userBalanace, setType,protectedAmount,setProtectedAmount, setMetamaskEvent,setstoploss_contract} = useContext(setBlockData);
 
   /** active - user wallet status  , active will be true if the  site is connected with the user wallet.
    *  account -  user wallet address.
@@ -26,7 +26,7 @@ const Protect = (props) => {
    * @param {the value  of WETH that user want to approve} _value
    * @param {the token  address of WETH} _token
    */
-  const approve_WETH = async (_value, _token) => {
+  const approveWETH = async (_value, _token) => {
     // ERC20_ABI  - abi of the ERC20 token
     const contract = await new library.eth.Contract(ERC20_ABI, _token);
     // method will contain all the methodod that our smart contract have.
@@ -61,18 +61,21 @@ const Protect = (props) => {
         stoploss_contract_abi,
         CONTRACT_ADDRESS
       );
-      console.log(contract)
+     
       // setting smart contract to Stoploss usestate.
       setstoploss_contract(contract);
     }
-    console.log(stoploss_contract)
+  
   };
   /**
    * loading smart contract everytime  if the user  wallet address get changed .
    */
   useEffect(() => {
     loadContract();
+  
   }, [account]);
+
+
 
 
 
@@ -123,7 +126,7 @@ const Protect = (props) => {
             <Button
               width={400}
               onClick={() => {
-                approve_WETH(protectedAmount,WETH_ADDRESS)
+                approveWETH(protectedAmount,WETH_ADDRESS)
                 navigate(`/confirm`);
                 setType("Protect");
                 
@@ -139,7 +142,7 @@ const Protect = (props) => {
           details={[
             {
               label: "Staked Balance",
-              value: "0.007 ETH",
+              value: `${userBalanace} WETH`,
             },
           ]}
         />

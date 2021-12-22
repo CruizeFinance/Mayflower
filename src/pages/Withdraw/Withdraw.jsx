@@ -8,15 +8,34 @@ import { useContext, useEffect } from "react";
 import { setBlockData } from "../../ContextAPI/ContextApi";
 import { useWeb3React } from "@web3-react/core";
 
+
 const Withdraw = () => {
   const navigate = useNavigate();
-  const { setType, connect_to_user_wallet } = useContext(setBlockData);
+  const { setType, connect_to_user_wallet ,setwithdraw_amount,userBalanace,setuserBalanace,stoploss_contract} = useContext(setBlockData);
   
   /**
    * active - user wallet status  , active will be true if the  site is connected with the user wallet.
    */
-  const { active} = useWeb3React();
+  const { active,account,library } = useWeb3React();
 
+/**
+   * @function getBalanceInfo -  will proived the information about the user asset's  value that is belong to user account
+   * i.e.
+   * 1.  amount  - value that user have in our Smart contract .
+   * 2.  token - the asset's address that user currently have on Smart  contract .
+   * @dev stopLoos_Contract -  this contain's   our smart contract .
+   */
+ const getBalanceInfo = async () => {
+  var meth = stoploss_contract.methods;
+  // meth -  this variable have  all the method that our Smart contract have .
+  let userAssetsInfo = await meth.balances(account).call();
+  setuserBalanace(library .utils.fromWei(userAssetsInfo._amt))
+  // setting up the token address that  is associate with user in our Smart contract.
+};
+
+useEffect(() => {
+  getBalanceInfo();
+}, []);
 
   
   return (
@@ -26,7 +45,7 @@ const Withdraw = () => {
       <InputField
         inputLabel="Witdraw Amount"
         currency="ETH"
-        onChange={(e) => console.log(e)}
+        onChange={(e) => setwithdraw_amount(e.target.value)}
         onMaxClick={() => console.log("max clicked")}
       />
       <ProtectDetails
@@ -81,7 +100,7 @@ const Withdraw = () => {
           details={[
             {
               label: "Staked Balance",
-              value: "0.007 ETH"
+              value: `${userBalanace} WETH`
             }
           ]}
         />
