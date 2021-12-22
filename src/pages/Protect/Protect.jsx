@@ -8,13 +8,13 @@ import { useContext, useEffect } from "react";
 import { setBlockData } from "../../ContextAPI/ContextApi";
 import { useWeb3React } from "@web3-react/core";
 import {abi as ERC20_ABI} from '../../Blockchain/Abis/ERC20.json'
-import {abi as stopLoss_Contract_abi} from '../../Blockchain/Abis/Stoploss.json'
+import {abi as stoploss_contract_abi} from '../../Blockchain/Abis/Stoploss.json'
 
 const Protect = (props) => {
   const navigate = useNavigate();
 
   // getting context API
-  const { connect_to_user_wallet, setType,protectedAmount,setProtectedAmount, setMetamaskEvent,setstopLoos_Contract} = useContext(setBlockData);
+  const { connect_to_user_wallet, setType,protectedAmount,setProtectedAmount,stoploss_contract, setMetamaskEvent,setstoploss_contract} = useContext(setBlockData);
 
   /** active - user wallet status  , active will be true if the  site is connected with the user wallet.
    *  account -  user wallet address.
@@ -26,7 +26,7 @@ const Protect = (props) => {
    * @param {the value  of WETH that user want to approve} _value
    * @param {the token  address of WETH} _token
    */
-  const approve_weth = async (_value, _token) => {
+  const approve_WETH = async (_value, _token) => {
     // ERC20_ABI  - abi of the ERC20 token
     const contract = await new library.eth.Contract(ERC20_ABI, _token);
     // method will contain all the methodod that our smart contract have.
@@ -50,7 +50,7 @@ const Protect = (props) => {
   };
   /**
    * @function loadContract -  this will load the Stoploss smart contract.
-   *@param stopLoss_Contract_abi - this is the ABI for the Stoploss Contract.
+   *@param stoploss_contract_abi - this is the ABI for the Stoploss Contract.
    *@param CONTRACT_ADDRESS - is the contract Address where we have deployed our Smart Contract.
    *
    */
@@ -58,12 +58,14 @@ const Protect = (props) => {
     if (account) {
       // loading smart contract .
       const contract = await new library.eth.Contract(
-        stopLoss_Contract_abi,
+        stoploss_contract_abi,
         CONTRACT_ADDRESS
       );
+      console.log(contract)
       // setting smart contract to Stoploss usestate.
-      setstopLoos_Contract(contract);
+      setstoploss_contract(contract);
     }
+    console.log(stoploss_contract)
   };
   /**
    * loading smart contract everytime  if the user  wallet address get changed .
@@ -121,7 +123,7 @@ const Protect = (props) => {
             <Button
               width={400}
               onClick={() => {
-                approve_weth(protectedAmount,WETH_ADDRESS)
+                approve_WETH(protectedAmount,WETH_ADDRESS)
                 navigate(`/confirm`);
                 setType("Protect");
                 

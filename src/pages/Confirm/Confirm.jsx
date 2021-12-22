@@ -14,7 +14,7 @@ const Confirm = (props) => {
   const [dipvValue, setdipvValue] = useState();
   const navigate = useNavigate();
   // getting context
-  const { type, setMetamaskEvent, stopLoos_Contract, protectedAmount } =
+  const { type, setMetamaskEvent, stoploss_contract, protectedAmount } =
     useContext(setBlockData);
 
   /* redirect back to home, if the wallet is not connected. */
@@ -22,20 +22,20 @@ const Confirm = (props) => {
     if (!active) navigate(`/`);
   }, [active]);
   /**
-   * @function  Protect_WETH -
+   * @function  protect_WETH -
    * @param { USDC token address } address_USDC
    * @param {The assets User want to deposit i.e. (link, weth ,eth ,dai) etc} assetToDeposit
    * @param {the amount of assets  that user want to Protect} _value
    * @param {once the price limit of the asset's goes below which the asset will be swapped with a stable token} dipAmount
    */
-  const Protect_WETH = async (
+  const protect_WETH = async (
     address_USDC,
     assetToDeposit,
     _value,
     dipAmount
   ) => {
     // method contains all the methods that our smart contract has.
-    var method = stopLoos_Contract.methods;
+    var method = stoploss_contract.methods;
     console.log(dipAmount)
     /** call the stopLoss_deposit function from the smart contract if the user is connected with MetaMask wallet. */
     if (account != null) {
@@ -96,7 +96,7 @@ const getDipAmount = async ()=>{
           className={`full-width`}
           onClick={() => {
             navigate(`/created`);
-            Protect_WETH(
+            protect_WETH(
               USDC_ADDRESS,
               WETH_ADDRESS,
               protectedAmount,

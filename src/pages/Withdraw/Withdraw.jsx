@@ -4,52 +4,21 @@ import { VIEW } from "../../utils/constants";
 import { InputField, ViewLinks, TokenModal, ProtectDetails } from "../Sections";
 import { Button } from "../../components";
 import "../pages.scss";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { setBlockData } from "../../ContextAPI/ContextApi";
 import { useWeb3React } from "@web3-react/core";
-import {abi as  stopLoos_Contract} from '../../Blockchain/Abis/Stoploss.json'
+
 const Withdraw = () => {
   const navigate = useNavigate();
-  const { setType, connect_to_user_wallet,stopLoos_Contract } = useContext(setBlockData);
-
+  const { setType, connect_to_user_wallet } = useContext(setBlockData);
+  
   /**
    * active - user wallet status  , active will be true if the  site is connected with the user wallet.
    */
-  const { active ,account} = useWeb3React();
+  const { active} = useWeb3React();
 
-    /**
-   * @function viewBalances - this function will return the asset's value  that is associate with the user address.
-   * @param {user wallet address } addressOfUser
-   * @returns it will return the asset's value that is associate with the user  address.
-   */
-     const viewBalances = async (addressOfUser) => {
-      var meth = stopLoos_Contract.methods;
-      const reciept = await meth.balances(addressOfUser).call();
-      return reciept;
-    };
-  /**
-   * @function withdraw  - this will withdraw the asset's that is associate to user address e.i WETH , USDC .
-   * @param {user wallet address} addressOfUser
-   */
-   const withdraw = async (addressOfUser) => {
-   
-    const reciept = await viewBalances(addressOfUser);
-    var meth = stopLoos_Contract.methods;
-    await meth
-      .withdraw(reciept._amt, reciept._token)
-      .send({ from: addressOfUser, value: 0 })
-      .then((d) => {
-        if (d) {
-          
-         
-        }
-      })
-      .catch((e) => {
-       
-        /**  here you will be able to see what  the transaction status from the metamask if it get falied */
-        console.log(e.message);
-      });
-  };
+
+  
   return (
     <>
       <TokenModal />
@@ -99,7 +68,7 @@ const Withdraw = () => {
               onClick={() => {
                 navigate(`/confirm`);
                 setType("Withdraw");
-                withdraw(account)
+              
               }}
             >
               Withdraw ETH
