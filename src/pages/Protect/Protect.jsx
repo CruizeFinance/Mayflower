@@ -7,14 +7,26 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { setBlockData } from "../../ContextAPI/ContextApi";
 import { useWeb3React } from "@web3-react/core";
-import {abi as ERC20_ABI} from '../../Blockchain/Abis/ERC20.json'
-import {abi as stoploss_contract_abi} from '../../Blockchain/Abis/Stoploss.json'
+import { abi as ERC20_ABI } from "../../Blockchain/Abis/ERC20.json";
+import { getDipValue } from "../../utils/Api/api_call";
 
 const Protect = (props) => {
   const navigate = useNavigate();
 
   // getting context API
-  const { connect_to_user_wallet, userBalanace, setType,protectedAmount,setProtectedAmount, setMetamaskEvent,setstoploss_contract} = useContext(setBlockData);
+  const {
+    connect_to_user_wallet,
+    userBalance,
+    setType,
+    protectedAmount,
+    setProtectedAmount,
+    setMetamaskEvent,
+    dipValue,
+    setDipValue,
+    setuserBalance,
+    stoploss_contract,
+    resetValues,
+  } = useContext(setBlockData);
 
   /** active - user wallet status  , active will be true if the  site is connected with the user wallet.
    *  account -  user wallet address.
@@ -43,41 +55,47 @@ const Protect = (props) => {
         .catch((error) => {
           /* the error for the popup is caught in the confirm screen. Need to navigate back to protect. */
           navigate("/protect");
+          resetValues();
         });
     } else {
       console.log("Wallet not connected!");
     }
   };
+
   /**
-   * @function loadContract -  this will load the Stoploss smart contract.
-   *@param stoploss_contract_abi - this is the ABI for the Stoploss Contract.
-   *@param CONTRACT_ADDRESS - is the contract Address where we have deployed our Smart Contract.
+   * @function getDipAmount - This function will call the getDipvalue and that return
+   *  calcalute the 85 of value of the USDC of 1 ETH
    *
    */
-  const loadContract = async () => {
-    if (account) {
-      // loading smart contract .
-      const contract = await new library.eth.Contract(
-        stoploss_contract_abi,
-        CONTRACT_ADDRESS
-      );
-     
-      // setting smart contract to Stoploss usestate.
-      setstoploss_contract(contract);
-    }
-  
+  const getDipAmount = async () => {
+    const dipAmount = await getDipValue();
+    setDipValue(dipAmount * protectedAmount);
   };
+
   /**
-   * loading smart contract everytime  if the user  wallet address get changed .
+   * @function getBalanceInfo -  will proived the information about the user asset's  value that is belong to user account
+   * i.e.
+   * 1.  amount  - value that user have in our Smart contract .
+   * 2.  token - the asset's address that user currently have on Smart  contract .
+   * @dev stopLoos_Contract -  this contain's   our smart contract .
    */
+  const getBalanceInfo = async () => {
+    var meth = stoploss_contract.methods;
+    // meth -  this variable have  all the method that our Smart contract have .
+    let userAssetsInfo = await meth.balances(account).call();
+    setuserBalance(library.utils.fromWei(userAssetsInfo._amt));
+    // setting up the token address that  is associate with user in our Smart contract.
+  };
+
   useEffect(() => {
-    loadContract();
-  
-  }, [account]);
+    getDipAmount();
+  }, [protectedAmount]);
 
-
-
-
+  useEffect(() => {
+    if (stoploss_contract) {
+      getBalanceInfo();
+    }
+  }, [stoploss_contract]);
 
   return (
     <>
@@ -85,21 +103,20 @@ const Protect = (props) => {
       <ViewLinks map={VIEW} page={"protect"} />
       <InputField
         inputLabel="Protected Amount"
-        currency="ETH"
+        currency="WETH"
         onChange={(e) => setProtectedAmount(e.target.value)}
-        onMaxClick={() => console.log("max clicked")}
       />
       <ProtectDetails
         header={"Protection Details"}
         details={[
           {
             label: "Price floor (% of the current price)",
-            value: "85%",
+            value: "85%"
           },
           {
             label: "Total Price Floor (in USDC)",
-            value: active ? "1200 USDC" : "-",
-          },
+            value: active && dipValue ? dipValue : "-"
+          }
         ]}
       />
       <div className={`hedge-eth`}>
@@ -126,24 +143,24 @@ const Protect = (props) => {
             <Button
               width={400}
               onClick={() => {
-                approveWETH(protectedAmount,WETH_ADDRESS)
+                approveWETH(protectedAmount, WETH_ADDRESS);
                 navigate(`/confirm`);
                 setType("Protect");
-                
               }}
+              disabled={!dipValue || userBalance != 0}
             >
-              Protect ETH
+              Protect WETH
             </Button>
           </>
         )}
       </div>
-      {active ? (
+      {active && userBalance != 0 ? (
         <ProtectDetails
           details={[
             {
               label: "Staked Balance",
-              value: `${userBalanace} WETH`,
-            },
+              value: `${userBalance} WETH`
+            }
           ]}
         />
       ) : null}
@@ -151,13 +168,13 @@ const Protect = (props) => {
         header={"Earning Details"}
         details={[
           {
-            label: "ETH APY (Before Protection)",
-            value: "12.78%",
+            label: "WETH APY (Before Protection)",
+            value: "12.78%"
           },
           {
             label: "USDC APY (Before Protection)",
-            value: "12.78%",
-          },
+            value: "12.78%"
+          }
         ]}
       />
     </>

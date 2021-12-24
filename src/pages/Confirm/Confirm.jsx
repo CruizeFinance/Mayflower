@@ -7,11 +7,9 @@ import { Sprite, Button } from "../../components";
 import "../pages.scss";
 import { setBlockData } from "../../ContextAPI/ContextApi";
 import { USDC_ADDRESS, WETH_ADDRESS } from "../../utils/constants";
-import { getDipValue } from "../../utils/Api/api_call";
 
 const Confirm = (props) => {
   const { active, account, library } = useWeb3React();
-  const [dipvValue, setdipvValue] = useState();
   const navigate = useNavigate();
   // getting context
   const {
@@ -20,12 +18,16 @@ const Confirm = (props) => {
     stoploss_contract,
     protectedAmount,
     withdraw_amount,
+    metamaskEvent,
+    dipValue,
+    resetValues
   } = useContext(setBlockData);
 
   /* redirect back to home, if the wallet is not connected. */
   useEffect(() => {
     if (!active) navigate(`/`);
   }, [active]);
+
   /**
    * @function  protect_WETH -
    * @param { USDC token address } address_USDC
@@ -40,22 +42,26 @@ const Confirm = (props) => {
     dipAmount
   ) => {
     // method contains all the methods that our smart contract has.
-    var method = stoploss_contract.methods;
+    const method = stoploss_contract.methods;
     /** call the stopLoss_deposit function from the smart contract if the user is connected with MetaMask wallet. */
     if (account != null) {
+      const tokens = library.utils.toWei(dipAmount.toString(), "ether");
+      const amount = library.utils.toBN(tokens);
       await method
         .stopLoss_deposit(
           address_USDC,
           assetToDeposit,
           library.utils.toBN(_value * 1e18),
-          library.utils.toBN(dipAmount * 100000000)
+          library.utils.toBN(amount)
         )
         .send({ from: account, value: 0 })
-        .then((d) => setMetamaskEvent(d))
+        .then((d) => {
+          setMetamaskEvent(d);
+        })
         .catch((error) => {
-          /**  here you will be able to see what  the transaction status from the metamask if it get falied */
-
+          /**  here you will be able to see what the transaction status from the metamask if it get falied */
           navigate(`/${type?.toLowerCase()}`);
+          resetValues();
         });
     }
   };
@@ -64,29 +70,13 @@ const Confirm = (props) => {
    * @function confrim  - This function will call the withdraw function or the protectWETH function based on the type .
    * @param {withdraw_amount} - The amount that user want to withdraw.
    */
-
   const confirm = () => {
     if (type === "Withdraw") {
       withdraw(withdraw_amount, account);
     } else {
-      protectWETH(USDC_ADDRESS, WETH_ADDRESS, protectedAmount, dipvValue);
+      protectWETH(USDC_ADDRESS, WETH_ADDRESS, protectedAmount, dipValue);
     }
   };
-
-  /**
-   * @function getDipAmount - This function will call the getDipvalue and that return
-   *  calcalute the 85 of value of the USDC of 1 ETH
-   *
-   */
-  const getDipAmount = async () => {
-    const dipAmount = await getDipValue();
-    console.log(dipAmount);
-    setdipvValue(dipAmount * protectedAmount);
-  };
-
-  useEffect(() => {
-    getDipAmount();
-  }, []);
 
   /**
    * @function viewBalances - this function will return the asset's value  that is associate with the user address.
@@ -98,6 +88,7 @@ const Confirm = (props) => {
     const reciept = await meth.balances(addressOfUser).call();
     return reciept;
   };
+
   /**
    * @function withdraw  - this will withdraw the asset's that is associate to user address e.i WETH , USDC .
    * @param {user wallet address} addressOfUser
@@ -109,14 +100,15 @@ const Confirm = (props) => {
       .withdraw(library.utils.toBN(_withdraw_amount * 1e18), reciept._token)
       .send({ from: addressOfUser, value: 0 })
       .then((d) => {
-       
-
-        if (d) {
-        }
+        setMetamaskEvent(d);
       })
-      .catch((e) => {});
+      .catch((e) => {
+        /**  here you will be able to see what the transaction status from the metamask if it get falied */
+        navigate(`/${type?.toLowerCase()}`);
+        resetValues();
+      });
   };
-  
+
   return (
     <>
       <div
@@ -133,7 +125,7 @@ const Confirm = (props) => {
           {type}
         </Typography>
         <Typography variant="subtitle1">
-          <Sprite id="eth" width={16} height={16} /> ETH
+          <Sprite id="weth" width={16} height={16} /> WETH
         </Typography>
         <div style={{ width: "100%" }}>
           <div className={`confirm`}>
@@ -142,7 +134,7 @@ const Confirm = (props) => {
             </Typography>
             <Typography variant="body2">
               {type === "Protect" ? `${protectedAmount}` : `${withdraw_amount}`}{" "}
-              ETH
+              WETH
             </Typography>
           </div>
         </div>
@@ -153,8 +145,16 @@ const Confirm = (props) => {
             navigate(`/created`);
             confirm();
           }}
+          disabled={
+            type?.toLowerCase() === "protect" &&
+            !(metamaskEvent?.events?.Approval?.type === "mined")
+          }
         >
-          Confirm Order
+          {type?.toLowerCase() === "protect"
+            ? metamaskEvent
+              ? "Confirm Order"
+              : "Confirmation Pending"
+            : "Confirm Order"}
         </Button>
       </div>
     </>

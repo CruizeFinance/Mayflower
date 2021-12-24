@@ -4,49 +4,33 @@ import { VIEW } from "../../utils/constants";
 import { InputField, ViewLinks, TokenModal, ProtectDetails } from "../Sections";
 import { Button } from "../../components";
 import "../pages.scss";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { setBlockData } from "../../ContextAPI/ContextApi";
 import { useWeb3React } from "@web3-react/core";
 
-
 const Withdraw = () => {
   const navigate = useNavigate();
-  const { setType, connect_to_user_wallet ,setwithdraw_amount,userBalanace,setuserBalanace,stoploss_contract} = useContext(setBlockData);
-  
+  const {
+    setType,
+    connect_to_user_wallet,
+    setwithdraw_amount,
+    withdraw_amount,
+    userBalance
+  } = useContext(setBlockData);
+
   /**
    * active - user wallet status  , active will be true if the  site is connected with the user wallet.
    */
-  const { active,account,library } = useWeb3React();
+  const { active } = useWeb3React();
 
-/**
-   * @function getBalanceInfo -  will proived the information about the user asset's  value that is belong to user account
-   * i.e.
-   * 1.  amount  - value that user have in our Smart contract .
-   * 2.  token - the asset's address that user currently have on Smart  contract .
-   * @dev stopLoos_Contract -  this contain's   our smart contract .
-   */
- const getBalanceInfo = async () => {
-  var meth = stoploss_contract.methods;
-  // meth -  this variable have  all the method that our Smart contract have .
-  let userAssetsInfo = await meth.balances(account).call();
-  setuserBalanace(library .utils.fromWei(userAssetsInfo._amt))
-  // setting up the token address that  is associate with user in our Smart contract.
-};
-
-useEffect(() => {
-  getBalanceInfo();
-}, []);
-
-  
   return (
     <>
       <TokenModal />
       <ViewLinks map={VIEW} page={"withdraw"} />
       <InputField
-        inputLabel="Witdraw Amount"
-        currency="ETH"
+        inputLabel="Withdraw Amount"
+        currency="WETH"
         onChange={(e) => setwithdraw_amount(e.target.value)}
-        onMaxClick={() => console.log("max clicked")}
       />
       <ProtectDetails
         header={"Protection Details"}
@@ -54,10 +38,6 @@ useEffect(() => {
           {
             label: "Price floor (% of the current price)",
             value: "85%"
-          },
-          {
-            label: "Total Price Floor (in USDC)",
-            value: active ? "1200 USDC" : "-"
           }
         ]}
       />
@@ -87,20 +67,24 @@ useEffect(() => {
               onClick={() => {
                 navigate(`/confirm`);
                 setType("Withdraw");
-              
               }}
+              disabled={
+                !withdraw_amount ||
+                withdraw_amount == 0 ||
+                withdraw_amount > userBalance
+              }
             >
-              Withdraw ETH
+              Withdraw WETH
             </Button>
           </>
         )}
       </div>
-      {active ? (
+      {active && userBalance != 0 ? (
         <ProtectDetails
           details={[
             {
               label: "Staked Balance",
-              value: `${userBalanace} WETH`
+              value: `${userBalance} WETH`
             }
           ]}
         />
@@ -109,7 +93,7 @@ useEffect(() => {
         header={"Earning Details"}
         details={[
           {
-            label: "ETH APY (Before Protection)",
+            label: "WETH APY (Before Protection)",
             value: "12.78%"
           },
           {

@@ -3,28 +3,6 @@ export const CONTRACT_ADDRESS = "0xCfFC01cD2c0F41390a2070e2b3e8900b1656e8ba";
 export const WETH_ADDRESS = "0xd0A1E359811322d97991E03f863a0C30C2cF029C";
 export const USDC_ADDRESS = "0xe22da380ee6B445bb8273C81944ADEB6E8450422";
 export const COIN_BASE_ASSET_PRICE_URL="https://api.coinbase.com/v2/prices/ETH-USD/spot"
-export const MARKS = [
-  {
-    value: 0,
-    label: "0%",
-  },
-  {
-    value: 25,
-    label: "25%",
-  },
-  {
-    value: 50,
-    label: "50%",
-  },
-  {
-    value: 75,
-    label: "75%",
-  },
-  {
-    value: 100,
-    label: "100%",
-  },
-];
 
 export const VIEW = {
   protect: {
@@ -36,28 +14,3 @@ export const VIEW = {
     route: "/withdraw",
   },
 };
-
-export const ACTIVITY_HISTORY = [
-  {
-    type: "Protect",
-    currency: "WETH ",
-    usdcPriceLimit: 3841.28,
-    ethPriceLimit: 0.07,
-    orderDate: "14th Sept, 2021",
-    orderTime: "18:22 IST",
-  },
-];
-
-export const ASSETS_VALUE = [
-  "0xd0A1E359811322d97991E03f863a0C30C2cF029C",
-
-  "link",
-
-  "usdc",
-
-  "wbtc",
-
-  "uni",
-
-  "weth",
-];

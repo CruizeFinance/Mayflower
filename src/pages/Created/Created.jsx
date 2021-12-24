@@ -10,7 +10,13 @@ import { setBlockData } from "../../ContextAPI/ContextApi";
 const Created = (props) => {
   const navigate = useNavigate();
   const { active } = useWeb3React();
-  const { type, setMetamaskEvent } = useContext(setBlockData);
+  const {
+    type,
+    protectedAmount,
+    metamaskEvent,
+    withdraw_amount,
+    resetValues
+  } = useContext(setBlockData);
 
   /* redirect back to home, if the wallet is not connected. */
   useEffect(() => {
@@ -22,24 +28,26 @@ const Created = (props) => {
       <div className={`dialog`} style={{ gap: "10px" }}>
         <div className={`confirm`}>
           <Typography variant="subtitle1">Order Created</Typography>
-          <Link to={"/protect"} onClick={() => setMetamaskEvent(undefined)}>
+          <Link to={"/protect"} onClick={resetValues}>
             <Sprite id="close" width={18} height={18} />
           </Link>
         </div>
         <div className={`order-details`}>
           <Typography variant="h5">{type}</Typography>
           <Typography variant="h6">
-            <Sprite id="eth" width={16} height={16} /> 0.007 (Ether)
+            <Sprite id="weth" width={16} height={16} />{" "}
+            {protectedAmount || withdraw_amount} (Wrapped Ether)
           </Typography>
         </div>
         <Button
           className={`full-width`}
           onClick={() => {
-            setMetamaskEvent(undefined);
+            resetValues();
             navigate(`/protect`);
           }}
+          disabled={!(metamaskEvent?.events[0]?.type === "mined")}
         >
-          Back to Home
+          {metamaskEvent ? "Back to Home" : "Confirmation Pending"}
         </Button>
       </div>
     </>
