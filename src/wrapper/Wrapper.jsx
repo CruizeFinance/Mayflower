@@ -17,6 +17,7 @@ const Wrapper = () => {
   const [withdraw_amount, setwithdraw_amount] = useState();
   const [userBalance, setuserBalance] = useState(0);
   const [dipValue, setDipValue] = useState();
+  const [userInfo, setUserInfo] = useState();
   const { active, library, activate } = useWeb3React();
 
   /**
@@ -79,7 +80,9 @@ const Wrapper = () => {
           setuserBalance,
           dipValue,
           setDipValue,
-          resetValues
+          resetValues,
+          userInfo,
+          setUserInfo,
         }}
       >
         <Box style={{ height: "100vh" }}>

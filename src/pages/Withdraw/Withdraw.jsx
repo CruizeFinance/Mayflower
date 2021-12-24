@@ -1,12 +1,13 @@
 import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { VIEW } from "../../utils/constants";
+import { VIEW, WETH_ADDRESS } from "../../utils/constants";
 import { InputField, ViewLinks, TokenModal, ProtectDetails } from "../Sections";
 import { Button } from "../../components";
 import "../pages.scss";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { setBlockData } from "../../ContextAPI/ContextApi";
 import { useWeb3React } from "@web3-react/core";
+import { getDipValue } from "../../utils/Api/api_call";
 
 const Withdraw = () => {
   const navigate = useNavigate();
@@ -15,13 +16,35 @@ const Withdraw = () => {
     connect_to_user_wallet,
     setwithdraw_amount,
     withdraw_amount,
-    userBalance
+    userBalance,
+    setDipValue,
+    dipValue,
+    userInfo
   } = useContext(setBlockData);
 
   /**
    * active - user wallet status  , active will be true if the  site is connected with the user wallet.
    */
   const { active } = useWeb3React();
+
+  /**
+   * @function getDipAmount - This function will call the getDipvalue and that return
+   *  calcalute the 85 of value of the USDC of 1 ETH
+   *
+   */
+  const getDipAmount = async () => {
+    const dipAmount = await getDipValue();
+    setDipValue(dipAmount * withdraw_amount);
+  };
+
+  useEffect(() => {
+    getDipAmount();
+  }, [withdraw_amount]);
+
+  useEffect(() => {
+    setwithdraw_amount(undefined);
+    setDipValue(undefined);
+  }, []);
 
   return (
     <>
@@ -36,8 +59,15 @@ const Withdraw = () => {
         header={"Protection Details"}
         details={[
           {
-            label: "Price floor (% of the current price)",
-            value: "85%"
+            label: "Withdrawn as",
+            value:
+              userInfo?._amt > 0 && userInfo?._token === WETH_ADDRESS
+                ? "WETH"
+                : "USDC"
+          },
+          {
+            label: "Withdrawal amount (in USDC)",
+            value: active && dipValue ? dipValue / 0.85 : "-"
           }
         ]}
       />
@@ -74,7 +104,10 @@ const Withdraw = () => {
                 withdraw_amount > userBalance
               }
             >
-              Withdraw WETH
+              Withdraw{" "}
+              {userInfo?._amt > 0 && userInfo?._token === WETH_ADDRESS
+                ? "WETH"
+                : "USDC"}
             </Button>
           </>
         )}

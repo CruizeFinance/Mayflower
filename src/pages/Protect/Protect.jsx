@@ -26,6 +26,7 @@ const Protect = (props) => {
     setuserBalance,
     stoploss_contract,
     resetValues,
+    setUserInfo
   } = useContext(setBlockData);
 
   /** active - user wallet status  , active will be true if the  site is connected with the user wallet.
@@ -84,6 +85,7 @@ const Protect = (props) => {
     // meth -  this variable have  all the method that our Smart contract have .
     let userAssetsInfo = await meth.balances(account).call();
     setuserBalance(library.utils.fromWei(userAssetsInfo._amt));
+    setUserInfo(userAssetsInfo);
     // setting up the token address that  is associate with user in our Smart contract.
   };
 
@@ -96,6 +98,11 @@ const Protect = (props) => {
       getBalanceInfo();
     }
   }, [stoploss_contract]);
+
+  useEffect(() => {
+    setProtectedAmount(undefined);
+    setDipValue(undefined);
+  }, []);
 
   return (
     <>
@@ -138,7 +145,9 @@ const Protect = (props) => {
               variant="body2"
               style={{ color: "var(--gray)", marginBottom: "10px" }}
             >
-              Protected assets never fall in value below the Price Floor
+              {userBalance
+                ? "Withdraw your staked balance to add a new amount"
+                : "Protected assets never fall in value below the Price Floor"}
             </Typography>
             <Button
               width={400}
