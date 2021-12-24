@@ -6,5 +6,5 @@ export const _getCurrentDatetime = () => {
     return dateTime;
   }
 export const Convert_toWei =(_value)=>{
-  return (_value * Math.pow(10,18))
+  return (_value * (Math.pow(10,9)))
 }

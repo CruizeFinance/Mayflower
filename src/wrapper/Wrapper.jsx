@@ -1,21 +1,24 @@
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { Box, Toolbar } from "@mui/material";
 import Header from "./Header/Header";
 import Content from "./Content/Content";
 import { setBlockData } from "../ContextAPI/ContextApi";
 import { injectors } from "../wallet/connectors";
 import { useWeb3React } from "@web3-react/core";
+import { abi as stoploss_contract_abi } from "../Blockchain/Abis/Stoploss.json";
+import { CONTRACT_ADDRESS } from "../utils/constants";
 
 const Wrapper = () => {
   /* context values */
-  const [assetsAddress, setAssetsAddress] = useState("eth");
-  const [price, setPrice] = useState(0);
   const [protectedAmount, setProtectedAmount] = useState(0);
-  const [totalLimit, setTotalLimit] = useState(0);
-  const [stopLoos_Contract, setstopLoos_Contract] = useState();
-  const [type, settype] = useState();
+  const [type, setType] = useState();
   const [metamaskEvent, setMetamaskEvent] = useState();
-  const { activate } = useWeb3React();
+  const [stoploss_contract, setstoploss_contract] = useState();
+  const [withdraw_amount, setwithdraw_amount] = useState();
+  const [userBalance, setuserBalance] = useState(0);
+  const [dipValue, setDipValue] = useState();
+  const [userInfo, setUserInfo] = useState();
+  const { active, library, activate } = useWeb3React();
 
   /**
    * @function connect_to_user_wallet - This will connect our  website to the user wallet
@@ -28,25 +31,58 @@ const Wrapper = () => {
     }
   }
 
+  const resetValues = () => {
+    setMetamaskEvent(undefined);
+    setwithdraw_amount(undefined);
+    setProtectedAmount(undefined);
+    setDipValue(undefined);
+    setType("");
+  };
+
+  /**
+   * @function loadContract -  this will load the Stoploss smart contract.
+   *@param stoploss_contract_abi - this is the ABI for the Stoploss Contract.
+   *@param CONTRACT_ADDRESS - is the contract Address where we have deployed our Smart Contract.
+   *
+   */
+  const loadContract = async () => {
+    // loading smart contract .
+    const contract = await new library.eth.Contract(
+      stoploss_contract_abi,
+      CONTRACT_ADDRESS
+    );
+    // setting smart contract to Stoploss usestate.
+    setstoploss_contract(contract);
+  };
+
+  useEffect(() => {
+    if (active) {
+      loadContract();
+    }
+  }, [active]);
+
   return (
     <>
       <setBlockData.Provider
         value={{
-          price,
-          setPrice,
           protectedAmount,
           setProtectedAmount,
-          totalLimit,
-          setTotalLimit,
-          assetsAddress,
-          setAssetsAddress,
           type,
-          settype,
-          stopLoos_Contract,
-          setstopLoos_Contract,
+          setType,
           connect_to_user_wallet,
           metamaskEvent,
-          setMetamaskEvent
+          setMetamaskEvent,
+          stoploss_contract,
+          setstoploss_contract,
+          withdraw_amount,
+          setwithdraw_amount,
+          userBalance,
+          setuserBalance,
+          dipValue,
+          setDipValue,
+          resetValues,
+          userInfo,
+          setUserInfo,
         }}
       >
         <Box style={{ height: "100vh" }}>
