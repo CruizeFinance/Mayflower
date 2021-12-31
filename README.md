@@ -12,8 +12,9 @@ is a potent vessel that guards your crypto riches from the impact of every tidal
 <li> <b>High powered protection</b> contract that allows you to seal up your assets in our vault, and protect them with a price limit (a value below which you don't want your assets to go) so that you can "vanish" away on your cruize and our protocol will swap your asset, if it values equal to or below the price limit, with a stable token and have it ready for you to come back to redeem your riches.
 
 <br>
-
-<li> <b>To sweeten the pot</b>, both our artileries are equipped with a <b>compounded interest generation contract</b>. <br> So neither your protected assets nor your locked up USDC is idle. <br>Both contracts are constantly generating a yield on the assets and are supplemented to your order for you to redeem when you're back.
+<br>
+  
+<li> <b>To sweeten the pot</b>, both our artileries are equipped with a <b>compounded interest generation contract</b>. So neither your protected assets nor your locked up USDC is idle. Both contracts are constantly generating a yield on the assets and are supplemented to your order for you to redeem when you're back.
 
 <br>
 
