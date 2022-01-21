@@ -7,7 +7,7 @@ import { injectors } from "../wallet/connectors";
 import { useWeb3React } from "@web3-react/core";
 import { abi as stoploss_contract_abi } from "../Blockchain/Abis/Stoploss.json";
 import { CONTRACT_ADDRESS } from "../utils/constants";
-
+import {apyApi} from "../utils/Api/api_call.js"
 const Wrapper = () => {
   /* context values */
   const [protectedAmount, setProtectedAmount] = useState(0);
@@ -19,6 +19,7 @@ const Wrapper = () => {
   const [dipValue, setDipValue] = useState();
   const [userInfo, setUserInfo] = useState();
   const { active, library, activate } = useWeb3React();
+
 
   /**
    * @function connect_to_user_wallet - This will connect our  website to the user wallet
@@ -82,7 +83,7 @@ const Wrapper = () => {
           setDipValue,
           resetValues,
           userInfo,
-          setUserInfo,
+          setUserInfo
         }}
       >
         <Box style={{ height: "100vh" }}>

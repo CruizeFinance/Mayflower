@@ -5,7 +5,9 @@ import "./styles/app.scss";
 import { Web3ReactProvider } from "@web3-react/core";
 import { isMobile, isTablet } from "react-device-detect";
 import Web3 from "web3";
+import axios from 'axios'
 const App = () => {
+
 
   /**
    * @provider - web library provider
