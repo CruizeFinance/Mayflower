@@ -5,8 +5,10 @@ import "./styles/app.scss";
 import { Web3ReactProvider } from "@web3-react/core";
 import { isMobile, isTablet } from "react-device-detect";
 import Web3 from "web3";
+import axios from 'axios'
+import {apyAprApi} from "./utils/Api/api_call.js"
 const App = () => {
-
+	apyAprApi();
   /**
    * @provider - web library provider
    * function to utilise the web3 library

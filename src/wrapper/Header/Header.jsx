@@ -34,7 +34,7 @@ const Header = () => {
                 variant="body2"
                 color="var(--green)"
               >
-                <div
+                <span
                   style={{
                     display: "inline-block",
                     width: "8px",

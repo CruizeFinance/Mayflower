@@ -9,16 +9,11 @@ const TokenModal = () => {
     <Select
       value={tokenValue}
       onChange={(e) => setTokenValue(e.target.value)}
-      displayEmpty
       className={`select`}
     >
       <MenuItem value="weth" data-my-value={5}>
         <Sprite id="weth" width={14} height={14} />
         &nbsp;WETH
-      </MenuItem>
-      <MenuItem value="usdc" data-my-value={2}>
-        <Sprite id="usdc" width={14} height={14} />
-        &nbsp;USDC
       </MenuItem>
     </Select>
   );

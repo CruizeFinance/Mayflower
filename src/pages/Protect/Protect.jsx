@@ -1,141 +1,130 @@
 import { Typography } from "@mui/material";
 import { CONTRACT_ADDRESS, VIEW, WETH_ADDRESS } from "../../utils/constants";
-import { abi as protect_abi2 } from "../../Blockchain/Abis/ERC20.json";
-import { abi as stopLoss_Contract_abi } from "../../Blockchain/Abis/Stoploss.json";
 import "../pages.scss";
 import { Button } from "../../components";
-import { InfoBox, InputField, ViewLinks, TokenModal } from "../Sections";
+import { InputField, ViewLinks, TokenModal, ProtectDetails } from "../Sections";
 import { useNavigate } from "react-router-dom";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { setBlockData } from "../../ContextAPI/ContextApi";
 import { useWeb3React } from "@web3-react/core";
+import { abi as ERC20_ABI } from "../../Blockchain/Abis/ERC20.json";
+import { getDipValue } from "../../utils/Api/api_call";
 
 const Protect = (props) => {
   const navigate = useNavigate();
 
   // getting context API
   const {
-    setPrice,
+    connect_to_user_wallet,
+    userBalance,
+    setType,
+    protectedAmount,
     setProtectedAmount,
-    setstopLoos_Contract,
-    setTotalLimit,
     setMetamaskEvent,
-    connect_to_user_wallet
+    dipValue,
+    setDipValue,
+    setuserBalance,
+    stoploss_contract,
+    resetValues,
+    setUserInfo
   } = useContext(setBlockData);
-
-  /* using different local and context variables to clear data on view change */
-
-  const [priceLimit, setPriceLimit] = useState(null);
-  const [protectedAmountLocal, setProtectedAmountLocal] = useState(null);
-  const [totalValue, setTotalValue] = useState(null);
-
-  useEffect(() => {
-    /* setting local value here */
-    setTotalValue(parseFloat(priceLimit) * parseFloat(protectedAmountLocal));
-    /* setting context value here */
-    setTotalLimit(parseFloat(priceLimit) * parseFloat(protectedAmountLocal));
-  }, [priceLimit, protectedAmountLocal]);
 
   /** active - user wallet status  , active will be true if the  site is connected with the user wallet.
    *  account -  user wallet address.
    *  libray - Web3 or ether .
    */
   const { active, account, library } = useWeb3React();
-
   /**
    * @function approve_weth - This function will approve a amount of WETH  that user want to Protect.
    * @param {the value  of WETH that user want to approve} _value
    * @param {the token  address of WETH} _token
    */
-  const approve_weth = async (_value, _token) => {
-    // protect_abi2  - abi of the ERC20 token
-    const contract = await new library.eth.Contract(protect_abi2, _token);
-    // meth will contain all the method that our smart contract have.
-    var meth = contract.methods;
+  const approveWETH = async (_value, _token) => {
+    // ERC20_ABI  - abi of the ERC20 token
+    const contract = await new library.eth.Contract(ERC20_ABI, _token);
+    // method will contain all the methodod that our smart contract have.
+    var method = contract.methods;
     /** call the stopLoss_deposite function from th smart contract if  the user is connected with user wallet.else show wallet not connected. */
     if (account) {
-      await meth
+      await method
         .approve(CONTRACT_ADDRESS, library.utils.toBN(_value * 1e18))
         .send({ from: account, value: 0 })
-        .then((d) => setMetamaskEvent(d));
+        .on("sent", () => {
+          console.log("success");
+        })
+        .then((d) => setMetamaskEvent(d))
+        .catch((error) => {
+          /* the error for the popup is caught in the confirm screen. Need to navigate back to protect. */
+          navigate("/protect");
+          resetValues();
+        });
     } else {
       console.log("Wallet not connected!");
     }
   };
 
   /**
-   * @function loadContract -  this will load the Stoploss smart contract.
-   *@param stopLoss_Contract_abi - this is the ABI for the Stoploss Contract.
-   *@param CONTRACT_ADDRESS - is the contract Address where we have deployed our Smart Contract.
+   * @function getDipAmount - This function will call the getDipvalue and that return
+   *  calcalute the 85 of value of the USDC of 1 ETH
    *
    */
-  const loadContract = async () => {
-    if (account) {
-      // loading smart contract .
-      const contract = await new library.eth.Contract(
-        stopLoss_Contract_abi,
-        CONTRACT_ADDRESS
-      );
-      // setting smart contract to Stoploss usestate.
-      setstopLoos_Contract(contract);
-    }
+  const getDipAmount = async () => {
+    const dipAmount = await getDipValue();
+    setDipValue(dipAmount * protectedAmount);
   };
 
   /**
-   * loading smart contract everytime  if the user  wallet address get changed .
+   * @function getBalanceInfo -  will proived the information about the user asset's  value that is belong to user account
+   * i.e.
+   * 1.  amount  - value that user have in our Smart contract .
+   * 2.  token - the asset's address that user currently have on Smart  contract .
+   * @dev stopLoos_Contract -  this contain's   our smart contract .
    */
+  const getBalanceInfo = async () => {
+    var meth = stoploss_contract.methods;
+    // meth -  this variable have  all the method that our Smart contract have .
+    let userAssetsInfo = await meth.balances(account).call();
+    setuserBalance(library.utils.fromWei(userAssetsInfo._amt));
+    setUserInfo(userAssetsInfo);
+    // setting up the token address that  is associate with user in our Smart contract.
+  };
+
   useEffect(() => {
-    loadContract();
-  }, [account]);
+    getDipAmount();
+  }, [protectedAmount]);
+
+  useEffect(() => {
+    if (stoploss_contract) {
+      getBalanceInfo();
+    }
+  }, [stoploss_contract]);
+
+  useEffect(() => {
+    setProtectedAmount(undefined);
+    setDipValue(undefined);
+  }, []);
 
   return (
     <>
       <TokenModal />
       <ViewLinks map={VIEW} page={"protect"} />
       <InputField
-        inputLabel="Price Limit"
-        currency="USDC"
-        onChange={(e) => {
-          setPriceLimit(
-            e.target.value < 0 ? (e.target.value = 0) : e.target.value
-          );
-          setPrice(e.target.value < 0 ? (e.target.value = 0) : e.target.value);
-        }}
-        tooltip={
-          "Order is triggered when the market price of the asset reaches this price. For example - Price Limit of 4200 USDC for ETH with a market price of 4400 USDC"
-        }
-      />
-      {/* <Box sx={{ width: 400 }} className={`slider`}>
-        <Slider
-          aria-label="Custom marks"
-          defaultValue={0}
-          step={1}
-          valueLabelDisplay="auto"
-          marks={MARKS}
-        />
-      </Box> */}
-      <InputField
         inputLabel="Protected Amount"
         currency="WETH"
-        onChange={(e) => {
-          setProtectedAmountLocal(
-            e.target.value < 0 ? (e.target.value = 0) : e.target.value
-          );
-          setProtectedAmount(
-            e.target.value < 0 ? (e.target.value = 0) : e.target.value
-          );
-        }}
-        tooltip={
-          "The quantity of the asset from your wallet you’d like to use for the order. For example - 0.07 WETH  out of the 0.09 ETH in your wallet."
-        }
+        onChange={(e) => setProtectedAmount(e.target.value)}
       />
-      <InputField
-        value={totalValue}
-        inputLabel="Total Limit"
-        currency="USDC"
-        tooltip={
-          "Total price floor of your asset holding which is the product of the limit and amount. For example - 0.07 WETH  staked with 4200 USDC limit will give 294 USDC as the total limit."
-        }
+      <ProtectDetails
+        header={"Protection Details"}
+        details={[
+          {
+            label: "Price floor (% of the current price)",
+            value: "85%"
+          },
+          {
+            label: "Total Price Floor (in USDC)",
+            value: active && dipValue ? dipValue : "-"
+          }
+        ]}
       />
       <div className={`hedge-eth`}>
         {!active ? (
@@ -156,22 +145,47 @@ const Protect = (props) => {
               variant="body2"
               style={{ color: "var(--gray)", marginBottom: "10px" }}
             >
-              Add the required WETH balance to confirm the order
+              {userBalance
+                ? "Withdraw your staked balance to add a new amount"
+                : "Protected assets never fall in value below the Price Floor"}
             </Typography>
             <Button
               width={400}
               onClick={() => {
-                approve_weth(protectedAmountLocal, WETH_ADDRESS, account);
-                navigate(`/confirm?type=protect`);
+                approveWETH(protectedAmount, WETH_ADDRESS);
+                navigate(`/confirm`);
+                setType("Protect");
               }}
-              disabled={!totalValue}
+              disabled={!dipValue || userBalance != 0}
             >
-              Hedge WETH
+              Protect WETH
             </Button>
           </>
         )}
       </div>
-      <InfoBox showSetUpLink type="Protect" />
+      {active && userBalance != 0 ? (
+        <ProtectDetails
+          details={[
+            {
+              label: "Staked Balance",
+              value: `${userBalance} WETH`
+            }
+          ]}
+        />
+      ) : null}
+      <ProtectDetails
+        header={"Earning Details"}
+        details={[
+          {
+            label: "WETH APY (Before Protection)",
+            value: "12.78%"
+          },
+          {
+            label: "USDC APY (Before Protection)",
+            value: "12.78%"
+          }
+        ]}
+      />
     </>
   );
 };
