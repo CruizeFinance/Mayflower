@@ -16,20 +16,24 @@ const coinBaseAPI = async (userAsset) => {
     console.log(error);
   }
 };
-const apyAprApi = async()=>{
+const apyAprApi = async(token = 'USDC', reward = 'ETH')=>{
 
  try {
     // calling APY APR API for WETH And USDC 
-    const apyValue= await axios.get(APY_API_PATH);
+    const apyValue= await axios.get(APY_API_PATH(token, reward));
     // getting the value of USD
 	 
 	console.log(apyValue)
-    return apyValue;
-  } catch (error) {
+	 if(apyValue.data){
+     return apyValue.data;
+	 }
+	 return null;
+   } catch (error) {
     console.log(error);
   }
 
 
 }
 
-export { getDipValue,apyAprApi};
+export { getDipValue, apyAprApi  };
+

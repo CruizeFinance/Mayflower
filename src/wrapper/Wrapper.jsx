@@ -7,7 +7,7 @@ import { injectors } from "../wallet/connectors";
 import { useWeb3React } from "@web3-react/core";
 import { abi as stoploss_contract_abi } from "../Blockchain/Abis/Stoploss.json";
 import { CONTRACT_ADDRESS } from "../utils/constants";
-import {apyApi} from "../utils/Api/api_call.js"
+import {apyAprApi} from "../utils/Api/api_call.js"
 const Wrapper = () => {
   /* context values */
   const [protectedAmount, setProtectedAmount] = useState(0);
@@ -19,7 +19,9 @@ const Wrapper = () => {
   const [dipValue, setDipValue] = useState();
   const [userInfo, setUserInfo] = useState();
   const { active, library, activate } = useWeb3React();
-
+ 
+const[usdcapy,setusdcApy] = useState();
+const[ethapy,setEthApy] = useState();
 
   /**
    * @function connect_to_user_wallet - This will connect our  website to the user wallet
@@ -31,7 +33,10 @@ const Wrapper = () => {
       console.log(e);
     }
   }
-
+const apicall  = async (token="USDC",reward="ETH")=>{
+const data = await apyAprApi(token,reward);
+return data;
+}
   const resetValues = () => {
     setMetamaskEvent(undefined);
     setwithdraw_amount(undefined);
@@ -52,16 +57,24 @@ const Wrapper = () => {
       stoploss_contract_abi,
       CONTRACT_ADDRESS
     );
-    // setting smart contract to Stoploss usestate.
+    // etting smart contract to Stoploss usestate.
     setstoploss_contract(contract);
   };
 
-  useEffect(() => {
+  useEffect( async () => {
     if (active) {
       loadContract();
+	const data = await apicall();
+    setEthApy(data?.ETH?.APY);
     }
   }, [active]);
 
+useEffect(async()=>{
+    if(ethapy){
+	const data = await apicall("USDC","USDC");
+	setusdcApy(data?.USDC?.APY);
+	}
+},[ethapy])
   return (
     <>
       <setBlockData.Provider
@@ -83,8 +96,10 @@ const Wrapper = () => {
           setDipValue,
           resetValues,
           userInfo,
-          setUserInfo
+          setUserInfo,
+ethapy,usdcapy
         }}
+
       >
         <Box style={{ height: "100vh" }}>
           <Header />

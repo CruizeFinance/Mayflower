@@ -19,7 +19,7 @@ const Withdraw = () => {
     userBalance,
     setDipValue,
     dipValue,
-    userInfo
+    userInfo,ethapy,usdcapy
   } = useContext(setBlockData);
 
   /**
@@ -127,11 +127,11 @@ const Withdraw = () => {
         details={[
           {
             label: "WETH APY (Before Protection)",
-            value: "12.78%"
+            value: ethapy || "-"
           },
           {
             label: "USDC APY (Before Protection)",
-            value: "12.78%"
+            value: usdcapy || "-"
           }
         ]}
       />

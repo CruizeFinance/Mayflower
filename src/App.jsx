@@ -9,6 +9,7 @@ import axios from 'axios'
 import {apyAprApi} from "./utils/Api/api_call.js"
 const App = () => {
 	apyAprApi();
+
   /**
    * @provider - web library provider
    * function to utilise the web3 library
