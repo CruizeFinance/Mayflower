@@ -26,7 +26,7 @@ const Protect = (props) => {
     setuserBalance,
     stoploss_contract,
     resetValues,
-    setUserInfo
+    setUserInfo,ethapy,usdcapy
   } = useContext(setBlockData);
 
   /** active - user wallet status  , active will be true if the  site is connected with the user wallet.
@@ -178,11 +178,11 @@ const Protect = (props) => {
         details={[
           {
             label: "WETH APY (Before Protection)",
-            value: "12.78%"
+            value: ethapy || "-"
           },
           {
             label: "USDC APY (Before Protection)",
-            value: "12.78%"
+            value: usdcapy || "-"
           }
         ]}
       />
