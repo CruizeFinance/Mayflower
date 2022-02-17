@@ -6,7 +6,7 @@ Some may say, its a potent vessel that guards your crypto riches from the impact
 
 <br>
 
-## Checkout our working Prototype [here](https://master.d3bieez7lmzxny.amplifyapp.com/).
+## Checkout our working Prototype [here](https://master.d3bieez7lmzxny.amplifyapp.com/). Go easy on it. Its just an MVP.
 
 <br>
 
