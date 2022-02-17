@@ -1,5 +1,8 @@
 # Mayflower
-is a potent vessel that guards your crypto riches from the impact of every tidal attack that comes our way.
+is the beauty that masks our strenght.
+It the app frontend that the real world user interacts with to hedge their assets.
+
+Some may say, its a potent vessel that guards your crypto riches from the impact of every tidal attack that comes our way.
 
 <br>
 
@@ -14,12 +17,12 @@ is a potent vessel that guards your crypto riches from the impact of every tidal
 <br>
 <br>
   
-<li> <b>To sweeten the pot</b>, both our artileries are equipped with a <b>compounded interest generation contract</b>. So neither your protected assets nor your locked up USDC is idle. Both contracts are constantly generating a yield on the assets and are supplemented to your order for you to redeem when you're back.
+<li> <b>To sweeten the pot</b>, both our artileries are equipped with a <b>lending protocol's yeild generation contract</b>. So your protected assets are not idle at any given time. The contract is constantly generating a yield on the assets and are supplemented to your order for you to redeem when you're back.
 
 <br>
 
 ## Where is the code for all these protocols?
-Our protection tower or as we call them as [watch dog](https://github.com/CruizeFinance/watch_dog) is a repository that contains our solidity IERC20 protocols.
+Our protection tower or as we call them [watch dog](https://github.com/CruizeFinance/watch_dog) is a repository that contains our solidity IERC20 protocols.
 
 
 ## Local development setup
